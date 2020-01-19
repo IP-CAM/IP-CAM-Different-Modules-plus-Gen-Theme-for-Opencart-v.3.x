@@ -1,0 +1,12 @@
+{% if modules or menu %}
+   <aside id="column-left" class="col-sm-3">
+      {% if menu %}
+         {{ menu }}
+      {% endif %}
+      <div class="hidden-xs">
+         {% for module in modules %}
+            {{ module }}
+         {% endfor %}
+      </div>
+   </aside>
+{% endif %}

@@ -1,0 +1,604 @@
+{{ header }}{{ column_left }}
+<div id="content">
+   <div class="page-header">
+      <div class="container-fluid">
+         <div class="pull-right">
+            <button type="submit" form="form-theme" data-toggle="tooltip" title="{{ button_save }}"
+                    class="btn btn-primary"><i class="fa fa-save"></i></button>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i
+                       class="fa fa-reply"></i></a></div>
+         <h1>{{ heading_title }}</h1>
+         <ul class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+               <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+            {% endfor %}
+         </ul>
+      </div>
+   </div>
+   <div class="container-fluid">
+      {% if error_warning %}
+         <div class="alert alert-danger alert-dismissible"><i
+                    class="fa fa-exclamation-circle"></i> {{ error_warning }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+         </div>
+      {% endif %}
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+         </div>
+         <div class="panel-body">
+            <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-theme"
+                  class="form-horizontal">
+
+               <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+                  <li><a href="#tab-store" data-toggle="tab">{{ tab_store }}</a></li>
+                  <li><a href="#tab-menu-blog" data-toggle="tab">{{ tab_menu_blog }}</a></li>
+               </ul>
+               <div class="tab-content">
+                  <div class="tab-pane active" id="tab-general">
+                     {# Directory Status#}
+                     <fieldset>
+                        <legend>{{ text_general }}</legend>
+                        <div class="form-group">
+                           <label class="col-sm-2 control-label" for="input-directory"><span
+                                      data-toggle="tooltip"
+                                      title="{{ help_directory }}">{{ entry_directory }}</span></label>
+                           <div class="col-sm-10">
+                              <select name="theme_gen_directory" id="input-directory" class="form-control">
+                                 {% for directory in directories %}
+                                    {% if directory == theme_gen_directory %}
+                                       <option value="{{ directory }}"
+                                               selected="selected">{{ directory }}</option>
+                                    {% else %}
+                                       <option value="{{ directory }}">{{ directory }}</option>
+                                    {% endif %}
+                                 {% endfor %}
+                              </select>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                           <div class="col-sm-10">
+                              <select name="theme_gen_status" id="input-status" class="form-control">
+                                 {% if theme_gen_status %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                 {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                                 {% endif %}
+                              </select>
+                           </div>
+                        </div>
+                     </fieldset>
+                     {# Limits #}
+                     <fieldset>
+                        <legend>{{ text_product }}</legend>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label" for="input-catalog-limit"><span
+                                      data-toggle="tooltip"
+                                      title="{{ help_product_limit }}">{{ entry_product_limit }}</span></label>
+                           <div class="col-sm-10">
+                              <input type="text" name="theme_gen_product_limit"
+                                     value="{{ theme_gen_product_limit }}"
+                                     placeholder="{{ entry_product_limit }}" id="input-catalog-limit"
+                                     class="form-control"/>
+                              {% if error_product_limit %}
+                                 <div class="text-danger">{{ error_product_limit }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label" for="input-description-limit"><span
+                                      data-toggle="tooltip"
+                                      title="{{ help_product_description_length }}">{{ entry_product_description_length }}</span></label>
+                           <div class="col-sm-10">
+                              <input type="text" name="theme_gen_product_description_length"
+                                     value="{{ theme_gen_product_description_length }}"
+                                     placeholder="{{ entry_product_description_length }}"
+                                     id="input-description-limit" class="form-control"/>
+                              {% if error_product_description_length %}
+                                 <div class="text-danger">{{ error_product_description_length }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </fieldset>
+                     {# Images Dimensions #}
+                     <fieldset>
+                        <legend>{{ text_image }}</legend>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-category-width">{{ entry_image_category }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_category_width"
+                                           value="{{ theme_gen_image_category_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-category-width"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_category_height"
+                                           value="{{ theme_gen_image_category_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_category %}
+                                 <div class="text-danger">{{ error_image_category }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-thumb-width">{{ entry_image_thumb }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_thumb_width"
+                                           value="{{ theme_gen_image_thumb_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-thumb-width"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_thumb_height"
+                                           value="{{ theme_gen_image_thumb_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_thumb %}
+                                 <div class="text-danger">{{ error_image_thumb }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-popup-width">{{ entry_image_popup }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_popup_width"
+                                           value="{{ theme_gen_image_popup_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-popup-width"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_popup_height"
+                                           value="{{ theme_gen_image_popup_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_popup %}
+                                 <div class="text-danger">{{ error_image_popup }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-product-width">{{ entry_image_product }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_product_width"
+                                           value="{{ theme_gen_image_product_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-product-width"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_product_height"
+                                           value="{{ theme_gen_image_product_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_product %}
+                                 <div class="text-danger">{{ error_image_product }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-additional-width">{{ entry_image_additional }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_additional_width"
+                                           value="{{ theme_gen_image_additional_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-additional-width"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_additional_height"
+                                           value="{{ theme_gen_image_additional_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_additional %}
+                                 <div class="text-danger">{{ error_image_additional }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-related">{{ entry_image_related }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_related_width"
+                                           value="{{ theme_gen_image_related_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-related"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_related_height"
+                                           value="{{ theme_gen_image_related_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_related %}
+                                 <div class="text-danger">{{ error_image_related }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-compare">{{ entry_image_compare }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_compare_width"
+                                           value="{{ theme_gen_image_compare_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-compare"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_compare_height"
+                                           value="{{ theme_gen_image_compare_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_compare %}
+                                 <div class="text-danger">{{ error_image_compare }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-wishlist">{{ entry_image_wishlist }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_wishlist_width"
+                                           value="{{ theme_gen_image_wishlist_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-wishlist"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_wishlist_height"
+                                           value="{{ theme_gen_image_wishlist_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_wishlist %}
+                                 <div class="text-danger">{{ error_image_wishlist }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-cart">{{ entry_image_cart }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_cart_width"
+                                           value="{{ theme_gen_image_cart_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-cart"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_cart_height"
+                                           value="{{ theme_gen_image_cart_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_cart %}
+                                 <div class="text-danger">{{ error_image_cart }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="form-group required">
+                           <label class="col-sm-2 control-label"
+                                  for="input-image-location">{{ entry_image_location }}</label>
+                           <div class="col-sm-10">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_location_width"
+                                           value="{{ theme_gen_image_location_width }}"
+                                           placeholder="{{ entry_width }}" id="input-image-location"
+                                           class="form-control"/>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input type="text" name="theme_gen_image_location_height"
+                                           value="{{ theme_gen_image_location_height }}"
+                                           placeholder="{{ entry_height }}" class="form-control"/>
+                                 </div>
+                              </div>
+                              {% if error_image_location %}
+                                 <div class="text-danger">{{ error_image_location }}</div>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </fieldset>
+                  </div>
+                  <div class="tab-pane" id="tab-store">
+                     <div class="row">
+                        {# Checkout #}
+                        <div class="col-sm-6">
+                           <fieldset>
+                              <legend>{{ text_checkout }}</legend>
+                              <div class="form-group">
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" value="shipping_comment"
+                                           name="theme_gen_checkout_hidden_fields[]"
+                                           id="input-shipping-comment"
+                                            {% if shipping_comment %} checked {% endif %}>
+                                    <label class="control-label"
+                                           for="input-shipping-comment">{{ entry_shipping_comment }}</label>
+                                 </div>
+                                 <br>
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" value="payment_comment"
+                                           name="theme_gen_checkout_hidden_fields[]"
+                                           id="input-payment-comment"
+                                            {% if payment_comment %} checked {% endif %}>
+                                    <label class="control-label"
+                                           for="input-payment-comment">{{ entry_payment_comment }}</label>
+                                 </div>
+                                 <br>
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" value="payment_company"
+                                           name="theme_gen_checkout_hidden_fields[]"
+                                           id="input-payment-company"
+                                            {% if payment_company %} checked {% endif %}>
+                                    <label class="control-label"
+                                           for="input-payment-company">{{ entry_payment_company }}</label>
+                                 </div>
+                                 <br>
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" value="payment_address_2"
+                                           name="theme_gen_checkout_hidden_fields[]"
+                                           id="input-payment-address-2"
+                                            {% if payment_address_2 %} checked {% endif %}>
+                                    <label class="control-label"
+                                           for="input-payment-address-2">{{ entry_payment_address_2 }}</label>
+                                 </div>
+                                 <br>
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" value="payment_postcode"
+                                           name="theme_gen_checkout_hidden_fields[]"
+                                           id="input-payment-postcode"
+                                            {% if payment_postcode %} checked {% endif %}>
+                                    <label class="control-label"
+                                           for="input-payment-postcode">{{ entry_payment_postcode }}</label>
+                                 </div>
+                                 <br>
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" value="payment_country"
+                                           name="theme_gen_checkout_hidden_fields[]"
+                                           id="input-payment-country"
+                                            {% if payment_country %} checked {% endif %}>
+                                    <label class="control-label"
+                                           for="input-payment-country">{{ entry_payment_country }}</label>
+                                 </div>
+                                 <br>
+                                 <div class="col-sm-12">
+                                    <input type="checkbox" value="payment_email"
+                                           name="theme_gen_checkout_hidden_fields[]"
+                                           id="input-payment-email"
+                                            {% if payment_email %} checked {% endif %}>
+                                    <label class="control-label"
+                                           for="input-payment-email">{{ entry_payment_email }}</label>
+                                 </div>
+                              </div>
+                           </fieldset>
+                        </div>
+                        {# Theme Feauture #}
+                        <div class="col-sm-6">
+                           <fieldset>
+                              <legend>{{ text_theme_feature }}</legend>
+                              <div class="form-group">
+                                 <label class="col-sm-4 control-label"
+                                        for="input-sticky-cart">{{ entry_sticky_cart }}</label>
+                                 <div class="col-sm-8">
+                                    <select name="theme_gen_sticky_cart" id="input-sticky-cart"
+                                            class="form-control">
+                                       {% if theme_gen_sticky_cart %}
+                                          <option value="1"
+                                                  selected="selected">{{ text_enabled }}</option>
+                                          <option value="0">{{ text_disabled }}</option>
+                                       {% else %}
+                                          <option value="1">{{ text_enabled }}</option>
+                                          <option value="0"
+                                                  selected="selected">{{ text_disabled }}</option>
+                                       {% endif %}
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-4 control-label"
+                                        for="input-scroll-to-top">{{ entry_scroll_to_top }}</label>
+                                 <div class="col-sm-8">
+                                    <select name="theme_gen_scroll_to_top" id="input-scroll-to-top"
+                                            class="form-control">
+                                       {% if theme_gen_scroll_to_top %}
+                                          <option value="1"
+                                                  selected="selected">{{ text_enabled }}</option>
+                                          <option value="0">{{ text_disabled }}</option>
+                                       {% else %}
+                                          <option value="1">{{ text_enabled }}</option>
+                                          <option value="0"
+                                                  selected="selected">{{ text_disabled }}</option>
+                                       {% endif %}
+                                    </select>
+                                 </div>
+                              </div>
+                           </fieldset>
+                        </div>
+                     </div>
+                     <div class="row">
+                        {# Opengraph #}
+                        <div class="col-sm-6">
+                           <fieldset>
+                              <legend>{{ text_opengraph_meta }}</legend>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label"
+                                        for="input-opengraph-logo">{{ entry_opengraph_logo }}</label>
+                                 <div class="col-sm-10">
+                                    <a href=""
+                                       id="opengraph-logo"
+                                       data-toggle="image"
+                                       class="img-thumbnail">
+                                       <img src="{{ opengraph_logo_preview }}"
+                                            alt=""
+                                            title=""
+                                            data-placeholder="{{ placeholder }}"/>
+                                    </a>
+                                    <input type="hidden"
+                                           name="theme_gen_opengraph_logo"
+                                           value="{{ theme_gen_opengraph_logo }}"
+                                           id="input-opengraph-logo"/>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label"
+                                        for="input-opengraph-api-id">
+                                    {{ entry_api_id }}
+                                    <span data-toggle="tooltip"
+                                          title="{{ text_tooltip_api_id }}"></span>
+                                 </label>
+                                 <div class="col-sm-10">
+                                    <input class="form-control"
+                                           type="text"
+                                           name="theme_gen_opengraph_api_id"
+                                           value="{{ theme_gen_opengraph_api_id }}"
+                                           id="input-opengraph-api-id"/>
+                                 </div>
+                              </div>
+                           </fieldset>
+                        </div>
+                        {# Insta and Cards#}
+                        <div class="col-sm-6">
+                           <fieldset>
+                              <legend>{{ text_social }}</legend>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label"
+                                        for="input-visa-mastercard-logo">{{ entry_card_logo }}</label>
+                                 <div class="col-sm-10">
+                                    <a href=""
+                                       id="visa-mastercard-logo"
+                                       data-toggle="image"
+                                       class="img-thumbnail">
+                                       <img src="{{ visa_mastercard_logo_preview }}"
+                                            alt=""
+                                            title=""
+                                            data-placeholder="{{ placeholder }}"/>
+                                    </a>
+                                    <input type="hidden"
+                                           name="theme_gen_visa_mastercard_logo"
+                                           value="{{ theme_gen_visa_mastercard_logo }}"
+                                           id="input-visa-mastercard-logo"/>
+                                 </div>
+                              </div>
+                           </fieldset>
+                           <fieldset>
+                              <legend>{{ text_instagram_logo }}</legend>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label"
+                                        for="input-instagram-logo">{{ entry_instagram_logo }}</label>
+                                 <div class="col-sm-10">
+                                    <a href=""
+                                       id="instagram-logo"
+                                       data-toggle="image"
+                                       class="img-thumbnail">
+                                       <img src="{{ instagram_logo_preview }}"
+                                            alt=""
+                                            title=""
+                                            data-placeholder="{{ placeholder }}"/>
+                                    </a>
+                                    <input type="hidden"
+                                           name="theme_gen_instagram_logo"
+                                           value="{{ theme_gen_instagram_logo }}"
+                                           id="input-instagram-logo"/>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label"
+                                        for="input-instagram-account">
+                                    {{ entry_instagram_account }}
+                                    <span data-toggle="tooltip"
+                                          title="{{ text_tooltip_instagram_account }}"></span>
+                                 </label>
+                                 <div class="col-sm-10">
+                                    <input class="form-control"
+                                           type="text"
+                                           name="theme_gen_instagram_account"
+                                           value="{{ theme_gen_instagram_account }}"
+                                           id="input-instagram-account"/>
+                                 </div>
+                              </div>
+                           </fieldset>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tab-pane" id="tab-menu-blog">
+                     <div class="row">
+                        {# Menu info #}
+                        <div class="col-sm-6">
+                           <fieldset>
+                              <legend>{{ text_information }}</legend>
+                              <div class="form-group">
+                                 {% if informations %}
+                                    {% for information in informations %}
+                                       <div class="col-sm-12">
+                                          <input type="checkbox" value="{{ information.id }}"
+                                                 name="theme_gen_menu_info_links[]"
+                                                 id="input-menu-info"
+                                                  {% if information.id in info_id %} checked {% endif %}>
+                                          <label class="control-label"
+                                                 for="input-menu-info">{{ information.title }}</label>
+                                       </div>
+                                       <br>
+                                    {% endfor %}
+                                 {% endif %}
+                              </div>
+                           </fieldset>
+                        </div>
+                        {# Blog #}
+                        <div class="col-sm-6">
+                           <fieldset>
+                              <legend>{{ text_blog }}</legend>
+                              <div class="form-group">
+                                 {% if blog_informations %}
+                                    {% for blog_information in blog_informations %}
+                                       <div class="col-sm-12">
+                                          <input type="checkbox" value="{{ blog_information.id }}"
+                                                 name="theme_gen_blog_info_links[]"
+                                                 id="input-blog-info"
+                                                  {% if blog_information.id in blog_info_id %} checked {% endif %}>
+                                          <label class="control-label"
+                                                 for="input-blog-info">{{ blog_information.title }}</label>
+                                       </div>
+                                       <br>
+                                    {% endfor %}
+                                 {% endif %}
+                              </div>
+                           </fieldset>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{{ footer }}

@@ -1,0 +1,145 @@
+/* cart */
+#cart {
+   margin-bottom: 10px;
+
+   & > .btn {
+      font-size: 12px;
+      line-height: 18px;
+      color: #FFF;
+      background: #00B4DB; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to bottom, #0083B0, #00B4DB); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to bottom, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+      i {
+         font-size: 18px;
+         margin: 0;
+         padding: 0;
+      }
+      &:active {
+         position: relative;
+         top: 1px;
+      }
+   }
+
+   &.open {
+
+      & > .btn {
+         background: #00B4DB; /* fallback for old browsers */
+         background: -webkit-linear-gradient(to right, #0083B0, #00B4DB); /* Chrome 10-25, Safari 5.1-6 */
+         background: linear-gradient(to right, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+         color: #FFFFFF;
+         border: 1px solid #E6E6E6;
+         box-shadow: none;
+         text-shadow: none;
+      }
+
+   }
+   .dropdown-menu {
+      background: #eee;
+      z-index: 1001;
+      min-width: 100%;
+
+      table {
+         margin-bottom: 10px;
+      }
+
+      li {
+         & > div {
+            min-width: 427px;
+            padding: 0 10px;
+         }
+
+         p {
+            margin: 20px 0;
+            text-align: center;
+
+            a.cart-btn-cart {
+               float: left;
+               box-shadow: inset 0px 1px 0px 0px #97c4fe;
+               background: linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+               border-radius: 6px;
+               border: 1px solid #337fed;
+               cursor: pointer;
+               color: #ffffff;
+               padding: 5px;
+               text-decoration: none;
+
+               &:hover {
+                  background: linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+               }
+
+               &:active {
+                  position: relative;
+                  top: 1px;
+               }
+            }
+
+            a.cart-btn-checkout {
+               float: right;
+               box-shadow: inset 0px 1px 0px 0px #a4e271;
+               background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+               border-radius: 6px;
+               border: 1px solid #74b807;
+               display: inline-block;
+               cursor: pointer;
+               color: #ffffff;
+               padding: 5px;
+               text-decoration: none;
+               text-shadow: 0px 1px 0px #528009;
+
+               &:hover {
+                  background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+               }
+
+               &:active {
+                  position: relative;
+                  top: 1px;
+               }
+            }
+         }
+      }
+   }
+
+}
+
+@media (max-width: 478px) {
+   #cart .dropdown-menu {
+      width: 100%;
+
+      li {
+         & > div {
+            min-width: 100%;
+         }
+         p {
+
+            a {
+               max-width: 45%;
+               overflow: hidden;
+               min-height: 55px;
+               padding: 5px 20px !important;
+            }
+            a.cart-btn-cart {
+               left: 0;
+            }
+            a.cart-btn-checkout {
+               right: 0;
+            }
+         }
+      }
+   }
+}
+
+.sticky-cart {
+   z-index: 9;
+   position: fixed;
+   top: 0 !important;
+   right: 0;
+   padding-right: 0;
+}
+
+.sticky-cart-open {
+   width: 100% !important;
+   padding-left: 0;
+   padding-right: 0;
+}

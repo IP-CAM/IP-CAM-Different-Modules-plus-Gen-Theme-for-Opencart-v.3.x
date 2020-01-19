@@ -1,0 +1,38 @@
+{{ header }}
+<div id="information-blog" class="container">
+   <ul class="breadcrumb">
+      {% for breadcrumb in breadcrumbs %}
+         <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+      {% endfor %}
+   </ul>
+   <div class="row">{{ column_left }}
+      {% if column_left and column_right %}
+         {% set class = 'col-sm-6' %}
+      {% elseif column_left or column_right %}
+         {% set class = 'col-sm-9' %}
+      {% else %}
+         {% set class = 'col-sm-12' %}
+      {% endif %}
+      <div id="content" class="{{ class }}">{{ content_top }}
+         <h1>{{ heading_title }}</h1>
+         <div class="container">
+            <div class="row">
+               {% if informations %}
+                  {% for information in informations|batch((informations|length / 4)|round(1, 'ceil')) %}
+                     <div class="col-sm-3">
+                        <ul class="list-unstyled">
+                           {% for info in information %}
+                              <a class="list-group-item" href="{{ info.href }}">{{ info.title }}</a>
+                           {% endfor %}
+                        </ul>
+                     </div>
+                  {% endfor %}
+               {% endif %}
+            </div>
+         </div>
+         {{ content_bottom }}
+      </div>
+      {{ column_right }}
+   </div>
+</div>
+{{ footer }}

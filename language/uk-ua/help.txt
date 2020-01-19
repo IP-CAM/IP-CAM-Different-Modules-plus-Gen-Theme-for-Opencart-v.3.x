@@ -1,0 +1,1 @@
+uk-UA,uk_UA.UTF-8,uk_UA,uk-ua,ukrainian

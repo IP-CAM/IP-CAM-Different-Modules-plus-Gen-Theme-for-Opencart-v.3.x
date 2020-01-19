@@ -1,0 +1,56 @@
+<div class="category-three-level">
+  {% for category in categories %}
+    {% if category.children %}
+      <div class="top-menu">
+        <a href="{{ category.href }}">
+          <div class="top-link">{{ category.name }}</div>
+        </a>
+        <div class="sub-menu">
+
+          {% for child in category.children %}
+            {% if child.sub_children %}
+
+              <div class="top-menu">
+                <a href="{{ child.href }}">
+                  <div class="top-link">{{ child.name }}</div>
+                </a>
+                <div class="sub-menu">
+                  {% for subchild in child.sub_children %}
+                    <a href="{{ subchild.href }}">
+                      <div class="top-menu">{{ subchild.name }}</div>
+                    </a>
+                  {% endfor %}
+
+
+                </div>
+              </div>
+            {% else %}
+
+              <a href="{{ child.href }}">
+                <div class="top-menu">{{ child.name }}</div>
+              </a>
+            {% endif %}
+
+          {% endfor %}
+
+        </div>
+      </div>
+
+    {% else %}
+
+      <a href="{{ category.href }}">
+        <div class="top-menu">{{ category.name }}</div>
+      </a>
+    {% endif %}
+
+  {% endfor %}
+</div>
+<script type="text/javascript"><!--
+    $(document).ready(function () {
+        $('.category-three-level').on('mouseover', function () {
+            $('#content').css({opacity: '0.4', filter: 'blur(0.5px)'});
+        }).on('mouseleave', function () {
+            $('#content').css({opacity: '1', filter: 'blur(0)'});
+        });
+    });
+    //--></script>

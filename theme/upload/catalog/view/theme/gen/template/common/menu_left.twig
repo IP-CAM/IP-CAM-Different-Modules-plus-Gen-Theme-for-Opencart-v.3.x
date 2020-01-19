@@ -1,0 +1,53 @@
+<div id="menu-left">
+   <button type="button"
+           id="mobile-menu-open"
+           class="btn btn-primary btn-lg btn-block visible-xs">
+      <span>{{ text_menu }}&nbsp;&nbsp;<i class="fa fa-bars"></i></span>
+   </button>
+
+   <div class="list-group menu-left-container">
+      <div id="mobile-menu-close" class="visible-xs"><span class="fa fa-window-close"></span></div>
+      {% for category in categories %}
+
+         {% if category.children %}
+            <div class="menu-container">
+
+               <a href="{{ category.href }}" class="list-group-item top-category">
+                  {{ category.name }}
+                  <span class="arrow"></span>
+               </a>
+               <div class="menu-content">
+                  {% for child in category.children %}
+
+                     {% if child.sub_children %}
+                        <div class="menu-container">
+                           <a href="{{ child.href }}"
+                              class="list-group-item top-category">
+                              &nbsp;&nbsp;- {{ child.name }}
+                              <span class="arrow"></span>
+                           </a>
+                           <div class="menu-content">
+                              {% for subchild in child.sub_children %}
+
+                                 <a href="{{ subchild.href }}"
+                                    class="list-group-item">&nbsp;&nbsp;&nbsp;&nbsp;-- {{ subchild.name }}</a>
+
+                              {% endfor %}
+                           </div>
+                        </div>
+                     {% else %}
+
+                        <a href="{{ child.href }}" class="list-group-item">&nbsp;&nbsp;- {{ child.name }}</a>
+
+                     {% endif %}
+
+                  {% endfor %}
+               </div>
+            </div>
+         {% else %}
+            <a href="{{ category.href }}" class="list-group-item">{{ category.name }}</a>
+         {% endif %}
+
+      {% endfor %}
+   </div>
+</div>

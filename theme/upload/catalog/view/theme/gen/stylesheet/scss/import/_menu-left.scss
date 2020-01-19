@@ -1,0 +1,184 @@
+#menu-left {
+
+   .menu-left-container {
+
+      .menu-container {
+
+         .top-category {
+            max-height: 40px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            position: relative;
+
+            .arrow {
+               position: absolute;
+               right: 5px;
+            }
+
+            &:active {
+               position: relative;
+               top: 1px;
+            }
+         }
+         .active {
+            color: #444444;
+            background: #eeeeee;
+            border: 1px solid #DDDDDD;
+            text-shadow: 0 1px 0 #FFF;
+         }
+      }
+   }
+}
+
+@media screen and (max-width: 768px) {
+   #menu-left {
+
+      margin: 20px 0;
+
+      .menu-left-container {
+         display: none;
+         position: fixed;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         z-index: 10;
+         background: #7F7FD5; /* fallback for old browsers */
+         background: -webkit-linear-gradient(to left, #91EAE4, #86A8E7, #7F7FD5); /* Chrome 10-25, Safari 5.1-6 */
+         background: linear-gradient(to left, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+         a {
+            font-size: 1.3em;
+            line-height: 1.5;
+         }
+         #mobile-menu-close {
+
+            min-height: 60px;
+
+            span {
+               box-shadow: inset 0 0 0 0 #ffffff;
+               background: #f9f9f9 linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+               border-radius: 14px;
+               border: 2px solid #dcdcdc;
+               display: inline-block;
+               cursor: pointer;
+               color: #666666;
+               font-size: 15px;
+               font-weight: bold;
+               padding: 10px 10px;
+               margin: 10px 10px 0 0;
+               text-decoration: none;
+               text-shadow: 0 1px 0 #ffffff;
+               float: right;
+
+               &:active {
+                  position: relative;
+                  top: 1px;
+               }
+            }
+         }
+
+         .menu-container {
+
+            .top-category {
+
+               max-height: 50px;
+
+               .arrow {
+
+                  &::after {
+                     content: '\2193';
+                     float: right;
+                     font-weight: bold;
+                     font-size: 20px;
+                     margin-right: 5px;
+                  }
+               }
+            }
+            .active {
+
+               .arrow {
+                  &::after {
+                     content: '\2191';
+                     float: right;
+                     font-weight: bold;
+                     font-size: 20px;
+                     margin-right: 5px;
+                  }
+               }
+            }
+
+            .menu-content {
+               display: none;
+               a {
+                  background: #fbfbfb;
+               }
+               .active{
+                  color: #444444;
+                  background: #eeeeee;
+                  border: 1px solid #DDDDDD;
+                  text-shadow: 0 1px 0 #FFF;
+               }
+            }
+         }
+
+      }
+   }
+}
+
+@media screen and (min-width: 768px) {
+   #menu-left {
+
+      .menu-left-container {
+
+         .menu-container {
+            position: relative;
+
+            .top-category {
+
+               .arrow {
+
+                  &::after {
+                     content: '\23F5';
+                     float: right;
+                  }
+               }
+            }
+
+            .menu-content {
+               position: absolute;
+               top: 0;
+               right: -100%;
+               min-width: 160px;
+               width: 100%;
+               z-index: 10;
+               display: none;
+            }
+         }
+
+         .menu-container:hover {
+
+            & > .top-category {
+
+               color: #444444;
+               background: #eeeeee;
+               border: 1px solid #DDDDDD;
+               text-shadow: 0 1px 0 #FFF;
+
+               .arrow {
+                  &::after {
+                     content: '\23F4';
+                     float: right;
+                  }
+               }
+            }
+
+            & > .menu-content {
+               display: block;
+            }
+         }
+      }
+   }
+}
