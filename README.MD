@@ -41,8 +41,9 @@
 * opengraph
 * visa-mastercard photo footer
 * instagram-header-button
-* hide admin product buttons(dev)
+* intagrate nova poshta to checkout(dev)
 * callback-button(dev)
+* hide admin product buttons(dev)
 * google translate(dev)
 * facebook(dev)
 * option-image-modal(dev)
