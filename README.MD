@@ -41,10 +41,10 @@
 * opengraph
 * visa-mastercard photo footer
 * instagram-header-button
-* minimal-order-quantity(dev)
 * hide admin product buttons(dev)
 * callback-button(dev)
 * google translate(dev)
 * facebook(dev)
 * option-image-modal(dev)
 * option-price-counter(dev)
+* minimal-order-quantity(dev)
