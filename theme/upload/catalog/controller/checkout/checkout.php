@@ -33,6 +33,14 @@ class ControllerCheckoutCheckout extends Controller {
         $this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
         $this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
+        if ($this->config->get('shipping_nova_poshta_status') && $this->config->get('shipping_nova_poshta_api_key_validity')) {
+            $this->document->addStyle('catalog/view/javascript/igdev/style/css/nova-poshta.min.css');
+            $this->document->addScript('catalog/view/javascript/igdev/js/nova-poshta.min.js');
+            $data['nova_poshta_api_key'] = $this->config->get('shipping_nova_poshta_api_key');
+        } else {
+            $data['nova_poshta_api_key'] = false;
+        }
+
         // Required by klarna
         if ($this->config->get('payment_klarna_account') || $this->config->get('payment_klarna_invoice')) {
             $this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');

@@ -513,7 +513,7 @@ $(document).ready(function () {
     } else {
         $('#menu-left').on('mouseover', function () {
             $('#content').css({opacity: '0.4', filter: 'blur(0.5px)'});
-        }).on('mouseleave',function () {
+        }).on('mouseleave', function () {
             $('#content').css({opacity: '1', filter: 'blur(0)'});
         });
     }

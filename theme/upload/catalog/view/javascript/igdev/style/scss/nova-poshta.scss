@@ -1,0 +1,22 @@
+.np-cities-list, .np-departments-list {
+   overflow: auto;
+   width: 100%;
+   max-height: 240px;
+   position: absolute;
+   z-index: 9;
+
+   li {
+
+      cursor: pointer;
+      width: 100%;
+      overflow: hidden;
+
+      &:hover {
+         background-color: #EEEEEE;
+      }
+      &:active {
+         position: relative;
+         top: 1px;
+      }
+   }
+}

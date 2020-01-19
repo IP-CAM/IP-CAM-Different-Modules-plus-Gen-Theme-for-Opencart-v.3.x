@@ -1,0 +1,2 @@
+.np-cities-list,.np-departments-list{overflow:auto;width:100%;max-height:240px;position:absolute;z-index:9}.np-cities-list li,.np-departments-list li{cursor:pointer;width:100%;overflow:hidden}.np-cities-list li:hover,.np-departments-list li:hover{background-color:#EEEEEE}.np-cities-list li:active,.np-departments-list li:active{position:relative;top:1px}
+/*# sourceMappingURL=nova-poshta.min.css.map */
