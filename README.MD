@@ -1,31 +1,38 @@
-#Opencart 3 modules and theme
+# Opencart 3 modules and theme
 
 > Instruction:
+
 > * Go inside top folder
 > * Zip upload and .xml files (if exist) with name "anyname.ocmod.zip" and upload to opencart
 
-#Project structure
+# Project structure
 
-##language: 
+## language:
 * uk-ua
 * ru-ru
 
-##payment
+## payment
+
 * bank-card
 
-##shipping
+## shipping
+
 * nova-poshta
 * ukrposhta
 
-##module
+## module
+
 * category_top_image
 * category_three_level
 
-##tool
+## tool
+
 * export-import
 
 ## theme 
+
 > feauture (activate theme inside extension admin menu)
+
 * checkout
 * sticky-cart
 * scroll-to-top
