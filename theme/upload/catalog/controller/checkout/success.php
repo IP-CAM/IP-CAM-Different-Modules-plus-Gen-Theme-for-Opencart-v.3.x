@@ -21,6 +21,8 @@ class ControllerCheckoutSuccess extends Controller {
             unset($this->session->data['voucher']);
             unset($this->session->data['vouchers']);
             unset($this->session->data['totals']);
+        } else {
+            $order_id = '';
         }
 
         $this->document->setTitle($this->language->get('heading_title'));

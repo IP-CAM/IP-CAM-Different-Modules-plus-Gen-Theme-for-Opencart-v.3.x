@@ -31,7 +31,6 @@ class ControllerCommonHeader extends Controller {
             $this->document->addScript('catalog/view/javascript/igdev/js/sticky-cart.min.js');
         }
         if ($this->config->get('theme_gen_scroll_to_top')) {
-            $this->document->addScript('catalog/view/javascript/igdev/js/scroll-to-top.min.js');
             $data['scroll_to_top'] = 1;
         } else {
             $data['scroll_to_top'] = 0;

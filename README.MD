@@ -42,7 +42,6 @@
 * visa-mastercard photo footer
 * instagram-header-button
 * intagrate nova poshta to checkout
-* callback-button(dev)
 * hide admin product buttons(dev)
 * google translate(dev)
 * facebook(dev)

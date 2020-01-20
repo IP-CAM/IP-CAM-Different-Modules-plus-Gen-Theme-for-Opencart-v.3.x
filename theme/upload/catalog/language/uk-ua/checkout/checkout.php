@@ -44,7 +44,7 @@ $_['text_year']       = 'рік';
 // Column
 $_['column_name']     = 'Назва товару';
 $_['column_model']    = 'Код';
-$_['column_quantity'] = 'Кількість';
+$_['column_quantity'] = 'шт';
 $_['column_price']    = 'Ціна';
 $_['column_total']    = 'Разом';
 

@@ -60,9 +60,7 @@
    {% endfor %}
 </head>
 <body>
-{% if scroll_to_top %}
-   <span id="scroll-to-top"></span>
-{% endif %}
+<span class="{% if not scroll_to_top %} hidden {% endif %}" id="scroll-to-top"></span>
 <nav id="top">
    <div class="container">
       {% if instagram_logo and instagram_account %}

@@ -393,6 +393,7 @@ class ControllerExtensionThemeGen extends Controller {
 
         //  - Functionality -
 
+        // Sticky card
         if (isset($this->request->post['theme_gen_sticky_cart'])) {
             $data['theme_gen_sticky_cart'] = $this->request->post['theme_gen_sticky_cart'];
         } elseif (isset($setting_info['theme_gen_sticky_cart'])) {
@@ -401,6 +402,7 @@ class ControllerExtensionThemeGen extends Controller {
             $data['theme_gen_sticky_cart'] = 0;
         }
 
+        // Scroll to top
         if (isset($this->request->post['theme_gen_scroll_to_top'])) {
             $data['theme_gen_scroll_to_top'] = $this->request->post['theme_gen_scroll_to_top'];
         } elseif (isset($setting_info['theme_gen_scroll_to_top'])) {
@@ -409,6 +411,7 @@ class ControllerExtensionThemeGen extends Controller {
             $data['theme_gen_scroll_to_top'] = 0;
         }
 
+        // Opengraph
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
         if (isset($this->request->post['theme_gen_opengraph_logo'])) {
