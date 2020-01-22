@@ -43,6 +43,7 @@
 * instagram-header-button
 * intagrate nova poshta to checkout
 * hidden admin product edit buttons
+* product page description scrolling if long
 * admin category edit copy helper button
 * admin product edit copy helper button
 * facebook(dev)
