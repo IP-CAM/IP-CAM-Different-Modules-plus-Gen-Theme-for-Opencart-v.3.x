@@ -18,7 +18,7 @@ class ControllerExtensionThemeGen extends Controller {
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('theme_gen', $this->request->post, $this->request->get['store_id']);
 
-            if (in_array('payment_postcode', $this->request->post['theme_gen_checkout_hidden_fields'])) {
+            if (is_array($this->request->post['theme_gen_checkout_hidden_fields']) && in_array('payment_postcode', $this->request->post['theme_gen_checkout_hidden_fields'])) {
                 $this->editCountryPostcode(0);
             } else {
                 $this->editCountryPostcode(1);
@@ -411,6 +411,24 @@ class ControllerExtensionThemeGen extends Controller {
             $data['theme_gen_scroll_to_top'] = 0;
         }
 
+        // Copy admin category text
+        if (isset($this->request->post['theme_gen_admin_category_copy_status'])) {
+            $data['theme_gen_admin_category_copy_status'] = $this->request->post['theme_gen_admin_category_copy_status'];
+        } elseif (isset($setting_info['theme_gen_admin_category_copy_status'])) {
+            $data['theme_gen_admin_category_copy_status'] = $setting_info['theme_gen_admin_category_copy_status'];
+        } else {
+            $data['theme_gen_admin_category_copy_status'] = 0;
+        }
+        // Copy admin page text
+        if (isset($this->request->post['theme_gen_admin_product_copy_status'])) {
+            $data['theme_gen_admin_product_copy_status'] = $this->request->post['theme_gen_admin_product_copy_status'];
+        } elseif (isset($setting_info['theme_gen_admin_product_copy_status'])) {
+            $data['theme_gen_admin_product_copy_status'] = $setting_info['theme_gen_admin_product_copy_status'];
+        } else {
+            $data['theme_gen_admin_product_copy_status'] = 0;
+        }
+
+
         // Opengraph
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
@@ -475,7 +493,6 @@ class ControllerExtensionThemeGen extends Controller {
         }
         // Menu Info
 
-
         $data['informations'] = array();
 
         $data['blog_informations'] = array();
@@ -517,7 +534,7 @@ class ControllerExtensionThemeGen extends Controller {
             'id'    => 'special'
         );
         $data['informations'][] = array(
-            'title' => $this->language->get('text_blog'),
+            'title' => $this->language->get('text_blog_link'),
             'id'    => 'blog'
         );
 

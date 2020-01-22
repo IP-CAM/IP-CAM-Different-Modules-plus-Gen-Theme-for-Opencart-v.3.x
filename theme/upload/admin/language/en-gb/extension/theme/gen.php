@@ -18,6 +18,7 @@ $_['text_voucher']        = 'Voucher';
 $_['text_affiliate']      = 'Affiliate';
 $_['text_special']        = 'Special';
 $_['text_blog']           = 'News - checked will be hidden';
+$_['text_blog_link']      = 'News';
 $_['text_opengraph_meta'] = 'Opengraph meta settings';
 $_['text_tooltip_api_id'] = 'Facebook api get on facebook page';
 $_['text_social']         = 'Social media';
@@ -54,6 +55,10 @@ $_['entry_scroll_to_top']              = 'Scroll to top button';
 $_['entry_opengraph_logo']             = 'Opengraph logo 600*314';
 $_['entry_api_id']                     = 'Facebook API ID';
 $_['entry_card_logo']                  = 'Card logo 120*40';
+$_['entry_admin_category_copy']        = 'Copy text on admin category page to similar input';
+$_['entry_admin_product_copy']         = 'Copy text on admin product page to similar input';
+$_['entry_google_translate_api_key']   = 'Google Translate api key(Get from google api console)';
+
 
 $_['entry_instagram_logo']    = 'Instagram logo 90*30';
 $_['entry_instagram_account'] = 'Instagram account name';

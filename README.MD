@@ -42,9 +42,9 @@
 * visa-mastercard photo footer
 * instagram-header-button
 * intagrate nova poshta to checkout
-* hide admin product buttons(dev)
-* google translate(dev)
+* hidden admin product edit buttons
+* admin category edit copy helper button
+* admin product edit copy helper button
 * facebook(dev)
 * option-image-modal(dev)
 * option-price-counter(dev)
-* minimal-order-quantity(dev)

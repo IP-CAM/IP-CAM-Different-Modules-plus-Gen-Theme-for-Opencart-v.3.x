@@ -19,6 +19,7 @@ $_['text_voucher']        = 'Подарункові сертифікати';
 $_['text_affiliate']      = 'Співпраця';
 $_['text_special']        = 'Акції';
 $_['text_blog']           = 'Новини - з галочкою будуьт приховані';
+$_['text_blog_link']      = 'Новини';
 $_['text_opengraph_meta'] = 'Opengraph meta налаштування';
 $_['text_tooltip_api_id'] = 'Facebook api можна взяти в налаштуваннях фейсбуку';
 $_['text_social']         = 'Соціал медіа';
@@ -55,9 +56,12 @@ $_['entry_sticky_cart']                = 'Закріпити кнопку кош
 $_['entry_scroll_to_top']              = 'Кнопка прокрутки вгору';
 $_['entry_opengraph_logo']             = 'Opengraph логотип 600*314';
 $_['entry_api_id']                     = 'Facebook API ID';
+$_['entry_instagram_logo']             = 'Instagram logo 90*30';
+$_['entry_instagram_account']          = 'Instagram акаунт ім*я /';
+$_['entry_admin_category_copy']        = 'Копіювати текст адміністрування категрія в схожих полях і мовами';
+$_['entry_admin_product_copy']         = 'Копіювати текст адміністрування товарів в схожих полях і мовами';
+$_['entry_google_translate_api_key']   = 'Google Translate ключ API (Отримати в Google API консолі)';
 
-$_['entry_instagram_logo']    = 'Instagram logo 90*30';
-$_['entry_instagram_account'] = 'Instagram акаунт ім*я /';
 
 // Help
 $_['help_directory']                  = 'Це поле необхідно для того, щоб старі шаблони (від версій 2.0.х .2.1.х), були сумісні з новим функціоналом. В зазначеному полі ви можете вибрати директорію теми';

@@ -405,6 +405,45 @@
                         <div class="col-sm-6">
                            <fieldset>
                               <legend>{{ text_theme_feature }}</legend>
+                              {# Admin Category Copy#}
+                              <div class="form-group">
+                                 <label class="col-sm-8 control-label"
+                                        for="input-admin-category-copy">{{ entry_admin_category_copy }}</label>
+                                 <div class="col-sm-4">
+                                    <select name="theme_gen_admin_category_copy_status" id="input-admin-category-copy"
+                                            class="form-control">
+                                       {% if theme_gen_admin_category_copy_status %}
+                                          <option value="1"
+                                                  selected="selected">{{ text_enabled }}</option>
+                                          <option value="0">{{ text_disabled }}</option>
+                                       {% else %}
+                                          <option value="1">{{ text_enabled }}</option>
+                                          <option value="0"
+                                                  selected="selected">{{ text_disabled }}</option>
+                                       {% endif %}
+                                    </select>
+                                 </div>
+                              </div>
+                              {# Admin Product Copy #}
+                              <div class="form-group">
+                                 <label class="col-sm-8 control-label"
+                                        for="input-admin-category-copy">{{ entry_admin_product_copy }}</label>
+                                 <div class="col-sm-4">
+                                    <select name="theme_gen_admin_product_copy_status" id="input-admin-product-copy"
+                                            class="form-control">
+                                       {% if theme_gen_admin_product_copy_status %}
+                                          <option value="1"
+                                                  selected="selected">{{ text_enabled }}</option>
+                                          <option value="0">{{ text_disabled }}</option>
+                                       {% else %}
+                                          <option value="1">{{ text_enabled }}</option>
+                                          <option value="0"
+                                                  selected="selected">{{ text_disabled }}</option>
+                                       {% endif %}
+                                    </select>
+                                 </div>
+                              </div>
+                              {# Sticky Cart #}
                               <div class="form-group">
                                  <label class="col-sm-4 control-label"
                                         for="input-sticky-cart">{{ entry_sticky_cart }}</label>
@@ -423,6 +462,7 @@
                                     </select>
                                  </div>
                               </div>
+                              {# Scroll to top #}
                               <div class="form-group">
                                  <label class="col-sm-4 control-label"
                                         for="input-scroll-to-top">{{ entry_scroll_to_top }}</label>
@@ -561,10 +601,10 @@
                                        <div class="col-sm-12">
                                           <input type="checkbox" value="{{ information.id }}"
                                                  name="theme_gen_menu_info_links[]"
-                                                 id="input-menu-info"
+                                                 id="input-menu-info-{{ information.id }}"
                                                   {% if information.id in info_id %} checked {% endif %}>
                                           <label class="control-label"
-                                                 for="input-menu-info">{{ information.title }}</label>
+                                                 for="input-menu-info-{{ information.id }}">{{ information.title }}</label>
                                        </div>
                                        <br>
                                     {% endfor %}
@@ -582,10 +622,10 @@
                                        <div class="col-sm-12">
                                           <input type="checkbox" value="{{ blog_information.id }}"
                                                  name="theme_gen_blog_info_links[]"
-                                                 id="input-blog-info"
+                                                 id="input-blog-info-{{ blog_information.id }}"
                                                   {% if blog_information.id in blog_info_id %} checked {% endif %}>
                                           <label class="control-label"
-                                                 for="input-blog-info">{{ blog_information.title }}</label>
+                                                 for="input-blog-info-{{ blog_information.id }}">{{ blog_information.title }}</label>
                                        </div>
                                        <br>
                                     {% endfor %}
@@ -600,5 +640,37 @@
          </div>
       </div>
    </div>
+   {# Check google api key validity #}
+   <script type="text/javascript"><!--
+       $("#google-translate-key-check").on("click", function () {
+           $.ajax({
+               url: "https://translation.googleapis.com/language/translate/v2?key=" + $("#input-google-translate-api-key").val(),
+               method: "POST",
+               timeout: 0,
+               headers: {
+                   "Content-Type": "application/json"
+               },
+               data: JSON.stringify({
+                   "q": "Привет мир. Я онлайн!",
+                   "source": "ru",
+                   "target": "en",
+                   "format": "text"
+               }),
+               error: function (xhr, ajaxOptions, thrownError) {
+                   $("#input-google-translate-api-key").css("border", "2px solid red");
+                   alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+               },
+               success: function (json) {
+                   if (json["data"]) {
+                       $("#input-google-translate-api-key").css("border", "2px solid green");
+                       $("#input-google-translate-api-key-validity").val(1);
+                   } else {
+                       $("#input-google-translate-api-key").css("border", "2px solid red");
+                       $("#input-google-translate-api-key-validity").val(0);
+                   }
+               }
+           });
+       });
+       //--></script>
 </div>
 {{ footer }}
