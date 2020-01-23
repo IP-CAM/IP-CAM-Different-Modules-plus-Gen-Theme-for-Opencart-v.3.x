@@ -51,24 +51,53 @@ $(document).ready(function () {
     });
 
     /* Search */
-    $("#search input[name=\"search\"]").parent().find("button").on("click", function () {
-        let url = $("base").attr("href") + "index.php?route=product/search";
+    $("#search-gen input[name=\"search\"]").on("input", function () {
+        let url = $("base").attr("href") + "index.php?route=product/search_gen";
 
-        let value = $("header #search input[name=\"search\"]").val();
+        let value = $("header #search-gen input[name=\"search\"]").val();
 
         if (value) {
             url += "&search=" + encodeURIComponent(value);
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                success: function (json) {
+                    if (json["success"]) {
+                        let html = "<ul class=\"list-group\">";
+                        $.each(json["data"], function (i, product) {
+                            html += "<a class=\"list-group-item\" href=\"" + product["href"] + "\">";
+                            html += "<img class=\"img-thumbnail img-responsive img-rounded\" src=\"" + product["thumb"] + "\" alt=\"" + product["name"] + "\">"
+                            html += "&nbsp;<span>" + product["name"] + "</span>";
+                            html += "</a>";
+                        });
+                        html += "</ul>";
+                        $("#search-response").html(html);
+                    } else {
+                        $("#search-response").children().remove();
+                    }
+                }
+            })
+        } else {
+            $("#search-response").children().remove();
         }
 
-        location = url;
-    });
-
-    $("#search input[name=\"search\"]").on("keydown", function (e) {
-        if (e.keyCode == 13) {
-            $("header #search input[name=\"search\"]").parent().find("button").trigger("click");
+    }).on("keydown", function (e) {
+        if (e.keyCode === 13) {
+            $("header #search-gen input[name=\"search\"]").trigger("input");
         }
     });
 
+    // Search on mobile
+    if ($(window).width() < 768) {
+        $("#btn-search-open").on("click", function () {
+            $(this).next().toggle();
+        });
+        $("#btn-search-close").on("click", function () {
+            $(this).parent().toggle();
+        });
+    }
+    
     // Menu
     $("#menu .dropdown-menu").each(function () {
         let menu = $("#menu").offset();
@@ -174,6 +203,8 @@ $(document).ready(function () {
     $("#scroll-to-top").on("click", function () {
         $("html, body").animate({scrollTop: 0}, "slow");
     });
+
+
 });
 
 // Cart add remove functions

@@ -4,6 +4,16 @@
    padding: 4px 0;
    border: 1px solid #ddd;
 
+   a {
+      color: #000000;
+      &:hover {
+         color: #555555;
+      }
+      &:active {
+         position: relative;
+         top: 1px;
+      }
+   }
    i {
       font-size: 20px;
    }

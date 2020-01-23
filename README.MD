@@ -46,6 +46,7 @@
 * product page description scrolling if long
 * admin category edit copy helper button
 * admin product edit copy helper button
+* add dynamically search product
 * facebook(dev)
 * option-image-modal(dev)
 * option-price-counter(dev)

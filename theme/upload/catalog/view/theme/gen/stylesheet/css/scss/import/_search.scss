@@ -1,0 +1,57 @@
+/* search */
+#btn-search-open, #btn-search-close {
+   display: none;
+}
+
+#search-gen {
+   margin-bottom: 10px;
+   position: relative;
+   .input-lg {
+      height: 40px;
+      line-height: 20px;
+      padding: 0 10px;
+   }
+   #search-response {
+      position: absolute;
+      top: 100%;
+      z-index: 10;
+      width: 100%;
+      max-height: 300px;
+      overflow: auto;
+      img {
+         max-height: 40px;
+      }
+   }
+}
+
+@media screen and (max-width: 768px) {
+   #btn-search-open, #btn-search-close {
+      display: block;
+
+      &:active {
+         position: relative;
+         top: 1px;
+      }
+   }
+   #search-gen {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: #eeeeee;
+
+      #btn-search-close {
+         margin: 10px;
+         color: red;
+      }
+      #search-response {
+         position: initial;
+         max-height: 100%;
+         overflow: auto;
+      }
+   }
+}

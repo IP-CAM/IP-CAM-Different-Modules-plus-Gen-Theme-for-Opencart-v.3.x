@@ -1,0 +1,62 @@
+/* top */
+#top {
+   background-color: #EEEEEE;
+   border-bottom: 1px solid #e2e2e2;
+   padding: 4px 0px 3px 0;
+   margin: 0 0 20px 0;
+   min-height: 40px;
+}
+
+#top .container {
+   padding: 0 20px;
+}
+
+#top #form-currency .currency-select,
+#top #form-language .language-select {
+   text-align: left;
+}
+
+#top #form-currency .currency-select:hover,
+#top #form-language .language-select:hover {
+   text-shadow: none;
+   color: #ffffff;
+   background-color: #229ac8;
+   background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
+   background-repeat: repeat-x;
+}
+
+#top .btn-link, #top-links li, #top-links a {
+   color: #888;
+   text-shadow: 0 1px 0 #FFF;
+   text-decoration: none;
+}
+
+#top .btn-link:hover, #top-links a:hover {
+   color: #444;
+}
+
+#top-links .dropdown-menu a {
+   text-shadow: none;
+}
+
+#top-links .dropdown-menu a:hover {
+   color: #FFF;
+}
+
+#top .btn-link strong {
+   font-size: 14px;
+   line-height: 14px;
+}
+
+#top-links {
+   padding-top: 6px;
+}
+
+#top-links a + a {
+   margin-left: 15px;
+}
+
+/* logo */
+#logo {
+   margin: 0 0 10px 0;
+}
