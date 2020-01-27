@@ -20,6 +20,13 @@
       overflow: auto;
       img {
          max-height: 40px;
+         max-width: 20%;
+         padding: 0 !important;
+         vertical-align: top;
+      }
+      span {
+         max-width: 79%;
+         display: inline-block;
       }
    }
 }
@@ -27,6 +34,10 @@
 @media screen and (max-width: 768px) {
    #btn-search-open, #btn-search-close {
       display: block;
+
+      &.active {
+         background-color: #eeeeee;
+      }
 
       &:active {
          position: relative;

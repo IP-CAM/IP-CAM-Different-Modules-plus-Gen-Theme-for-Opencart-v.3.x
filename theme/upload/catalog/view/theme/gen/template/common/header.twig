@@ -63,6 +63,8 @@
 <span class="{% if not scroll_to_top %} hidden {% endif %}" id="scroll-to-top"></span>
 <nav id="top">
    <div class="container">
+      {{ currency }}
+      {{ language }}
       {% if instagram_logo and instagram_account %}
          <div class="pull-left">
             <a href="https://www.instagram.com/{{ instagram_account }}">
@@ -73,12 +75,11 @@
             </a>
          </div>
       {% endif %}
-      {{ currency }}
-      {{ language }}
       <div id="top-links" class="nav pull-right">
          <ul class="list-inline">
-            <li><a href="tel:{{ telephone }}"><span class="fa fa-phone">&nbsp;&nbsp;{{ telephone }}</span></a></li>
-            <li class="dropdown">
+            <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a></li>
+            <li><a href="tel:{{ telephone }}">{{ telephone }}</a></li>
+            <li class="dropdown hidden-xs">
                <a href="{{ account }}" title="{{ text_account }}"
                   class="dropdown-toggle"
                   data-toggle="dropdown">
@@ -99,7 +100,7 @@
                   {% endif %}
                </ul>
             </li>
-            <li>
+            <li class="hidden-xs">
                <a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}">
                   <i class="fa fa-heart"></i>
                   <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span>

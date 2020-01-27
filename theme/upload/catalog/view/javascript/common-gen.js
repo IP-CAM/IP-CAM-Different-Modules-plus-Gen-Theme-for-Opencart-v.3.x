@@ -51,33 +51,39 @@ $(document).ready(function () {
     });
 
     /* Search */
+    let typingTimer;
     $("#search-gen input[name=\"search\"]").on("input", function () {
+
         let url = $("base").attr("href") + "index.php?route=product/search_gen";
 
         let value = $("header #search-gen input[name=\"search\"]").val();
 
-        if (value) {
+        clearTimeout(typingTimer);
+
+        if (value && value.length > 1) {
             url += "&search=" + encodeURIComponent(value);
 
-            $.ajax({
-                url: url,
-                dataType: "json",
-                success: function (json) {
-                    if (json["success"]) {
-                        let html = "<ul class=\"list-group\">";
-                        $.each(json["data"], function (i, product) {
-                            html += "<a class=\"list-group-item\" href=\"" + product["href"] + "\">";
-                            html += "<img class=\"img-thumbnail img-responsive img-rounded\" src=\"" + product["thumb"] + "\" alt=\"" + product["name"] + "\">"
-                            html += "&nbsp;<span>" + product["name"] + "</span>";
-                            html += "</a>";
-                        });
-                        html += "</ul>";
-                        $("#search-response").html(html);
-                    } else {
-                        $("#search-response").children().remove();
+            typingTimer = setTimeout(function () {
+                $.ajax({
+                    url: url,
+                    dataType: "json",
+                    success: function (json) {
+                        if (json["success"]) {
+                            let html = "<ul class=\"list-group\">";
+                            $.each(json["data"], function (i, product) {
+                                html += "<a class=\"list-group-item\" href=\"" + product["href"] + "\">";
+                                html += "<img class=\"img-thumbnail img-responsive img-rounded\" src=\"" + product["thumb"] + "\" alt=\"" + product["name"] + "\">"
+                                html += "&nbsp;<span>" + product["name"] + "</span>";
+                                html += "</a>";
+                            });
+                            html += "</ul>";
+                            $("#search-response").html(html);
+                        } else {
+                            $("#search-response").children().remove();
+                        }
                     }
-                }
-            })
+                })
+            }, 1000);
         } else {
             $("#search-response").children().remove();
         }
@@ -91,13 +97,17 @@ $(document).ready(function () {
     // Search on mobile
     if ($(window).width() < 768) {
         $("#btn-search-open").on("click", function () {
-            $(this).next().toggle();
+            $(this).addClass("active");
+            $("#btn-search-close").removeClass("active");
+            $(this).next().toggle("slow");
         });
         $("#btn-search-close").on("click", function () {
-            $(this).parent().toggle();
+            $(this).addClass("active");
+            $("#btn-search-open").removeClass("active");
+            $(this).parent().toggle("slow");
         });
     }
-    
+
     // Menu
     $("#menu .dropdown-menu").each(function () {
         let menu = $("#menu").offset();

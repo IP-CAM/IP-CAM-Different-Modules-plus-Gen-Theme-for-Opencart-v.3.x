@@ -259,13 +259,13 @@ class ControllerCatalogProduct extends Controller {
         if (isset($this->request->get['sort'])) {
             $sort = $this->request->get['sort'];
         } else {
-            $sort = 'pd.name';
+            $sort = 'p.model';
         }
 
         if (isset($this->request->get['order'])) {
             $order = $this->request->get['order'];
         } else {
-            $order = 'ASC';
+            $order = 'DESC';
         }
 
         if (isset($this->request->get['page'])) {
@@ -737,7 +737,7 @@ class ControllerCatalogProduct extends Controller {
         } elseif (!empty($product_info)) {
             $data['quantity'] = $product_info['quantity'];
         } else {
-            $data['quantity'] = 1;
+            $data['quantity'] = 10;
         }
 
         if (isset($this->request->post['minimum'])) {
@@ -753,7 +753,7 @@ class ControllerCatalogProduct extends Controller {
         } elseif (!empty($product_info)) {
             $data['subtract'] = $product_info['subtract'];
         } else {
-            $data['subtract'] = 1;
+            $data['subtract'] = 0;
         }
 
         if (isset($this->request->post['sort_order'])) {

@@ -20,7 +20,7 @@ class ControllerProductSearchGen extends Controller {
                 'sort'        => 'p.sort_order',
                 'order'       => 'ASC',
                 'start'       => 0,
-                'limit'       => 100
+                'limit'       => 25
             );
 
             $product_total = $this->model_catalog_product->getTotalProducts($filter_data);
@@ -31,9 +31,9 @@ class ControllerProductSearchGen extends Controller {
 
             foreach ($results as $result) {
                 if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_additional_height'));
                 }
 
                 $category_id = $category_id = $this->model_catalog_product->getCategories($result['product_id'])[0]["category_id"];

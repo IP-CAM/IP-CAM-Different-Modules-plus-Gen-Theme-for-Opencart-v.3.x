@@ -9,7 +9,7 @@ class ControllerCommonMenuInfo extends Controller {
 
         $data['informations'] = array();
 
-        $info_config = $this->config->get('theme_gen_menu_info_links');
+        $info_config = $this->config->get('theme_gen_menu_info_links') ? $this->config->get('theme_gen_menu_info_links') : array();
 
         foreach ($this->model_catalog_information->getInformations() as $result) {
             if (in_array($result['information_id'], $info_config)) {

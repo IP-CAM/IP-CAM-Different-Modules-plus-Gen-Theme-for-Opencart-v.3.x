@@ -1,23 +1,23 @@
 /* cart */
 
 @mixin cart-bg {
-   background: #283048; /* fallback for old browsers */
-   background: -webkit-linear-gradient(to right, #859398, #283048); /* Chrome 10-25, Safari 5.1-6 */
-   background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   background: #373B44;  /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
 @mixin cart-open-bg {
-   background: #283048; /* fallback for old browsers */
-   background: -webkit-linear-gradient(to bottom, #859398, #283048); /* Chrome 10-25, Safari 5.1-6 */
-   background: linear-gradient(to bottom, #859398, #283048); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   background: #373B44;  /* fallback for old browsers */
+   background: -webkit-linear-gradient(to bottom, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to bottom, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
 @mixin cart-btn-cart {
-   background: #bdc3c7; /* fallback for old browsers */
-   background: -webkit-linear-gradient(to bottom, #2c3e50, #bdc3c7); /* Chrome 10-25, Safari 5.1-6 */
-   background: linear-gradient(to bottom, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   background: #373B44;  /* fallback for old browsers */
+   background: -webkit-linear-gradient(to left, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to left, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 

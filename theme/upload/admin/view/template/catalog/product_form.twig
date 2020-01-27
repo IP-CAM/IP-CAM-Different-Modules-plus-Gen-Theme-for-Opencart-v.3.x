@@ -214,7 +214,7 @@
                                   id="input-price" class="form-control"/>
                         </div>
                      </div>
-                     <div class="form-group">
+                     <div class="form-group hidden">
                         <label class="col-sm-2 control-label" for="input-tax-class">{{ entry_tax_class }}</label>
                         <div class="col-sm-10">
                            <select name="tax_class_id" id="input-tax-class" class="form-control">
@@ -1383,7 +1383,7 @@
                         </table>
                      </div>
                   </div>
-                  <div class="tab-pane" id="tab-design">
+                  <div class="tab-pane hidden" id="tab-design">
                      <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                            <thead>
@@ -1585,7 +1585,7 @@
        });
        //--></script>
    <script type="text/javascript"><!--
-       var attribute_row = {{ attribute_row }};
+       let attribute_row = {{ attribute_row }};
 
        function addAttribute() {
            html = '<tr id="attribute-row' + attribute_row + '">';
@@ -1634,7 +1634,7 @@
        });
        //--></script>
    <script type="text/javascript"><!--
-       var option_row = {{ option_row }};
+       let option_row = {{ option_row }};
 
        $('input[name=\'option\']').autocomplete({
            'source': function (request, response) {
@@ -1778,7 +1778,7 @@
        });
        //--></script>
    <script type="text/javascript"><!--
-       var option_value_row = {{ option_value_row }};
+       let option_value_row = {{ option_value_row }};
 
        function addOptionValue(option_row) {
            html = '<tr id="option-value-row' + option_value_row + '">';
@@ -1816,7 +1816,7 @@
 
        //--></script>
    <script type="text/javascript"><!--
-       var discount_row = {{ discount_row }};
+       let discount_row = {{ discount_row }};
 
        function addDiscount() {
            html = '<tr id="discount-row' + discount_row + '">';
@@ -1844,7 +1844,7 @@
 
        //--></script>
    <script type="text/javascript"><!--
-       var special_row = {{ special_row }};
+       let special_row = {{ special_row }};
 
        function addSpecial() {
            html = '<tr id="special-row' + special_row + '">';
@@ -1872,7 +1872,7 @@
 
        //--></script>
    <script type="text/javascript"><!--
-       var image_row = {{ image_row }};
+       let image_row = {{ image_row }};
 
        function addImage() {
            html = '<tr id="image-row' + image_row + '">';
@@ -1888,7 +1888,7 @@
 
        //--></script>
    <script type="text/javascript"><!--
-       var recurring_row = {{ recurring_row }};
+       let recurring_row = {{ recurring_row }};
 
        function addRecurring() {
            html = '<tr id="recurring-row' + recurring_row + '">';
@@ -1979,7 +1979,7 @@
               });
               $(".copy-meta-description").on("click", function () {
                   let descriptionContainer = "#input-description" + $(this).attr("data-language-id");
-                  let descriptionEditor = $(descriptionContainer).next().find(".note-editable");
+                  let descriptionEditor = $(descriptionContainer).parent().find(".note-editable");
                   let copyText = "";
 
                   if (descriptionEditor.children()) {
@@ -1991,6 +1991,28 @@
                   }
 
                   $(this).prev().val(copyText.substr(0, 250));
+              });
+
+              $.each(languageIDArray, function (i, val) {
+                  if (i !== 0) {
+                      let textareaDescription = "#input-description" + val;
+                      let inputName = "#input-name" + val;
+                      $(textareaDescription).after("<span data-language-id =\"" + val + "\" class=\"btn btn-default copy-description copy-helper-gen\"><i class=\"fa fa-copy\"></i></span>")
+                      $(inputName).after("<span data-language-id =\"" + val + "\" class=\"btn btn-default copy-name copy-helper-gen\"><i class=\"fa fa-copy\"></i></span>")
+                  }
+              });
+              $(".copy-description").on("click", function () {
+                  let descriptionContainer = "#input-description" + languageIDArray[0];
+                  let descriptionHtml = $(descriptionContainer).next().find(".note-editable").html();
+                  let insertDescriptionContainer = "#input-description" + $(this).attr("data-language-id");
+
+                  $(insertDescriptionContainer).parent().find(".note-editable").html(descriptionHtml).trigger("input");
+              });
+              $(".copy-name").on("click", function () {
+                  let container = "#language" + languageIDArray[0];
+                  let copyTitle = "#input-name" + languageIDArray[0];
+                  let copyText = $(container).find(copyTitle).val();
+                  $(this).prev().val(copyText);
               });
           });
           //--></script>
