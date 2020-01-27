@@ -67,6 +67,9 @@ $(document).ready(function () {
                 $.ajax({
                     url: url,
                     dataType: "json",
+                    beforeSend: function () {
+                        $("#search-gen").append("<span class=\"spinner-search\"></span>");
+                    },
                     success: function (json) {
                         if (json["success"]) {
                             let html = "<ul class=\"list-group\">";
@@ -81,7 +84,10 @@ $(document).ready(function () {
                         } else {
                             $("#search-response").children().remove();
                         }
-                    }
+                    },
+                    complete: function () {
+                        $(".spinner-search").remove();
+                    },
                 })
             }, 1000);
         } else {
