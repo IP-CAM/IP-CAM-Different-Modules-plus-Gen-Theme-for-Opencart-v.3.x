@@ -1,3 +1,19 @@
+@import "mixin";
+
+#mobile-menu-open {
+   border-radius: 6px;
+   @include cart-bg;
+   color: #FFFFFF;
+
+   &:active {
+      position: relative;
+      top: 1px;
+   }
+   &:focus {
+      outline: none;
+   }
+}
+
 #menu-left {
 
    .menu-left-container {
@@ -115,7 +131,7 @@
                a {
                   background: #fbfbfb;
                }
-               .active{
+               .active {
                   color: #444444;
                   background: #eeeeee;
                   border: 1px solid #DDDDDD;

@@ -181,7 +181,7 @@ $(document).ready(function () {
 
     // Menu left
     if ($(window).width() < 768) {
-        $("#menu-left #mobile-menu-open").on("click", function () {
+        $("#mobile-menu-open").on("click", function () {
             $("#menu-left .menu-left-container").toggle("slow");
         });
         $("#menu-left #mobile-menu-close").on("click", function () {
