@@ -18,12 +18,10 @@
          <div class="container">
             <div class="row">
                {% if informations %}
-                  {% for information in informations|batch((informations|length / 4)|round(1, 'ceil')) %}
-                     <div class="col-sm-3">
+                  {% for information in informations|sort|reverse %}
+                     <div class="col-sm-12">
                         <ul class="list-unstyled">
-                           {% for info in information %}
-                              <a class="list-group-item" href="{{ info.href }}">{{ info.title }}</a>
-                           {% endfor %}
+                           <a class="list-group-item" href="{{ information.href }}">{{ information.title }}</a>
                         </ul>
                      </div>
                   {% endfor %}

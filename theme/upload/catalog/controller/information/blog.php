@@ -28,9 +28,14 @@ class ControllerInformationBlog extends Controller {
 
         $blog_info_id = $this->config->get('theme_gen_blog_info_links');
 
+        if (empty($blog_info_id)) {
+            $blog_info_id = array();
+        }
+
         foreach ($this->model_catalog_information->getInformations() as $result) {
             if (!in_array($result['information_id'], $blog_info_id)) {
                 $data['informations'][] = array(
+                    'id'    => $result['information_id'],
                     'title' => $result['title'],
                     'href'  => $this->url->link('information/blog/information', 'information_id=' . $result['information_id'])
                 );
