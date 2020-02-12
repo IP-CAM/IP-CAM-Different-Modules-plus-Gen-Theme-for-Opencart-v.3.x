@@ -24,6 +24,8 @@ class ControllerCheckoutSimplePaymentAddress extends Controller {
 
         if (isset($this->session->data['payment_address']['zone_id'])) {
             $data['zone_id'] = $this->session->data['payment_address']['zone_id'];
+        } elseif ($this->config->get('config_zone_id')) {
+            $data['zone_id'] = $this->config->get('config_zone_id');
         } else {
             $data['zone_id'] = '';
         }

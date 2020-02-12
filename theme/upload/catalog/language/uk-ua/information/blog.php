@@ -3,4 +3,4 @@
 $_['heading_title'] = 'Новини';
 
 // Text
-$_['text_home'] = 'Головна';
+$_['text_home'] = '<i class="fa fa-home"></i>';

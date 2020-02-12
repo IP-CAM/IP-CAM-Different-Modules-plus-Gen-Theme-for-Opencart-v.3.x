@@ -17,3 +17,4 @@ $_['text_wishlist']     = 'Закладки';
 $_['text_newsletter']   = 'Розсилка';
 $_['text_powered']      = '%s &copy; %s';
 $_['text_footer_info']  = 'Інформація сайту';
+$_['text_address']      = 'Наші контакти';

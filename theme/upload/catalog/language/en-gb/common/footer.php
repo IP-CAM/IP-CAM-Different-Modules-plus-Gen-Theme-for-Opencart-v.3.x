@@ -1,4 +1,5 @@
 <?php
+
 // Text
 $_['text_information']  = 'Information';
 $_['text_service']      = 'Customer Service';
@@ -16,3 +17,4 @@ $_['text_wishlist']     = 'Wish List';
 $_['text_newsletter']   = 'Newsletter';
 $_['text_powered']      = '%s &copy; %s';
 $_['text_footer_info']  = 'Site Info';
+$_['text_address']      = 'Our contacts';

@@ -7,6 +7,7 @@ class ControllerCheckoutSimplePaymentMethod extends Controller {
         $this->load->language('checkout/checkout');
 
         unset($this->session->data['payment_methods']);
+        unset($this->session->data['payment_method']);
 
         // Totals
         $totals = array();

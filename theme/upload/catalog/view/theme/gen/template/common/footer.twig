@@ -12,7 +12,7 @@
          </div>
          <div class="collapse navbar-collapse navbar-footer-collapse">
             {% if informations %}
-               <div class="col-sm-3 col-xs-6">
+               <div class="col-sm-3 col-xs-6 pull-left">
                   <h5>{{ text_information }}</h5>
                   <ul class="list-unstyled">
                      {% for information in informations %}
@@ -22,20 +22,29 @@
                </div>
             {% endif %}
             <div class="col-sm-3 col-xs-6 pull-right">
-               <h5>{{ text_service }}</h5>
+               <h5>{{ text_address }}</h5>
                <ul class="list-unstyled">
-                  <li><a href="{{ contact }}">{{ text_contact }}</a></li>
-                  <li><a href="{{ return }}">{{ text_return }}</a></li>
-                  <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+                  <li><a href="tel:{{ telephone }}"><i class="fa fa-phone"></i>&nbsp;{{ telephone }}</a></li>
+                  {% if fax %}
+                     <li><a href="tel:{{ fax }}"><i class="fa fa-phone"></i>&nbsp;{{ fax }}</a></li>
+                  {% endif %}
+                  <li><i class="fa fa-home"></i>&nbsp;{{ address }}</li>
+                  {% if open %}
+                     <li><i class="fa fa-calendar"></i>&nbsp;{{ open }}</li>
+                  {% endif %}
+                  <li><i class="fa fa-envelope"></i>&nbsp;{{ email }}</li>
                </ul>
             </div>
-            <div class="col-sm-3 col-xs-6 pull-right">
+            <div class="col-sm-3 col-xs-6 pull-left">
                <h5>{{ text_extra }}</h5>
                <ul class="list-unstyled">
+                  <li><a href="{{ contact }}">{{ text_contact }}</a></li>
                   <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
                   <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
-                  <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+                  <li class="hidden"><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
                   <li><a href="{{ special }}">{{ text_special }}</a></li>
+                  <li><a href="{{ return }}">{{ text_return }}</a></li>
+                  <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
                </ul>
             </div>
             <div class="col-sm-3 col-xs-6 pull-right">

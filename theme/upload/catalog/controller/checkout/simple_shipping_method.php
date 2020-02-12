@@ -8,6 +8,7 @@ class ControllerCheckoutSimpleShippingMethod extends Controller {
         if ($this->cart->hasShipping()) {
 
             unset($this->session->data['shipping_methods']);
+            unset($this->session->data['shipping_method']);
 
             // Helper
             $this->load->model('localisation/country');

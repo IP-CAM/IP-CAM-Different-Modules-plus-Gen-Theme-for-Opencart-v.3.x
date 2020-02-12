@@ -116,8 +116,12 @@
 
     function getPaymentMethod(nextAjax, innerAjax) {
         $.ajax({
-            url: 'index.php?route=checkout/simple_payment_method',
-            dataType: 'html',
+            url: "index.php?route=checkout/simple_payment_method",
+            type: "post",
+            data: {
+                "zone_id": $("#collapse-payment-address select[name=\"zone_id\"] option:selected").val()
+            },
+            dataType: "html",
             success: function (html) {
                 $('#collapse-payment-method .panel-body').html(html);
 
@@ -156,16 +160,19 @@
     }
 
     function getShippingMethod(nextAjax, innerFirstAjax, innerSecondAjax) {
-
         $.ajax({
-            url: 'index.php?route=checkout/simple_shipping_method',
-            dataType: 'html',
+            url: "index.php?route=checkout/simple_shipping_method",
+            type: "post",
+            data: {
+                "zone_id": $("#collapse-payment-address select[name=\"zone_id\"] option:selected").val()
+            },
+            dataType: "html",
             success: function (html) {
-                $('#collapse-shipping-method .panel-body').html(html);
+                $("#collapse-shipping-method .panel-body").html(html);
 
                 $.ajax({
-                    url: 'index.php?route=checkout/simple_shipping_method/save',
-                    type: 'post',
+                    url: "index.php?route=checkout/simple_shipping_method/save",
+                    type: "post",
                     data: $('#collapse-shipping-method input[type=\'radio\']:checked, #collapse-shipping-method textarea'),
                     dataType: 'json',
                     success: function (json) {
@@ -326,7 +333,7 @@
 
     });
 
-    $(document).delegate('#collapse-payment-address select[name=\'zone_id\']', 'change', function () {
+    $(document).delegate("#collapse-payment-address select[name=\"zone_id\"]", "change", function () {
 
        {% if shipping_required %}
 

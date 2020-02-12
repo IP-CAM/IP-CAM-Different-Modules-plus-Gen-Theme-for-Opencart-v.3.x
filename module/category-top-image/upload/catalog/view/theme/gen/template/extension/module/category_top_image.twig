@@ -1,14 +1,14 @@
 <div class="row text-center">
-    {% for category in categories %}
-        {% if not category.image == "" %}
-            <a href="{{ category.href }}" class="col-xs-6 col-sm-4 col-md-3">
-                <div class="list-group-item category-top-image-block">
-                    <img class="img-responsive img-rounded"
-                         src="{{ category.image }}"
-                         alt="{{ category.name }}">
-                    <div>{{ category.name }}</div>
-                </div>
-            </a>
-        {% endif %}
-    {% endfor %}
+   {% for category in categories %}
+      {% if not category.image == "" %}
+         <a href="{{ category.href }}" class="col-xs-6 col-sm-4 col-md-4">
+            <div class="list-group-item category-top-image-block">
+               <img class="img-responsive img-rounded"
+                    src="{{ category.image }}"
+                    alt="{{ category.name }}">
+               <div>{{ category.name }}</div>
+            </div>
+         </a>
+      {% endif %}
+   {% endfor %}
 </div>
