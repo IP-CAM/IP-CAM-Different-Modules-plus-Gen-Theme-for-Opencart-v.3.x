@@ -51,8 +51,12 @@
                   </div>
                </div>
                <div class="col-md-3 col-sm-6">
-                  <div class="form-group"><a href="{{ compare }}" id="compare-total"
-                                             class="btn btn-link">{{ text_compare }}</a></div>
+                  <div class="form-group">
+                     <a href="{{ compare }}" id="compare-total"
+                        class="btn btn-sm btn-default">
+                        {{ text_compare }}
+                     </a>
+                  </div>
                </div>
                <div class="col-md-4 col-xs-6">
                   <div class="form-group input-group input-group-sm">
@@ -152,11 +156,19 @@
                                       onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i
                                          class="fa fa-shopping-cart"></i> <span
                                          class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
-                              <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}"
-                                      onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i>
+
+                              <button type="button"
+                                      title="{{ button_comparing }}"
+                                      style="{% if not product.compared %} display: none; {% endif %}">
+                                 <a href="{{ compare }}">
+                                    <i class="fa fa-balance-scale text-success"></i>
+                                 </a>
                               </button>
-                              <button type="button" data-toggle="tooltip" title="{{ button_compare }}"
-                                      onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i>
+
+                              <button type="button"
+                                      title="{{ button_compare }}"
+                                      onclick="compare.add('{{ product.product_id }}', this);">
+                                 <i class="fa fa-exchange"></i>
                               </button>
                            </div>
                         </div>

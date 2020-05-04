@@ -221,18 +221,20 @@
                         $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-warning alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                     }
 
-                    for (i in json['error']) {
-                        var element = $('#input-payment-' + i.replace('_', '-'));
+                    for (indexOfError in json['error']) {
+                        var element = $('#input-payment-' + indexOfError.replace('_', '-'));
 
                         if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+                            $(element).parent().after('<div class="text-danger">' + json['error'][indexOfError] + '</div>');
                         } else {
-                            $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+                            $(element).after('<div class="text-danger">' + json['error'][indexOfError] + '</div>');
                         }
                     }
 
                     // Highlight any found errors
                     $('.text-danger').parent().parent().addClass('has-error');
+                    $('#button-simple-confirm').button('reset');
+                    $("html, body").animate({scrollTop: 150}, "slow");
 
                 } else {
                     $.ajax({
@@ -247,12 +249,13 @@
 
                                 setTimeout(function () {
                                     $('#button-simple-confirm').button('reset');
-                                }, 1000);
+                                }, 7000);
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                             $('#button-simple-confirm').button('reset');
+                            $("html, body").animate({scrollTop: 150}, "slow");
                         }
                     });
                 }

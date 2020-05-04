@@ -51,7 +51,7 @@
    {% for script in scripts %}
       <script src="{{ script }}" type="text/javascript"></script>
    {% endfor %}
-   <script src="catalog/view/javascript/common-gen-v2.min.js" type="text/javascript"></script>
+   <script src="catalog/view/javascript/common-gen-v3.min.js" type="text/javascript"></script>
    {% for link in links %}
       <link href="{{ link.href }}" rel="{{ link.rel }}"/>
    {% endfor %}
@@ -100,7 +100,7 @@
                   {% endif %}
                </ul>
             </li>
-            <li class="hidden-xs">
+            <li class="hidden">
                <a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}">
                   <i class="fa fa-heart"></i>
                   <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span>

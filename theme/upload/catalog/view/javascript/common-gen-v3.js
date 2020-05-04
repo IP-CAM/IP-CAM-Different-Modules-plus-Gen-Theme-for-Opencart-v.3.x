@@ -391,7 +391,7 @@ const wishlist = {
 };
 
 const compare = {
-    "add": function (product_id) {
+    "add": function (product_id, nodeObj) {
         $.ajax({
             url: "index.php?route=product/compare/add",
             type: "post",
@@ -405,7 +405,16 @@ const compare = {
 
                     $("#compare-total").html(json["total"]);
 
+                    $(nodeObj).prev("button").show();
+
                     // $("html, body").animate({scrollTop: 0}, "slow");
+
+                } else if (json["remove"]) {
+                    $("#content").parent().before("<div class=\"alert alert-success alert-dismissible\"><i class=\"fa fa-check-circle\"></i> " + json["remove"] + " <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button></div>");
+
+                    $("#compare-total").html(json["total"]);
+
+                    $(nodeObj).prev("button").hide();
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
