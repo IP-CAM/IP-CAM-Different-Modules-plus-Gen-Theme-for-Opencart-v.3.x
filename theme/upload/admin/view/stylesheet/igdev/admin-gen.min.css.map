@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,gBAAgB,CACb,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,CACZ,OAAO,CAAE,EAAE",
-"sources": ["scss/import/_admin-category.scss"],
+"mappings": "AAAA,gBAAgB,CACb,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,CACZ,OAAO,CAAE,EAAE,CCLd,cAAe,CACZ,UAAU,CAAE,eAAe",
+"sources": ["scss/import/_admin-category.scss","scss/import/_custom.scss"],
 "names": [],
 "file": "admin-gen.min.css"
 }

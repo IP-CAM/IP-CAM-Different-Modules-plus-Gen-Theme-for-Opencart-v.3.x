@@ -158,12 +158,12 @@
                   <ul class="list-unstyled">
                      {% if not special %}
                         <li>
-                           <h2>{{ price }}</h2>
+                           <h2 id="regular-price">{{ price }}</h2>
                         </li>
                      {% else %}
                         <li><span style="text-decoration: line-through;">{{ price }}</span></li>
                         <li>
-                           <h2>{{ special }}</h2>
+                           <h2 id="special-price">{{ special }}</h2>
                         </li>
                      {% endif %}
                      {% if tax %}
@@ -693,7 +693,34 @@
         }
     });
     //--></script>
+{% if counting_price_with_options %}
+   <script type="text/javascript"><!--
 
+       $('#product input[type=\'text\'], #product input[type=\'radio\'], #product input[type=\'checkbox\'], #product select').on('change', function () {
+           $.ajax({
+               url: 'index.php?route=product/product/countingPriceWithOptions',
+               type: 'post',
+               data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
+               dataType: 'json',
+               success: function (json) {
+                   if (json['success'] && json['total']) {
+
+                       if (json['special']) {
+                           $('#special-price').html(json['total']);
+                       } else {
+                           $('#regular-price').html(json['total']);
+                       }
+
+                   }
+               },
+               error: function (xhr, ajaxOptions, thrownError) {
+                   console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+               }
+           });
+       });
+
+       //--></script>
+{% endif %}
 <script type="text/javascript"><!--
     if ($("#tab-description").height() > 249) {
         $("#tab-description").css({

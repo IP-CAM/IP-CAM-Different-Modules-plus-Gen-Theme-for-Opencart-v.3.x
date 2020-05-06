@@ -443,6 +443,26 @@
                                     </select>
                                  </div>
                               </div>
+                              {# Dynamically counting price with options #}
+                              <div class="form-group">
+                                 <label class="col-sm-8 control-label"
+                                        for="input-counting-price-with-options">{{ entry_counting_price_with_options }}</label>
+                                 <div class="col-sm-4">
+                                    <select name="theme_gen_counting_price_with_options"
+                                            id="input-counting-price-with-options"
+                                            class="form-control">
+                                       {% if theme_gen_counting_price_with_options %}
+                                          <option value="1"
+                                                  selected="selected">{{ text_enabled }}</option>
+                                          <option value="0">{{ text_disabled }}</option>
+                                       {% else %}
+                                          <option value="1">{{ text_enabled }}</option>
+                                          <option value="0"
+                                                  selected="selected">{{ text_disabled }}</option>
+                                       {% endif %}
+                                    </select>
+                                 </div>
+                              </div>
                               {# Sticky Cart #}
                               <div class="form-group">
                                  <label class="col-sm-4 control-label"

@@ -441,6 +441,14 @@ class ControllerProductProduct extends Controller {
 
 			$this->model_catalog_product->updateViewed( $this->request->get['product_id'] );
 
+			// Dynamically price counting with options
+
+			if ( ! empty( $this->config->get( 'theme_gen_counting_price_with_options' ) ) && $this->config->get( 'theme_gen_counting_price_with_options' ) ) {
+				$data['counting_price_with_options'] = 1;
+			} else {
+				$data['counting_price_with_options'] = 0;
+			}
+
 			$data['column_left']    = $this->load->controller( 'common/column_left' );
 			$data['column_right']   = $this->load->controller( 'common/column_right' );
 			$data['content_top']    = $this->load->controller( 'common/content_top' );
@@ -657,6 +665,77 @@ class ControllerProductProduct extends Controller {
 				$json['success'] = $text;
 			}
 		}
+
+		$this->response->addHeader( 'Content-Type: application/json' );
+		$this->response->setOutput( json_encode( $json ) );
+	}
+
+	public function countingPriceWithOptions() {
+
+		$json = array();
+
+		if ( isset( $this->request->post['product_id'] ) ) {
+			$product_id      = (int) $this->request->post['product_id'];
+			$json['success'] = true;
+		} else {
+			$product_id      = 0;
+			$json['success'] = false;
+		}
+		if ( isset( $this->request->post['quantity'] ) ) {
+			$quantity = (int) $this->request->post['quantity'];
+		} else {
+			$quantity = 1;
+		}
+
+		if ( isset( $this->request->post['option'] ) ) {
+			$option = array_filter( $this->request->post['option'] );
+		} else {
+			$option = array();
+		}
+
+		$this->load->model( 'catalog/product' );
+
+		$all_product_options = $this->model_catalog_product->getProductOptions( $product_id );
+
+		$product_data = $this->model_catalog_product->getProduct( $product_id );
+
+		if ( $product_data['special'] ) {
+			$product_price   = $product_data['special'];
+			$json['special'] = true;
+		} else {
+			$product_price   = $product_data['price'];
+			$json['special'] = false;
+		}
+
+		$sub_total = 0;
+
+		if ( ! empty( $option ) ) {
+
+			foreach ( $all_product_options as $all_opt ) {
+
+				foreach ( $option as $opt_key => $opt_val ) {
+
+					if ( (int) $all_opt['product_option_id'] === (int) $opt_key ) {
+
+						foreach ( $all_opt['product_option_value'] as $all_opt_val ) {
+
+							if ( (int) $all_opt_val['product_option_value_id'] === (int) $opt_val ) {
+
+								if ( $all_opt_val['price_prefix'] === '+' ) {
+									$sub_total += $all_opt_val['price'];
+								} else {
+									$sub_total -= $all_opt_val['price'];
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$total = ( $product_price + $sub_total ) * $quantity;
+
+		$json['total'] = $this->currency->format( $total, $this->session->data['currency'] );
 
 		$this->response->addHeader( 'Content-Type: application/json' );
 		$this->response->setOutput( json_encode( $json ) );
