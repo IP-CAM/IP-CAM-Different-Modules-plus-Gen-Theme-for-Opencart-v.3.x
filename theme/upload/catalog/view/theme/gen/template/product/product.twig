@@ -199,19 +199,18 @@
                               {% if option.product_option_value[0].image %}
                                  <div class="row">
                                     <div class="col-xs-2">
-                                       {% if thumb %}
-                                          <img style="float: right; max-height: 36px; padding: 0;"
-                                               class="select-image-option{{ option.product_option_id }} select-image img-thumbnail img-responsive"
-                                               src="{{ popup }}"
-                                               alt="{{ heading_title }}"
-                                               title="{{ heading_title }}">
-                                       {% endif %}
+                                       <img style="float: right; max-height: 36px; padding: 0;"
+                                            class="select-image-option{{ option.product_option_id }} select-image img-thumbnail img-responsive"
+                                            src="{{ option.product_option_value[0].image_select }}"
+                                            data-img-option-id="{{ option.product_option_id }}"
+                                            alt="{{ option.product_option_value[0].name }}"
+                                            title="{{ option.product_option_value[0].name }}">
                                     </div>
                                     <div class="col-xs-10">
                                        <select name="option[{{ option.product_option_id }}]"
                                                data-select-option-id="{{ option.product_option_id }}"
                                                id="input-option{{ option.product_option_id }}"
-                                               class="form-control select-image-list">
+                                               class="form-control select-image-list select-image-list{{ option.product_option_id }}">
                                           <option value="">{{ text_select }}</option>
                                           {% for option_value in option.product_option_value %}
                                              <option value="{{ option_value.product_option_value_id }}"
@@ -243,24 +242,33 @@
                         {% if option.type == 'radio' %}
                            <div class="form-group{% if option.required %} required {% endif %}">
                               <label class="control-label">{{ option.name }}</label>
-                              <div id="input-option{{ option.product_option_id }}"> {% for option_value in option.product_option_value %}
-                                    <div class="radio">
+                              <div id="input-option{{ option.product_option_id }}"
+                                   class="row">
+                                 {% for option_value in option.product_option_value %}
+                                    <div class="col-xs-3 text-center">
                                        <label>
-                                          <input type="radio" name="option[{{ option.product_option_id }}]"
-                                                 value="{{ option_value.product_option_value_id }}"/>
+                                          <input type="radio"
+                                                 style="display: none;"
+                                                 name="option[{{ option.product_option_id }}]"
+                                                 value="{{ option_value.product_option_value_id }}"
+                                                  {% if loop.index == 1 %} checked {% endif %}/>
                                           {% if option_value.image %}
-                                             <img src="{{ option_value.image_select }}"
-                                                  data-mfp-src="{{ option_value.image }}"
+                                             <img src="{{ option_value.image }}"
+                                                     {% if loop.index == 1 %} style="border: 1px solid red;" {% endif %}
                                                   alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}"
                                                   title="{{ option_value.name }}"
-                                                  class="select-image img-thumbnail"/>
+                                                  class="img-thumbnail"/>
                                           {% endif %}
-                                          {{ option_value.name }}
+
                                           {% if option_value.price %}
-                                             ({{ option_value.price_prefix }}{{ option_value.price }})
+                                             <p>{{ option_value.name }}
+                                                ({{ option_value.price_prefix }}{{ option_value.price }})</p>
+                                          {% else %}
+                                             <p>{{ option_value.name }}</p>
                                           {% endif %} </label>
                                     </div>
-                                 {% endfor %} </div>
+                                 {% endfor %}
+                              </div>
                            </div>
                         {% endif %}
                         {% if option.type == 'checkbox' %}
@@ -660,37 +668,54 @@
             }
         });
         /* Magnific popup for selectable image */
+
+
         if ($(".select-image").length) {
 
-            let items = [];
-            $.each($(".select-image-list option"), function (i, el) {
-                if (i > 0) {
-                    items.push({
-                        src: $(el).attr("data-mfp-src"),
-                        type: "image",
-                        title: $(el).attr("title"),
-                        alt: $(el).attr("title")
-                    });
-                }
+            $(".select-image").on("click", function () {
+
+                let items = [];
+                $.each($(".select-image-list" + $(this).attr("data-img-option-id") + " option"), function (i, el) {
+                    if (i > 0) {
+                        items.push({
+                            src: $(el).attr("data-mfp-src"),
+                            type: "image",
+                            title: $(el).attr("title"),
+                            alt: $(el).attr("title")
+                        });
+                    }
+                });
+
+                $.magnificPopup.open({
+                    items: items,
+                    type: "image",
+                    gallery: {
+                        enabled: true
+                    }
+                });
             });
 
-            $('.select-image').magnificPopup({
-                items: items,
-                type: "image",
-                gallery: {
-                    enabled: true
-                }
-            });
 
             // Selectable image
             $(".select-image-list").on("change", function () {
                 $("img.select-image-option" + $(this).attr("data-select-option-id"))
                     .attr("src", $(this).find("option:selected").attr("data-mfp-src"))
-                    .attr("data-mfp-src", $(this).find("option:selected").attr("data-mfp-src"))
                     .attr("title", $(this).find("option:selected").attr("title"))
                     .attr("alt", $(this).find("option:selected").attr("title"));
             });
         }
+
+        // Highlight radio button
+
+        $('input[type=\'radio\']').on("click", function () {
+            $('input[type=\'radio\']').each(function () {
+                if ($(this).prop('checked') === true) {
+                    $(this).next("img").css("border", "1px solid red");
+                } else {
+                    $(this).next("img").css("border", "1px solid #ddd");
+                }
+            });
+        });
     });
     //--></script>
 {% if counting_price_with_options %}

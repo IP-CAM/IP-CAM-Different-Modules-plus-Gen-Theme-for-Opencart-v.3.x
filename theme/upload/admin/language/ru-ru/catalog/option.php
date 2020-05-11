@@ -3,23 +3,23 @@
 $_['heading_title'] = 'Опции';
 
 // Text
-$_['text_success']      = 'Настройки успешно изменены!';
-$_['text_list']         = 'Список опций';
-$_['text_add']          = 'Добавить';
-$_['text_edit']         = 'Редактирование';
-$_['text_choose']       = 'Выбор';
-$_['text_select']       = 'Список';
-$_['text_radio']        = 'Переключатель';
-$_['text_checkbox']     = 'Флажок';
-$_['text_input']        = 'Поле ввода';
-$_['text_text']         = 'Текст';
-$_['text_textarea']     = 'Текстовая область';
-$_['text_file']         = 'Файл';
-$_['text_date']         = 'Дата';
-$_['text_datetime']     = 'Дата и время';
-$_['text_time']         = 'Время';
-$_['text_option']       = 'Опция';
-$_['text_value']        = 'Значение';
+$_['text_success']  = 'Настройки успешно изменены!';
+$_['text_list']     = 'Список опций';
+$_['text_add']      = 'Добавить';
+$_['text_edit']     = 'Редактирование';
+$_['text_choose']   = 'Выбор';
+$_['text_select']   = 'Список';
+$_['text_radio']    = 'Переключатель';
+$_['text_checkbox'] = 'Флажок';
+$_['text_input']    = 'Поле ввода';
+$_['text_text']     = 'Текст';
+$_['text_textarea'] = 'Текстовая область';
+$_['text_file']     = 'Файл';
+$_['text_date']     = 'Дата';
+$_['text_datetime'] = 'Дата и время';
+$_['text_time']     = 'Время';
+$_['text_option']   = 'Опция';
+$_['text_value']    = 'Значение';
 
 // Column
 $_['column_name']       = 'Опция';
@@ -32,6 +32,7 @@ $_['entry_type']         = 'Тип';
 $_['entry_option_value'] = 'Значение опции';
 $_['entry_image']        = 'Изображение';
 $_['entry_sort_order']   = 'Порядок сортировки';
+$_['entry_option_var']   = 'Опция вариативна (select, radio)';
 
 // Error
 $_['error_permission']   = 'У вас не достаточно прав для изменения опции!';

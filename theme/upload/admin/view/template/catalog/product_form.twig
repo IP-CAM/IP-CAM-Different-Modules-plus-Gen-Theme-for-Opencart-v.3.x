@@ -288,26 +288,14 @@
                                                                                              title="{{ help_stock_status }}">{{ entry_stock_status }}</span></label>
                         <div class="col-sm-10">
                            <select name="stock_status_id" id="input-stock-status" class="form-control">
-
-
                               {% for stock_status in stock_statuses %}
                                  {% if stock_status.stock_status_id == stock_status_id %}
-
-
                                     <option value="{{ stock_status.stock_status_id }}"
                                             selected="selected">{{ stock_status.name }}</option>
-
-
                                  {% else %}
-
-
                                     <option value="{{ stock_status.stock_status_id }}">{{ stock_status.name }}</option>
-
-
                                  {% endif %}
                               {% endfor %}
-
-
                            </select>
                         </div>
                      </div>
@@ -628,38 +616,28 @@
                               {% for product_option in product_options %}
                                  <div class="tab-pane" id="tab-option{{ option_row }}">
                                     <input type="hidden" name="product_option[{{ option_row }}][product_option_id]"
-                                           value="{{ product_option.product_option_id }}"/> <input type="hidden"
-                                                                                                   name="product_option[{{ option_row }}][name]"
-                                                                                                   value="{{ product_option.name }}"/>
+                                           value="{{ product_option.product_option_id }}"/>
+                                    <input type="hidden"
+                                           name="product_option[{{ option_row }}][name]"
+                                           value="{{ product_option.name }}"/>
                                     <input type="hidden" name="product_option[{{ option_row }}][option_id]"
-                                           value="{{ product_option.option_id }}"/> <input type="hidden"
-                                                                                           name="product_option[{{ option_row }}][type]"
-                                                                                           value="{{ product_option.type }}"/>
+                                           value="{{ product_option.option_id }}"/>
+                                    <input type="hidden"
+                                           name="product_option[{{ option_row }}][type]"
+                                           value="{{ product_option.type }}"/>
                                     <div class="form-group">
                                        <label class="col-sm-2 control-label"
                                               for="input-required{{ option_row }}">{{ entry_required }}</label>
                                        <div class="col-sm-10">
                                           <select name="product_option[{{ option_row }}][required]"
                                                   id="input-required{{ option_row }}" class="form-control">
-
-
                                              {% if product_option.required %}
-
-
                                                 <option value="1" selected="selected">{{ text_yes }}</option>
                                                 <option value="0">{{ text_no }}</option>
-
-
                                              {% else %}
-
-
                                                 <option value="1">{{ text_yes }}</option>
                                                 <option value="0" selected="selected">{{ text_no }}</option>
-
-
                                              {% endif %}
-
-
                                           </select>
                                        </div>
                                     </div>
@@ -1269,10 +1247,16 @@
                            </thead>
                            <tbody>
                            <tr>
-                              <td class="text-left"><a href="" id="thumb-image" data-toggle="image"
-                                                       class="img-thumbnail"><img src="{{ thumb }}" alt="" title=""
-                                                                                  data-placeholder="{{ placeholder }}"/></a>
-                                 <input type="hidden" name="image" value="{{ image }}" id="input-image"/></td>
+                              <td class="text-left">
+                                 <a href=""
+                                    id="thumb-image"
+                                    data-toggle="image"
+                                    class="img-thumbnail">
+                                    <img src="{{ thumb }}" alt="" title=""
+                                         data-placeholder="{{ placeholder }}"/>
+                                 </a>
+                                 <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                              </td>
                            </tr>
                            </tbody>
                         </table>
@@ -1291,21 +1275,31 @@
                            {% set image_row = 0 %}
                            {% for product_image in product_images %}
                               <tr id="image-row{{ image_row }}">
-                                 <td class="text-left"><a href="" id="thumb-image{{ image_row }}" data-toggle="image"
-                                                          class="img-thumbnail"><img src="{{ product_image.thumb }}"
-                                                                                     alt="" title=""
-                                                                                     data-placeholder="{{ placeholder }}"/></a>
+                                 <td class="text-left">
+                                    <a href=""
+                                       id="thumb-image{{ image_row }}"
+                                       data-toggle="image"
+                                       class="img-thumbnail">
+                                       <img src="{{ product_image.thumb }}"
+                                            alt="" title=""
+                                            data-placeholder="{{ placeholder }}"/>
+                                    </a>
                                     <input type="hidden" name="product_image[{{ image_row }}][image]"
-                                           value="{{ product_image.image }}" id="input-image{{ image_row }}"/></td>
-                                 <td class="text-right"><input type="text"
-                                                               name="product_image[{{ image_row }}][sort_order]"
-                                                               value="{{ product_image.sort_order }}"
-                                                               placeholder="{{ entry_sort_order }}"
-                                                               class="form-control"/></td>
+                                           value="{{ product_image.image }}"
+                                           id="input-image{{ image_row }}"/>
+                                 </td>
+                                 <td class="text-right">
+                                    <input type="text"
+                                           name="product_image[{{ image_row }}][sort_order]"
+                                           value="{{ product_image.sort_order }}"
+                                           placeholder="{{ entry_sort_order }}"
+                                           class="form-control"/>
+                                 </td>
                                  <td class="text-left">
                                     <button type="button" onclick="$('#image-row{{ image_row }}').remove();"
-                                            data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i
-                                               class="fa fa-minus-circle"></i></button>
+                                            data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger">
+                                       <i class="fa fa-minus-circle"></i>
+                                    </button>
                                  </td>
                               </tr>
                               {% set image_row = image_row + 1 %}
@@ -1785,6 +1779,7 @@
                option_row++;
            }
        });
+
        //--></script>
    <script type="text/javascript"><!--
        let option_value_row = {{ option_value_row }};

@@ -326,7 +326,18 @@ class ControllerCatalogOption extends Controller {
 		} else {
 			$data['type'] = '';
 		}
-
+		if ( isset( $this->request->get['option_id'] ) && ( $this->request->server['REQUEST_METHOD'] != 'POST' ) ) {
+			$option_var_status = $this->model_catalog_option->getOptionVar( $this->request->get['option_id'] );
+		}
+		if ( isset( $this->request->post['option_var_status'] ) ) {
+			$data['option_var_status'] = $this->request->post['option_var_status'];
+		} elseif ( ! empty( $option_var_status ) ) {
+			foreach ( $option_var_status as $var ) {
+				$data['option_var_status'] = $var;
+			}
+		} else {
+			$data['option_var'] = '';
+		}
 		if ( isset( $this->request->post['sort_order'] ) ) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif ( ! empty( $option_info ) ) {
