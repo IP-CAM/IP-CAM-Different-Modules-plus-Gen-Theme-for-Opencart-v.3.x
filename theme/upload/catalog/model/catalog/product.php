@@ -551,14 +551,16 @@ class ModelCatalogProduct extends Model {
 	public function getProductOptionImage( $data ) {
 
 		$qry = "SELECT image_variation FROM " . DB_PREFIX . "product_option_var_images ";
-		$qry .= "WHERE variation_id in (SELECT variation_id FROM oc_product_option_var ";
+		$qry .= "WHERE variation_id in (SELECT variation_id FROM " . DB_PREFIX . "product_option_var ";
 		$qry .= "WHERE option_id IN (";
 		$qry .= implode( ', ', $data['option_id'] );
 		$qry .= ") AND option_value_id IN (";
 		$qry .= implode( ', ', $data['option_value_id'] );
-		$qry .= ") GROUP BY variation_id HAVING COUNT(variation_id) = " . (int) $data['opt_qty'] . ")";
+		$qry .= ") AND product_id =" . $data['product_id'] . " GROUP BY variation_id HAVING COUNT(variation_id) = " . (int) $data['opt_qty'] . ")";
 
 		$product_data = $this->db->query( $qry );
+
+		$this->cache->delete( 'image' );
 
 		return $product_data->row;
 

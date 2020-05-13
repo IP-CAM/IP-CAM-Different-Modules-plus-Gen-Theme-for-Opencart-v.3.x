@@ -28,13 +28,13 @@
             <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-product"
                   class="form-horizontal">
                <ul class="nav nav-tabs">
-                  <li><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+                  <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
                   <li><a href="#tab-data" data-toggle="tab">{{ tab_data }}</a></li>
                   <li><a href="#tab-links" data-toggle="tab">{{ tab_links }}</a></li>
                   <li><a href="#tab-attribute" data-toggle="tab">{{ tab_attribute }}</a></li>
                   <li><a href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
                   {% if option_variation_status %}
-                     <li class="active"><a href="#tab-option-var" data-toggle="tab">{{ tab_option_var }}</a></li>
+                     <li><a href="#tab-option-var" data-toggle="tab">{{ tab_option_var }}</a></li>
                   {% endif %}
                   <li class="hidden"><a href="#tab-recurring" data-toggle="tab">{{ tab_recurring }}</a></li>
                   <li><a href="#tab-discount" data-toggle="tab">{{ tab_discount }}</a></li>
@@ -45,7 +45,7 @@
                   <li class="hidden"><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
                </ul>
                <div class="tab-content">
-                  <div class="tab-pane" id="tab-general">
+                  <div class="tab-pane active" id="tab-general">
                      <ul class="nav nav-tabs" id="language">
                         {% for language in languages %}
                            <li data-language-code="{{ language.code }}" data-language-id="{{ language.language_id }}">
@@ -975,7 +975,7 @@
                      </div>
                   </div>
                   {% if option_variation_status %}
-                     <div class="tab-pane active" id="tab-option-var">
+                     <div class="tab-pane" id="tab-option-var">
                         {% set option_col = 1 %}
                         <div id="option-mix-container" class="panel panel-body">
                            <div class="form-group-sm col-sm-3">

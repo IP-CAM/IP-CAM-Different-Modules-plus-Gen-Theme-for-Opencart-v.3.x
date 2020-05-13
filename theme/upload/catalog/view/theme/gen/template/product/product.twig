@@ -54,13 +54,12 @@
                   {% endif %}
                </ul>
                <div class="tab-content">
-                  <div class="tab-pane active" id="tab-description">
+                  <div class="tab-pane {% if not attribute_groups %} active{% endif %}" id="tab-description">
                      {{ description }}
                      <span class="description-more"><i class="fa fa-chevron-down"></i></span>
                   </div>
-
                   {% if attribute_groups %}
-                     <div class="tab-pane" id="tab-specification">
+                     <div class="tab-pane active" id="tab-specification">
                         <table class="table table-bordered">
                            {% for attribute_group in attribute_groups %}
                               <thead>
@@ -260,7 +259,9 @@
                                     <div class="col-xs-2 text-center">
                                        <label>
                                           <input type="radio"
-                                                 style="display: none;"
+                                                  {% if not option_value.image %}
+                                                     style="display: none;"
+                                                  {% endif %}
                                                   {% if option.variability %}
                                                      data-variability="variable"
                                                   {% endif %}
@@ -676,65 +677,6 @@
             }
         });
     });
-
-    $(document).ready(function () {
-
-        $('.thumbnails').magnificPopup({
-            type: 'image',
-            delegate: 'a',
-            gallery: {
-                enabled: true
-            }
-        });
-        /* Magnific popup for selectable image */
-        if ($(".select-image").length) {
-
-            $(".select-image").on("click", function () {
-
-                let items = [];
-                $.each($(".select-image-list" + $(this).attr("data-img-option-id") + " option"), function (i, el) {
-                    if (i > 0) {
-                        items.push({
-                            src: $(el).attr("data-mfp-src"),
-                            type: "image",
-                            title: $(el).attr("title"),
-                            alt: $(el).attr("title")
-                        });
-                    }
-                });
-
-                $.magnificPopup.open({
-                    items: items,
-                    type: "image",
-                    gallery: {
-                        enabled: true
-                    }
-                });
-            });
-        }
-
-        // Change select option image
-        $("select[class*=select-image-list]").on("change", function () {
-            if ($(this).parent().parent().find('img').length) {
-                $(this).parent().parent().find('img')
-                    .attr("src", $(this).find("option:selected").attr("data-img-icon"))
-                    .attr("title", $(this).find("option:selected").attr("title"))
-                    .attr("alt", $(this).find("option:selected").attr("title"));
-            }
-        });
-
-        // Highlight radio button
-
-        $('input[type=\'radio\']').on("click", function () {
-            $('input[type=\'radio\']').each(function () {
-                if ($(this).prop('checked') === true) {
-                    $(this).next("img").css("border", "1px solid red");
-                } else {
-                    $(this).next("img").css("border", "1px solid #ddd");
-                }
-            });
-        });
-    });
     //--></script>
 {% if counting_price_with_options %}
    <script type="text/javascript"><!--
@@ -799,10 +741,74 @@
     //--></script>
 {# get option image #}
 <script type="text/javascript"><!--
+
+    $(document).ready(function () {
+
+        $('.thumbnails').magnificPopup({
+            type: 'image',
+            delegate: 'a',
+            gallery: {
+                enabled: true
+            }
+        });
+        /* Magnific popup for selectable image */
+        if ($(".select-image").length) {
+
+            $(".select-image").on("click", function () {
+
+                let items = [];
+                $.each($(".select-image-list" + $(this).attr("data-img-option-id") + " option"), function (i, el) {
+                    if (i > 0) {
+                        items.push({
+                            src: $(el).attr("data-mfp-src"),
+                            type: "image",
+                            title: $(el).attr("title"),
+                            alt: $(el).attr("title")
+                        });
+                    }
+                });
+
+                $.magnificPopup.open({
+                    items: items,
+                    type: "image",
+                    gallery: {
+                        enabled: true
+                    }
+                });
+            });
+        }
+
+        // Change select option image
+        $("select[class*=select-image-list]").on("change", function () {
+            let selectNode = $(this);
+            let imgNode = $(this).parent().parent().find('img');
+            if (imgNode.length) {
+                imgNode.attr({
+                    src: selectNode.find("option:selected").attr("data-img-icon"),
+                    title: $.trim(selectNode.find("option:selected").attr("title")),
+                    alt: $.trim(selectNode.find("option:selected").attr("title"))
+                });
+            }
+        });
+
+        // Highlight radio button
+
+        $('input[type=\'radio\']').on("click", function () {
+            $('input[type=\'radio\']').each(function () {
+                if ($(this).prop('checked') === true) {
+                    $(this).next("img").css("border", "1px solid red");
+                } else {
+                    $(this).next("img").css("border", "1px solid #ddd");
+                }
+            });
+        });
+    });
+
+    let productTitle = '{{ heading_title }}';
+
     $('select[data-variability="variable"], input[data-variability="variable"]').on('change', function () {
         let varQty = $('div[class*="variable"]').length;
-        let productTitle = $('a[class="thumbnail"]').attr('title') + " - ";
-        let optionTitle = [];
+        let optionTitle = '';
         let optId = [];
         let optValId = [];
 
@@ -810,7 +816,7 @@
             if ($(this).val().length) {
                 optId.push($(this).attr('data-radio-option-id'));
                 optValId.push($(this).attr('data-radio-option-value-id'));
-                optionTitle.push($(this).parent().find('img').attr('title'));
+                optionTitle += ' ' + $.trim($(this).parent().parent().parent().find('label').text()) + ' ' + $.trim($(this).parent().find('img').attr('title'));
             }
 
         });
@@ -818,7 +824,7 @@
             if ($(this).val().length) {
                 optId.push($(this).attr('data-select-option-id'));
                 optValId.push($('option:selected', this).attr('data-select-option-value-id'));
-                optionTitle.push($('option:selected', this).text());
+                optionTitle += ' ' + $.trim($(this).parent().parent().parent().find('label').text()) + ' ' + $.trim($('option:selected', this).text());
             }
         });
 
@@ -827,18 +833,21 @@
             qryStr += '&option_id=' + optId.join(',');
             qryStr += '&option_value_id=' + optValId.join(',');
             qryStr += '&opt_qty=' + varQty;
+            qryStr += '&product_id={{ product_id }}';
             $.ajax({
                 url: qryStr,
                 dataType: 'json',
                 success: function (json) {
                     if (json['image']) {
                         $('a[class="thumbnail"]')
-                            .attr('href', json['image'])
-                            .find('img')
+                            .attr({
+                                href: json['image'],
+                                title: $.trim(productTitle + optionTitle.toLowerCase())
+                            }).find('img')
                             .attr({
                                 src: json['image'],
-                                alt: productTitle + optionTitle,
-                                title: productTitle + optionTitle
+                                alt: $.trim(productTitle + optionTitle.toLowerCase()),
+                                title: $.trim(productTitle + optionTitle.toLowerCase())
                             });
                     }
                 },

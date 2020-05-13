@@ -749,7 +749,8 @@ class ControllerProductProduct extends Controller {
 		$data = array(
 			'option_id'       => explode( ',', $this->request->get['option_id'] ),
 			'option_value_id' => explode( ',', $this->request->get['option_value_id'] ),
-			'opt_qty'         => $this->request->get['opt_qty']
+			'opt_qty'         => $this->request->get['opt_qty'],
+			'product_id'      => $this->request->get['product_id']
 		);
 
 		$product_option_image = $this->model_catalog_product->getProductOptionImage( $data );
