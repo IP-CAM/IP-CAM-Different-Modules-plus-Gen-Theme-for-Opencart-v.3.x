@@ -463,6 +463,26 @@
                                     </select>
                                  </div>
                               </div>
+                              {# Option Variations #}
+                              <div class="form-group">
+                                 <label class="col-sm-8 control-label"
+                                        for="input-option-variations">{{ entry_option_variation }}</label>
+                                 <div class="col-sm-4">
+                                    <select name="theme_gen_option_variation"
+                                            id="input-option-variations"
+                                            class="form-control">
+                                       {% if theme_gen_option_variation %}
+                                          <option value="1"
+                                                  selected="selected">{{ text_enabled }}</option>
+                                          <option value="0">{{ text_disabled }}</option>
+                                       {% else %}
+                                          <option value="1">{{ text_enabled }}</option>
+                                          <option value="0"
+                                                  selected="selected">{{ text_disabled }}</option>
+                                       {% endif %}
+                                    </select>
+                                 </div>
+                              </div>
                               {# Sticky Cart #}
                               <div class="form-group">
                                  <label class="col-sm-4 control-label"

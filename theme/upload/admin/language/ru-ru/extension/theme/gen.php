@@ -62,6 +62,8 @@ $_['entry_instagram_logo']              = 'Instagram logo 90*30';
 $_['entry_instagram_account']           = 'Instagram акаунт имя без /';
 $_['entry_google_translate_api_key']    = 'Google Translate ключ API (Получить в Google API консоле)';
 $_['entry_counting_price_with_options'] = 'Динамически подсчитывать цену с опциями';
+$_['entry_counting_price_with_options'] = 'Динамически подсчитывать цену с опциями';
+$_['entry_option_variation']            = 'Вариативные опции';
 
 // Help
 $_['help_directory']                  = 'Данное поле необходимо для того, чтобы старые шаблоны (от версий 2.0.х и .2.1.х), были совместимы с новым функционалом тем. В указанном поле вы можете выбрать директорию темы';

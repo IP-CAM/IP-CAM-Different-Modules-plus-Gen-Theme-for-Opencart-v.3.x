@@ -2,7 +2,7 @@
 
 class ModelCatalogProduct extends Model {
 	public function addProduct( $data ) {
-		$this->db->query( "INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape( $data['model'] ) . "', sku = '" . $this->db->escape( $data['sku'] ) . "', upc = '" . $this->db->escape( $data['upc'] ) . "', ean = '" . $this->db->escape( $data['ean'] ) . "', jan = '" . $this->db->escape( $data['jan'] ) . "', isbn = '" . $this->db->escape( $data['isbn'] ) . "', mpn = '" . $this->db->escape( $data['mpn'] ) . "', location = '" . $this->db->escape( $data['location'] ) . "', quantity = '" . (int) $data['quantity'] . "', minimum = '" . (int) $data['minimum'] . "', subtract = '" . (int) $data['subtract'] . "', stock_status_id = '" . (int) $data['stock_status_id'] . "', date_available = '" . $this->db->escape( $data['date_available'] ) . "', manufacturer_id = '" . (int) $data['manufacturer_id'] . "', shipping = '" . (int) $data['shipping'] . "', price = '" . (float) $data['price'] . "', points = '" . (int) $data['points'] . "', weight = '" . (float) $data['weight'] . "', weight_class_id = '" . (int) $data['weight_class_id'] . "', length = '" . (float) $data['length'] . "', width = '" . (float) $data['width'] . "', height = '" . (float) $data['height'] . "', length_class_id = '" . (int) $data['length_class_id'] . "', status = '" . (int) $data['status'] . "', tax_class_id = '" . (int) $data['tax_class_id'] . "', sort_order = '" . (int) $data['sort_order'] . "', date_added = NOW(), date_modified = NOW()" );
+		$this->db->query( "INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape( $data['model'] ) . "', sku = '" . $this->db->escape( $data['sku'] ) . "', upc = '" . $this->db->escape( $data['upc'] ) . "', ean = '" . $this->db->escape( $data['ean'] ) . "', jan = '" . $this->db->escape( $data['jan'] ) . "', isbn = '" . $this->db->escape( $data['isbn'] ) . "', mpn = '" . $this->db->escape( $data['mpn'] ) . "', location = '" . $this->db->escape( $data['location'] ) . "', quantity = '" . (int) $data['quantity'] . "', minimum = '" . (int) $data['minimum'] . "', subtract = '" . (int) $data['subtract'] . "', stock_status_id = '" . (int) $data['stock_status_id'] . "', date_available = '" . $this->db->escape( $data['date_available'] ) . "', manufacturer_id = '" . (int) $data['manufacturer_id'] . "', shipping = '" . (int) $data['shipping'] . "', price = '" . (float) $data['price'] . "', points = '" . (int) $data['points'] . "', weight = '" . (float) $data['weight'] . "', weight_class_id = '" . (int) $data['weight_class_id'] . "', length = '" . (float) $data['length'] . "', width = '" . (float) $data['width'] . "', height = '" . (float) $data['height'] . "', length_class_id = '" . (int) $data['length_class_id'] . "', STATUS = '" . (int) $data['status'] . "', tax_class_id = '" . (int) $data['tax_class_id'] . "', sort_order = '" . (int) $data['sort_order'] . "', date_added = NOW(), date_modified = NOW()" );
 
 		$product_id = $this->db->getLastId();
 
@@ -29,7 +29,7 @@ class ModelCatalogProduct extends Model {
 					foreach ( $product_attribute['product_attribute_description'] as $language_id => $product_attribute_description ) {
 						$this->db->query( "DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int) $product_id . "' AND attribute_id = '" . (int) $product_attribute['attribute_id'] . "' AND language_id = '" . (int) $language_id . "'" );
 
-						$this->db->query( "INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int) $product_id . "', attribute_id = '" . (int) $product_attribute['attribute_id'] . "', language_id = '" . (int) $language_id . "', text = '" . $this->db->escape( $product_attribute_description['text'] ) . "'" );
+						$this->db->query( "INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int) $product_id . "', attribute_id = '" . (int) $product_attribute['attribute_id'] . "', language_id = '" . (int) $language_id . "', TEXT = '" . $this->db->escape( $product_attribute_description['text'] ) . "'" );
 					}
 				}
 			}
@@ -48,10 +48,37 @@ class ModelCatalogProduct extends Model {
 						}
 					}
 				} else {
-					$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int) $product_id . "', option_id = '" . (int) $product_option['option_id'] . "', value = '" . $this->db->escape( $product_option['value'] ) . "', required = '" . (int) $product_option['required'] . "'" );
+					$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option SET product_id = '" . (int) $product_id . "', option_id = '" . (int) $product_option['option_id'] . "', VALUE = '" . $this->db->escape( $product_option['value'] ) . "', required = '" . (int) $product_option['required'] . "'" );
 				}
 			}
 		}
+
+		// Product variation options
+
+		if ( isset( $data['option_images'] ) && isset( $data['option_var_id'] ) ) {
+			foreach ( $data['option_images'] as $ind => $option_image ) {
+				if ( isset( $option_image['image'] ) ) {
+					$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option_var_images SET product_id = '" . (int) $product_id . "', image_variation = '" . $this->db->escape( $option_image['image'] ) . "'" );
+
+					$option_variation_id = $this->db->getLastId();
+
+					$opt_ids_arr     = explode( ',', $data['option_var_id'][ $ind ]['option_id'] );
+					$opt_val_ids_arr = explode( ',', $data['option_var_id'][ $ind ]['option_value_id'] );
+
+					$opt_data_arr = array();
+					foreach ( $opt_ids_arr as $key => $val ) {
+						$opt_data_arr[ 'option_data' . $key ] = array(
+							'option_id'       => $val,
+							'option_value_id' => $opt_val_ids_arr[ $key ]
+						);
+					}
+					foreach ( $opt_data_arr as $opt ) {
+						$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option_var SET product_id = '" . (int) $product_id . "', variation_id = '" . (int) $option_variation_id . "', option_id = '" . (int) $opt['option_id'] . "', option_value_id = '" . (int) $opt['option_value_id'] . "'" );
+					}
+				}
+			}
+		}
+
 
 		if ( isset( $data['product_recurring'] ) ) {
 			foreach ( $data['product_recurring'] as $recurring ) {
@@ -165,7 +192,7 @@ class ModelCatalogProduct extends Model {
 					$this->db->query( "DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int) $product_id . "' AND attribute_id = '" . (int) $product_attribute['attribute_id'] . "'" );
 
 					foreach ( $product_attribute['product_attribute_description'] as $language_id => $product_attribute_description ) {
-						$this->db->query( "INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int) $product_id . "', attribute_id = '" . (int) $product_attribute['attribute_id'] . "', language_id = '" . (int) $language_id . "', text = '" . $this->db->escape( $product_attribute_description['text'] ) . "'" );
+						$this->db->query( "INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int) $product_id . "', attribute_id = '" . (int) $product_attribute['attribute_id'] . "', language_id = '" . (int) $language_id . "', TEXT = '" . $this->db->escape( $product_attribute_description['text'] ) . "'" );
 					}
 				}
 			}
@@ -187,10 +214,40 @@ class ModelCatalogProduct extends Model {
 						}
 					}
 				} else {
-					$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option SET product_option_id = '" . (int) $product_option['product_option_id'] . "', product_id = '" . (int) $product_id . "', option_id = '" . (int) $product_option['option_id'] . "', value = '" . $this->db->escape( $product_option['value'] ) . "', required = '" . (int) $product_option['required'] . "'" );
+					$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option SET product_option_id = '" . (int) $product_option['product_option_id'] . "', product_id = '" . (int) $product_id . "', option_id = '" . (int) $product_option['option_id'] . "', VALUE = '" . $this->db->escape( $product_option['value'] ) . "', required = '" . (int) $product_option['required'] . "'" );
 				}
 			}
 		}
+
+
+		// Option variation
+		$this->db->query( "DELETE FROM " . DB_PREFIX . "product_option_var WHERE product_id = '" . (int) $product_id . "'" );
+		$this->db->query( "DELETE FROM " . DB_PREFIX . "product_option_var_images WHERE product_id = '" . (int) $product_id . "'" );
+
+		if ( isset( $data['option_images'] ) && isset( $data['option_var_id'] ) ) {
+			foreach ( $data['option_images'] as $ind => $option_image ) {
+				if ( isset( $option_image['image'] ) ) {
+					$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option_var_images SET product_id = '" . (int) $product_id . "', image_variation = '" . $this->db->escape( $option_image['image'] ) . "'" );
+
+					$option_variation_id = $this->db->getLastId();
+
+					$opt_ids_arr     = explode( ',', $data['option_var_id'][ $ind ]['option_id'] );
+					$opt_val_ids_arr = explode( ',', $data['option_var_id'][ $ind ]['option_value_id'] );
+
+					$opt_data_arr = array();
+					foreach ( $opt_ids_arr as $key => $val ) {
+						$opt_data_arr[ 'option_data' . $key ] = array(
+							'option_id'       => $val,
+							'option_value_id' => $opt_val_ids_arr[ $key ]
+						);
+					}
+					foreach ( $opt_data_arr as $opt ) {
+						$this->db->query( "INSERT INTO " . DB_PREFIX . "product_option_var SET product_id = '" . (int) $product_id . "', variation_id = '" . (int) $option_variation_id . "', option_id = '" . (int) $opt['option_id'] . "', option_value_id = '" . (int) $opt['option_value_id'] . "'" );
+					}
+				}
+			}
+		}
+
 
 		$this->db->query( "DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = " . (int) $product_id );
 
@@ -346,6 +403,8 @@ class ModelCatalogProduct extends Model {
 		$this->db->query( "DELETE FROM " . DB_PREFIX . "review WHERE product_id = '" . (int) $product_id . "'" );
 		$this->db->query( "DELETE FROM " . DB_PREFIX . "seo_url WHERE query = 'product_id=" . (int) $product_id . "'" );
 		$this->db->query( "DELETE FROM " . DB_PREFIX . "coupon_product WHERE product_id = '" . (int) $product_id . "'" );
+		$this->db->query( "DELETE FROM " . DB_PREFIX . "product_option_var WHERE product_id = '" . (int) $product_id . "'" );
+		$this->db->query( "DELETE FROM " . DB_PREFIX . "product_option_var_images WHERE product_id = '" . (int) $product_id . "'" );
 
 		$this->cache->delete( 'product' );
 	}
@@ -528,6 +587,46 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_option_data;
+	}
+
+	public function getProductOptionsVariables( $product_id ) {
+
+		$product_opt_var_data = $this->db->query( "SELECT * FROM `" . DB_PREFIX . "product_option_var_images` WHERE product_id = '" . (int) $product_id . "'" );
+
+		$qry = "SELECT pov.product_id, pov.variation_id, pov.option_id, od.name AS option_name, pov.option_value_id, ovd.name AS option_value_name ";
+		$qry .= "FROM `" . DB_PREFIX . "product_option_var` pov ";
+		$qry .= "LEFT JOIN `" . DB_PREFIX . "option_description` od ON (pov.option_id = od.option_id) ";
+		$qry .= "LEFT JOIN (    SELECT * FROM `" . DB_PREFIX . "option_value_description` WHERE language_id = " . (int) $this->config->get( 'config_language_id' ) . ") ovd ON (pov.option_value_id = ovd.option_value_id) ";
+		$qry .= "WHERE pov.product_id = '" . (int) $product_id . "' AND od.language_id = '" . (int) $this->config->get( 'config_language_id' ) . "'";
+
+		$product_opt_var_values_data = $this->db->query( $qry );
+
+		$product_option_variations = array();
+		foreach ( $product_opt_var_data->rows as $opt_var ) {
+			$opt_id     = array();
+			$opt_var_id = array();
+			$var_title  = array();
+
+			foreach ( $product_opt_var_values_data->rows as $opt_data ) {
+				if ( $opt_var['variation_id'] == $opt_data['variation_id'] ) {
+					array_push( $opt_id, $opt_data['option_id'] );
+					array_push( $opt_var_id, $opt_data['option_value_id'] );
+					array_push( $var_title, $opt_data['option_name'] . ' - ' . $opt_data['option_value_name'] );
+				}
+			}
+
+			$product_option_variations[] = array(
+				'product_id'      => $opt_var['product_id'],
+				'variation_id'    => $opt_var['variation_id'],
+				'image'           => $opt_var['image_variation'],
+				'option_id'       => $opt_id,
+				'option_value_id' => $opt_var_id,
+				'variable_title'  => $var_title
+			);
+		}
+
+
+		return $product_option_variations;
 	}
 
 	public function getProductOptionValue( $product_id, $product_option_value_id ) {

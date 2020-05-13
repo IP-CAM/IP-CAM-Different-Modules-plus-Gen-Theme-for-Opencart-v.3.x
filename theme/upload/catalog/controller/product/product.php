@@ -337,7 +337,8 @@ class ControllerProductProduct extends Controller {
 					'name'                 => $option['name'],
 					'type'                 => $option['type'],
 					'value'                => $option['value'],
-					'required'             => $option['required']
+					'required'             => $option['required'],
+					'variability'          => $option['option_variability']
 				);
 			}
 
@@ -736,6 +737,26 @@ class ControllerProductProduct extends Controller {
 		$total = ( $product_price + $sub_total ) * $quantity;
 
 		$json['total'] = $this->currency->format( $total, $this->session->data['currency'] );
+
+		$this->response->addHeader( 'Content-Type: application/json' );
+		$this->response->setOutput( json_encode( $json ) );
+	}
+
+	public function getOptionImage() {
+		$json = array();
+		$this->load->model( 'catalog/product' );
+
+		$data = array(
+			'option_id'       => explode( ',', $this->request->get['option_id'] ),
+			'option_value_id' => explode( ',', $this->request->get['option_value_id'] ),
+			'opt_qty'         => $this->request->get['opt_qty']
+		);
+
+		$product_option_image = $this->model_catalog_product->getProductOptionImage( $data );
+
+		$this->load->model( 'tool/image' );
+
+		$json['image'] = $this->model_tool_image->resize( $product_option_image['image_variation'], $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_popup_width' ), $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_popup_height' ) );
 
 		$this->response->addHeader( 'Content-Type: application/json' );
 		$this->response->setOutput( json_encode( $json ) );

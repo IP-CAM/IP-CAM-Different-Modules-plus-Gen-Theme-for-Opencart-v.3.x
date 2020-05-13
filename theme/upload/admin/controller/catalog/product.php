@@ -990,6 +990,50 @@ class ControllerCatalogProduct extends Controller {
 				}
 			}
 		}
+		$this->load->model( 'tool/image' );
+
+		// Option variable
+
+		if ( ! empty( $this->model_catalog_option->getOptionsVar() ) ) {
+			$product_option_var = $this->model_catalog_option->getOptionsVar();
+		} else {
+			$product_option_var = array();
+		}
+		$data['product_option_var'] = array();
+
+		foreach ( $product_option_var as $opt ) {
+			$data['product_option_var'][] = array(
+				'option_id' => $opt['option_id'],
+				'name'      => $opt['name'],
+			);
+		}
+		$data['def_option_image'] = $this->model_tool_image->resize( 'no_image.png', 100, 100 );
+
+		if ( $this->config->get( 'theme_gen_option_variation' ) ) {
+			$data['option_variation_status'] = $this->config->get( 'theme_gen_option_variation' );
+		} else {
+			$data['option_variation_status'] = 0;
+		}
+
+		// Get options variables from db
+
+		if ( isset( $this->request->get['product_id'] ) ) {
+			$product_options_variables = $this->model_catalog_product->getProductOptionsVariables( $this->request->get['product_id'] );
+		} else {
+			$product_options_variables = array();
+		}
+
+		foreach ( $product_options_variables as $opt ) {
+			$data['product_options_variables'][] = array(
+				'product_id'      => $opt['product_id'],
+				'variation_id'    => $opt['variation_id'],
+				'option_id'       => $opt['option_id'],
+				'option_value_id' => $opt['option_value_id'],
+				'variable_title'  => $opt['variable_title'],
+				'image_link'      => $this->model_tool_image->resize( $opt['image'], 100, 100 ),
+				'image_value'     => $opt['image']
+			);
+		}
 
 		$this->load->model( 'customer/customer_group' );
 
@@ -1045,7 +1089,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['image'] = '';
 		}
 
-		$this->load->model( 'tool/image' );
 
 		if ( isset( $this->request->post['image'] ) && is_file( DIR_IMAGE . $this->request->post['image'] ) ) {
 			$data['thumb'] = $this->model_tool_image->resize( $this->request->post['image'], 100, 100 );
@@ -1325,6 +1368,30 @@ class ControllerCatalogProduct extends Controller {
 					'price'      => $result['price']
 				);
 			}
+		}
+
+		$this->response->addHeader( 'Content-Type: application/json' );
+		$this->response->setOutput( json_encode( $json ) );
+	}
+
+	public function getVariableOption() {
+		$json = array();
+
+		// Option variable
+		$this->load->model( 'catalog/option' );
+
+		if ( ! empty( $this->model_catalog_option->getOptionsVar() ) ) {
+			$product_option_var = $this->model_catalog_option->getOptionsVar();
+		} else {
+			$product_option_var = array();
+		}
+		$json['option_variable'] = array();
+
+		foreach ( $product_option_var as $opt ) {
+			$json['option_variable'][] = array(
+				'option_id' => $opt['option_id'],
+				'name'      => $opt['name'],
+			);
 		}
 
 		$this->response->addHeader( 'Content-Type: application/json' );

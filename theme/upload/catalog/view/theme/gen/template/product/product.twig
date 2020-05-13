@@ -187,7 +187,7 @@
                      <h3>{{ text_option }}</h3>
                      {% for option in options %}
                         {% if option.type == 'select' %}
-                           <div class="form-group{% if option.required %} required {% endif %}">
+                           <div class="{% if option.variability %}variable{% endif %} form-group{% if option.required %} required {% endif %}">
                               <div class="row">
                                  <div class="col-xs-12">
                                     <label class="control-label"
@@ -200,21 +200,33 @@
                                  <div class="row">
                                     <div class="col-xs-2">
                                        <img style="float: right; max-height: 36px; padding: 0;"
-                                            class="select-image-option{{ option.product_option_id }} select-image img-thumbnail img-responsive"
-                                            src="{{ option.product_option_value[0].image_select }}"
-                                            data-img-option-id="{{ option.product_option_id }}"
+                                            class="select-image-option{{ option.product_option_id }}{% if not option.variability %} select-image{% endif %} img-thumbnail img-responsive"
+                                               {% if not option.variability %}
+                                                  src="{{ option.product_option_value[0].image_select }}"
+                                                  data-img-option-id="{{ option.product_option_id }}"
+                                               {% else %}
+                                                  src="{{ option.product_option_value[0].image }}"
+                                               {% endif %}
                                             alt="{{ option.product_option_value[0].name }}"
                                             title="{{ option.product_option_value[0].name }}">
                                     </div>
                                     <div class="col-xs-10">
                                        <select name="option[{{ option.product_option_id }}]"
-                                               data-select-option-id="{{ option.product_option_id }}"
+                                               {% if option.variability %}
+                                                  data-variability="variable"
+                                               {% endif %}
+                                               data-select-option-id="{{ option.option_id }}"
                                                id="input-option{{ option.product_option_id }}"
                                                class="form-control select-image-list select-image-list{{ option.product_option_id }}">
                                           <option value="">{{ text_select }}</option>
                                           {% for option_value in option.product_option_value %}
                                              <option value="{{ option_value.product_option_value_id }}"
-                                                     data-mfp-src="{{ option_value.image_select }}"
+                                                     data-select-option-value-id="{{ option_value.option_value_id }}"
+                                                     {% if not option.variability %}
+                                                        data-mfp-src="{{ option_value.image_select }}"
+                                                     {% else %}
+                                                        data-img-icon="{{ option_value.image }}"
+                                                     {% endif %}
                                                      title="{{ option_value.name }}">
                                                 {{ option_value.name }}
                                                 {% if option_value.price %}
@@ -240,21 +252,24 @@
                            </div>
                         {% endif %}
                         {% if option.type == 'radio' %}
-                           <div class="form-group{% if option.required %} required {% endif %}">
+                           <div class="{% if option.variability %}variable{% endif %} form-group{% if option.required %} required {% endif %}">
                               <label class="control-label">{{ option.name }}</label>
                               <div id="input-option{{ option.product_option_id }}"
                                    class="row">
                                  {% for option_value in option.product_option_value %}
-                                    <div class="col-xs-3 text-center">
+                                    <div class="col-xs-2 text-center">
                                        <label>
                                           <input type="radio"
                                                  style="display: none;"
+                                                  {% if option.variability %}
+                                                     data-variability="variable"
+                                                  {% endif %}
+                                                 data-radio-option-id="{{ option.option_id }}"
+                                                 data-radio-option-value-id="{{ option_value.option_value_id }}"
                                                  name="option[{{ option.product_option_id }}]"
-                                                 value="{{ option_value.product_option_value_id }}"
-                                                  {% if loop.index == 1 %} checked {% endif %}/>
+                                                 value="{{ option_value.product_option_value_id }}"/>
                                           {% if option_value.image %}
                                              <img src="{{ option_value.image }}"
-                                                     {% if loop.index == 1 %} style="border: 1px solid red;" {% endif %}
                                                   alt="{{ option_value.name }} {% if option_value.price %} {{ option_value.price_prefix }} {{ option_value.price }} {% endif %}"
                                                   title="{{ option_value.name }}"
                                                   class="img-thumbnail"/>
@@ -472,6 +487,7 @@
          {{ content_bottom }}</div>
       {{ column_right }}</div>
 </div>
+{# Recuring #}
 <script type="text/javascript"><!--
     $('select[name=\'recurring_id\'], input[name="quantity"]').change(function () {
         $.ajax({
@@ -492,6 +508,7 @@
         });
     });
     //--></script>
+{# Add product to cart #}
 <script type="text/javascript"><!--
     $('#button-cart').on('click', function () {
         $.ajax({
@@ -546,6 +563,7 @@
         });
     });
     //--></script>
+{# Date time peacker#}
 <script type="text/javascript"><!--
     $('.date').datetimepicker({
         language: '{{ datepicker }}',
@@ -615,6 +633,7 @@
         }, 500);
     });
     //--></script>
+{# Review, pagination, docready #}
 <script type="text/javascript"><!--
     $('#review').delegate('.pagination a', 'click', function (e) {
         e.preventDefault();
@@ -668,8 +687,6 @@
             }
         });
         /* Magnific popup for selectable image */
-
-
         if ($(".select-image").length) {
 
             $(".select-image").on("click", function () {
@@ -694,16 +711,17 @@
                     }
                 });
             });
+        }
 
-
-            // Selectable image
-            $(".select-image-list").on("change", function () {
-                $("img.select-image-option" + $(this).attr("data-select-option-id"))
-                    .attr("src", $(this).find("option:selected").attr("data-mfp-src"))
+        // Change select option image
+        $("select[class*=select-image-list]").on("change", function () {
+            if ($(this).parent().parent().find('img').length) {
+                $(this).parent().parent().find('img')
+                    .attr("src", $(this).find("option:selected").attr("data-img-icon"))
                     .attr("title", $(this).find("option:selected").attr("title"))
                     .attr("alt", $(this).find("option:selected").attr("title"));
-            });
-        }
+            }
+        });
 
         // Highlight radio button
 
@@ -778,5 +796,58 @@
             }
         });
     }
+    //--></script>
+{# get option image #}
+<script type="text/javascript"><!--
+    $('select[data-variability="variable"], input[data-variability="variable"]').on('change', function () {
+        let varQty = $('div[class*="variable"]').length;
+        let productTitle = $('a[class="thumbnail"]').attr('title') + " - ";
+        let optionTitle = [];
+        let optId = [];
+        let optValId = [];
+
+        $('input[data-variability="variable"]:checked').each(function () {
+            if ($(this).val().length) {
+                optId.push($(this).attr('data-radio-option-id'));
+                optValId.push($(this).attr('data-radio-option-value-id'));
+                optionTitle.push($(this).parent().find('img').attr('title'));
+            }
+
+        });
+        $('select[data-variability="variable"]').each(function () {
+            if ($(this).val().length) {
+                optId.push($(this).attr('data-select-option-id'));
+                optValId.push($('option:selected', this).attr('data-select-option-value-id'));
+                optionTitle.push($('option:selected', this).text());
+            }
+        });
+
+        if (optId.length === varQty && optValId.length === varQty) {
+            let qryStr = 'index.php?route=product/product/getOptionImage';
+            qryStr += '&option_id=' + optId.join(',');
+            qryStr += '&option_value_id=' + optValId.join(',');
+            qryStr += '&opt_qty=' + varQty;
+            $.ajax({
+                url: qryStr,
+                dataType: 'json',
+                success: function (json) {
+                    if (json['image']) {
+                        $('a[class="thumbnail"]')
+                            .attr('href', json['image'])
+                            .find('img')
+                            .attr({
+                                src: json['image'],
+                                alt: productTitle + optionTitle,
+                                title: productTitle + optionTitle
+                            });
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+
+    });
     //--></script>
 {{ footer }} 

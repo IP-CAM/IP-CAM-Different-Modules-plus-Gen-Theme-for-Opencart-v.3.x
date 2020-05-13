@@ -59,6 +59,7 @@ $_['entry_admin_category_copy']         = 'Copy text on admin category page to s
 $_['entry_admin_product_copy']          = 'Copy text on admin product page to similar input';
 $_['entry_google_translate_api_key']    = 'Google Translate api key(Get from google api console)';
 $_['entry_counting_price_with_options'] = 'Dynamically counting price with options';
+$_['entry_option_variation']            = 'Option variations functionality';
 
 
 $_['entry_instagram_logo']    = 'Instagram logo 90*30';

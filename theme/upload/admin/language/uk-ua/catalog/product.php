@@ -68,6 +68,7 @@ $_['entry_attribute']        = 'Атрибут (характеристики)';
 $_['entry_attribute_group']  = 'Групи атрибутів';
 $_['entry_text']             = 'Значення';
 $_['entry_option']           = 'Параметр';
+$_['entry_option_var']      = 'Параметр варіант';
 $_['entry_option_value']     = 'Значення опції';
 $_['entry_required']         = 'Обов&#39;язково';
 $_['entry_status']           = 'Статус';

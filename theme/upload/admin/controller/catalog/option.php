@@ -326,6 +326,7 @@ class ControllerCatalogOption extends Controller {
 		} else {
 			$data['type'] = '';
 		}
+		/* Variable options */
 		if ( isset( $this->request->get['option_id'] ) && ( $this->request->server['REQUEST_METHOD'] != 'POST' ) ) {
 			$option_var_status = $this->model_catalog_option->getOptionVar( $this->request->get['option_id'] );
 		}
@@ -338,6 +339,12 @@ class ControllerCatalogOption extends Controller {
 		} else {
 			$data['option_var'] = '';
 		}
+		if ( $this->config->get( 'theme_gen_option_variation' ) ) {
+			$data['option_variation_status'] = $this->config->get( 'theme_gen_option_variation' );
+		} else {
+			$data['option_variation_status'] = 0;
+		}
+
 		if ( isset( $this->request->post['sort_order'] ) ) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif ( ! empty( $option_info ) ) {
@@ -513,6 +520,36 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		array_multisort( $sort_order, SORT_ASC, $json );
+
+		$this->response->addHeader( 'Content-Type: application/json' );
+		$this->response->setOutput( json_encode( $json ) );
+	}
+
+	public function autocompleteOptVar() {
+		$json = array();
+
+		$this->load->language( 'catalog/option' );
+
+		$this->load->model( 'catalog/option' );
+
+		$option_values = $this->model_catalog_option->getOptionValues( $this->request->get['option_id'] );
+
+		foreach ( $option_values as $option_value ) {
+
+			$json[] = array(
+				'option_value_id' => $option_value['option_value_id'],
+				'name'            => strip_tags( html_entity_decode( $option_value['name'], ENT_QUOTES, 'UTF-8' ) )
+			);
+		}
+
+		$sort_order = array();
+
+		foreach ( $json as $key => $value ) {
+			$sort_order[ $key ] = $value['name'];
+		}
+
+		array_multisort( $sort_order, SORT_ASC, $json );
+
 
 		$this->response->addHeader( 'Content-Type: application/json' );
 		$this->response->setOutput( json_encode( $json ) );

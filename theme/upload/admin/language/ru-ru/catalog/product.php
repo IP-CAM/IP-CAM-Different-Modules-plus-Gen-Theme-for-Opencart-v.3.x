@@ -70,6 +70,7 @@ $_['entry_attribute']        = 'Атрибут';
 $_['entry_attribute_group']  = 'Группы атрибутов';
 $_['entry_text']             = 'Текст';
 $_['entry_option']           = 'Опция';
+$_['entry_option_var']      = 'Опция вариант';
 $_['entry_option_value']     = 'Значение опции';
 $_['entry_required']         = 'Необходимо';
 $_['entry_status']           = 'Статус';

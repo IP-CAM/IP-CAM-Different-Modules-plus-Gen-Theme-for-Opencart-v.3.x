@@ -17,11 +17,18 @@ class ControllerExtensionThemeGen extends Controller {
 
 		if ( ( $this->request->server['REQUEST_METHOD'] == 'POST' ) && $this->validate() ) {
 			$this->model_setting_setting->editSetting( 'theme_gen', $this->request->post, $this->request->get['store_id'] );
-
+			// Postcode
 			if ( is_array( $this->request->post['theme_gen_checkout_hidden_fields'] ) && in_array( 'payment_postcode', $this->request->post['theme_gen_checkout_hidden_fields'] ) ) {
 				$this->editCountryPostcode( 0 );
 			} else {
 				$this->editCountryPostcode( 1 );
+			}
+
+			// Option variation
+
+			if ( $this->request->post['theme_gen_option_variation'] ) {
+				$this->load->model( 'catalog/option' );
+				$this->model_catalog_option->createVariationTables();
 			}
 
 			$this->session->data['success'] = $this->language->get( 'text_success' );
@@ -434,6 +441,14 @@ class ControllerExtensionThemeGen extends Controller {
 			$data['theme_gen_counting_price_with_options'] = $setting_info['theme_gen_counting_price_with_options'];
 		} else {
 			$data['theme_gen_counting_price_with_options'] = 0;
+		}
+		// Option variations
+		if ( isset( $this->request->post['theme_gen_option_variation'] ) ) {
+			$data['theme_gen_option_variation'] = $this->request->post['theme_gen_option_variation'];
+		} elseif ( isset( $setting_info['theme_gen_option_variation'] ) ) {
+			$data['theme_gen_option_variation'] = $setting_info['theme_gen_option_variation'];
+		} else {
+			$data['theme_gen_option_variation'] = 0;
 		}
 		// Opengraph
 		$data['placeholder'] = $this->model_tool_image->resize( 'no_image.png', 100, 100 );

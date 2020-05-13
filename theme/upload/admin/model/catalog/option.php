@@ -23,9 +23,7 @@ class ModelCatalogOption extends Model {
 		}
 
 		// Option var
-		if ( $this->optionVarTable() ) {
-			$this->db->query( "INSERT INTO `" . DB_PREFIX . "option_var` SET option_id = '" . (int) $option_id . "', option_var_status = '" . (int) $data['option_var_status'] . "'" );
-		}
+		$this->db->query( "INSERT INTO `" . DB_PREFIX . "option_var` SET option_id = '" . (int) $option_id . "', option_var_status = '" . (int) $data['option_var_status'] . "'" );
 
 
 		return $option_id;
@@ -60,14 +58,12 @@ class ModelCatalogOption extends Model {
 
 		}
 
-		if ( $this->optionVarTable() ) {
-			$id_exist = $this->db->query( "SELECT * FROM `" . DB_PREFIX . "option_var` WHERE option_id = '" . (int) $option_id . "'" );
+		$id_exist = $this->db->query( "SELECT * FROM `" . DB_PREFIX . "option_var` WHERE option_id = '" . (int) $option_id . "'" );
 
-			if ( $id_exist->num_rows == 1 ) {
-				$this->db->query( "UPDATE `" . DB_PREFIX . "option_var` SET option_var_status = '" . (int) $data['option_var_status'] . "' WHERE option_id = '" . (int) $option_id . "'" );
-			} else {
-				$this->db->query( "INSERT INTO `" . DB_PREFIX . "option_var` SET option_id = '" . (int) $option_id . "', option_var_status = '" . (int) $data['option_var_status'] . "'" );
-			}
+		if ( $id_exist->num_rows == 1 ) {
+			$this->db->query( "UPDATE `" . DB_PREFIX . "option_var` SET option_var_status = '" . (int) $data['option_var_status'] . "' WHERE option_id = '" . (int) $option_id . "'" );
+		} else {
+			$this->db->query( "INSERT INTO `" . DB_PREFIX . "option_var` SET option_id = '" . (int) $option_id . "', option_var_status = '" . (int) $data['option_var_status'] . "'" );
 		}
 	}
 
@@ -195,22 +191,32 @@ class ModelCatalogOption extends Model {
 
 	public function getOptionVar( $option_id ) {
 
-		if ( $this->optionVarTable() ) {
-			$query = $this->db->query( "SELECT option_var_status FROM `" . DB_PREFIX . "option_var` WHERE option_id = '" . (int) $option_id . "'" );
-		} else {
-			$query      = new stdClass();
-			$query->row = 0;
-		}
+		$query = $this->db->query( "SELECT option_var_status FROM `" . DB_PREFIX . "option_var` WHERE option_id = '" . (int) $option_id . "'" );
 
 		return $query->row;
 	}
 
-	private function optionVarTable() {
-		$table_exist = $this->db->query( "SHOW TABLES LIKE '" . DB_PREFIX . "option_var' " );
+	public function getOptionsVar() {
 
-		if ( $table_exist->num_rows == 1 ) {
-			$res = true;
-		} else {
+		$option_value_data = array();
+
+		$option_value_query = $this->db->query( "SELECT * FROM " . DB_PREFIX . "option_var ov LEFT JOIN " . DB_PREFIX . "option_description od ON (ov.option_id = od.option_id) WHERE od.language_id = '" . (int) $this->config->get( 'config_language_id' ) . "' ORDER BY od.name" );
+
+		foreach ( $option_value_query->rows as $option_value ) {
+			$option_value_data[] = array(
+				'option_id' => $option_value['option_id'],
+				'name'      => $option_value['name'],
+			);
+		}
+
+		return $option_value_data;
+	}
+
+	public function createVariationTables() {
+
+		$table_option_var_exist = $this->db->query( "SHOW TABLES LIKE '" . DB_PREFIX . "option_var' " );
+
+		if ( $table_option_var_exist->num_rows != 1 ) {
 			$this->db->query(
 				"CREATE TABLE `" . DB_PREFIX . "option_var` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -218,11 +224,35 @@ class ModelCatalogOption extends Model {
   `option_var_status` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `option_id` (`option_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci" );
-			$res = true;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;" );
 		}
 
-		return $res;
-	}
+		$table_product_option_var_exist = $this->db->query( "SHOW TABLES LIKE '" . DB_PREFIX . "product_option_var' " );
 
+		if ( $table_product_option_var_exist->num_rows != 1 ) {
+			$this->db->query(
+				"CREATE TABLE `" . DB_PREFIX . "product_option_var` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `product_id` INT(11) NOT NULL,
+  `variation_id` INT(11) NOT NULL,
+  `option_id` INT(11) NOT NULL,
+  `option_value_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `variation_id` (`variation_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;" );
+		}
+
+		$table_product_option_var_images_exist = $this->db->query( "SHOW TABLES LIKE '" . DB_PREFIX . "product_option_var_images' " );
+
+		if ( $table_product_option_var_images_exist->num_rows != 1 ) {
+			$this->db->query(
+				"CREATE TABLE `" . DB_PREFIX . "product_option_var_images` (
+  `variation_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `product_id` INT(11) NOT NULL,
+  `image_variation` VARCHAR(128) NOT NULL,
+  PRIMARY KEY (`variation_id`),
+  KEY `variation_id` (`variation_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;" );
+		}
+	}
 }
