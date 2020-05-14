@@ -200,7 +200,7 @@ class ModelCatalogOption extends Model {
 
 		$option_value_data = array();
 
-		$option_value_query = $this->db->query( "SELECT * FROM " . DB_PREFIX . "option_var ov LEFT JOIN " . DB_PREFIX . "option_description od ON (ov.option_id = od.option_id) WHERE od.language_id = '" . (int) $this->config->get( 'config_language_id' ) . "' ORDER BY od.name" );
+		$option_value_query = $this->db->query( "SELECT * FROM " . DB_PREFIX . "option_var ov LEFT JOIN " . DB_PREFIX . "option_description od ON (ov.option_id = od.option_id) WHERE ov.option_var_status = 1 AND od.language_id = '" . (int) $this->config->get( 'config_language_id' ) . "' ORDER BY od.name" );
 
 		foreach ( $option_value_query->rows as $option_value ) {
 			$option_value_data[] = array(
