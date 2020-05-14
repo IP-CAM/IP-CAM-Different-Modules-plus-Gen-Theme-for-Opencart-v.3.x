@@ -241,7 +241,9 @@
                                          id="input-option{{ option.product_option_id }}" class="form-control">
                                     <option value="">{{ text_select }}</option>
                                     {% for option_value in option.product_option_value %}
-                                       <option value="{{ option_value.product_option_value_id }}">{{ option_value.name }}
+                                       <option data-option-title="{{ option.name }} {{ option_value.name }}"
+                                               value="{{ option_value.product_option_value_id }}">
+                                          {{ option_value.name }}
                                           {% if option_value.price %}
                                              ({{ option_value.price_prefix }}{{ option_value.price }})
                                           {% endif %} </option>
@@ -259,7 +261,7 @@
                                     <div class="col-xs-2 text-center">
                                        <label>
                                           <input type="radio"
-                                                  {% if not option_value.image %}
+                                                  {% if option_value.image %}
                                                      style="display: none;"
                                                   {% endif %}
                                                   {% if option.variability %}
@@ -267,6 +269,7 @@
                                                   {% endif %}
                                                  data-radio-option-id="{{ option.option_id }}"
                                                  data-radio-option-value-id="{{ option_value.option_value_id }}"
+                                                 data-option-title="{{ option.name }} {{ option_value.name }}"
                                                  name="option[{{ option.product_option_id }}]"
                                                  value="{{ option_value.product_option_value_id }}"/>
                                           {% if option_value.image %}
@@ -817,7 +820,7 @@
             if ($(this).val().length) {
                 optId.push($(this).attr('data-radio-option-id'));
                 optValId.push($(this).attr('data-radio-option-value-id'));
-                optionTitle += ' ' + $.trim($(this).parent().parent().parent().find('label').text()) + ' ' + $.trim($(this).parent().find('img').attr('title'));
+                optionTitle += ' - ' + $.trim($(this).attr('data-option-title'));
             }
 
         });
@@ -825,7 +828,7 @@
             if ($(this).val().length) {
                 optId.push($(this).attr('data-select-option-id'));
                 optValId.push($('option:selected', this).attr('data-select-option-value-id'));
-                optionTitle += ' ' + $.trim($(this).parent().parent().parent().find('label').text()) + ' ' + $.trim($('option:selected', this).text());
+                optionTitle += ' - ' + $.trim($('option:selected', this).attr('data-option-title'));
             }
         });
 
@@ -839,14 +842,14 @@
                 url: qryStr,
                 dataType: 'json',
                 success: function (json) {
-                    if (json['image']) {
-                        $('a[class="thumbnail"]')
+                    if (json['image_thumb'] && json['image_popup']) {
+                        $('a[class="thumbnail"]').first()
                             .attr({
-                                href: json['image'],
+                                href: json['image_popup'],
                                 title: $.trim(productTitle + optionTitle.toLowerCase())
-                            }).find('img')
+                            }).find('img').first()
                             .attr({
-                                src: json['image'],
+                                src: json['image_thumb'],
                                 alt: $.trim(productTitle + optionTitle.toLowerCase()),
                                 title: $.trim(productTitle + optionTitle.toLowerCase())
                             });

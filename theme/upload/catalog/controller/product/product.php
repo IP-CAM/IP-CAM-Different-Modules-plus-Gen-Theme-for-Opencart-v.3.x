@@ -757,7 +757,14 @@ class ControllerProductProduct extends Controller {
 
 		$this->load->model( 'tool/image' );
 
-		$json['image'] = $this->model_tool_image->resize( $product_option_image['image_variation'], $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_popup_width' ), $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_popup_height' ) );
+		if ( ! empty( $product_option_image['image_variation'] ) ) {
+			$json['image_thumb'] = $this->model_tool_image->resize( $product_option_image['image_variation'], $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_thumb_width' ), $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_thumb_height' ) );
+			$json['image_popup'] = $this->model_tool_image->resize( $product_option_image['image_variation'], $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_popup_width' ), $this->config->get( 'theme_' . $this->config->get( 'config_theme' ) . '_image_popup_height' ) );
+		} else {
+			$json['image_thumb'] = false;
+			$json['image_popub'] = false;
+		}
+
 
 		$this->response->addHeader( 'Content-Type: application/json' );
 		$this->response->setOutput( json_encode( $json ) );
