@@ -238,10 +238,15 @@
                                  </div>
                               {% else %}
                                  <select name="option[{{ option.product_option_id }}]"
+                                         {% if option.variability %}
+                                            data-variability="variable"
+                                         {% endif %}
+                                         data-select-option-id="{{ option.option_id }}"
                                          id="input-option{{ option.product_option_id }}" class="form-control">
                                     <option value="">{{ text_select }}</option>
                                     {% for option_value in option.product_option_value %}
                                        <option data-option-title="{{ option.name }} {{ option_value.name }}"
+                                               data-select-option-value-id="{{ option_value.option_value_id }}"
                                                value="{{ option_value.product_option_value_id }}">
                                           {{ option_value.name }}
                                           {% if option_value.price %}
@@ -280,10 +285,12 @@
                                           {% endif %}
 
                                           {% if option_value.price %}
-                                             <p>{{ option_value.name }}
+                                             <p style="overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;"
+                                                class="small">{{ option_value.name }}
                                                 ({{ option_value.price_prefix }}{{ option_value.price }})</p>
                                           {% else %}
-                                             <p>{{ option_value.name }}</p>
+                                             <p style="overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;"
+                                                class="small">{{ option_value.name }}</p>
                                           {% endif %} </label>
                                     </div>
                                  {% endfor %}
