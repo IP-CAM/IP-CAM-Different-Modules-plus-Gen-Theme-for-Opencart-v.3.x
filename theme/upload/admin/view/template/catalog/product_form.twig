@@ -2100,10 +2100,12 @@
            let optId = [], optValId = [], optTitle = [];
 
            $('select[id^=select-var-option]').each(function () {
-               let title = $('option:selected', this).text() + ' - ' + $(this).parent().find('select[id^=select-option-value] option:selected').text();
-               optTitle.push(title);
-               optId.push($(this).val());
-               optValId.push($(this).parent().find('select[id^=select-option-value]').val());
+               if ($(this).val().length) {
+                   let title = $('option:selected', this).text() + ' - ' + $(this).parent().find('select[id^=select-option-value] option:selected').text();
+                   optTitle.push(title);
+                   optId.push($(this).val());
+                   optValId.push($(this).parent().find('select[id^=select-option-value]').val());
+               }
            });
 
            let html = ' <tr id="option-variation' + option_var_row + '">';
