@@ -976,7 +976,7 @@
                   </div>
                   {% if option_variation_status %}
                      <div class="tab-pane" id="tab-option-var">
-                        {% set option_col = 1 %}
+                        {% set option_col = 0 %}
                         <div id="option-mix-container" class="panel panel-body">
                            <div class="form-group-sm col-sm-3">
                               <label for="select-var-option{{ option_col }}">{{ entry_option }} {{ option_col }}</label>
@@ -987,9 +987,11 @@
                                  {% endfor %}
                               </select>
                               <label for="select-option-value{{ option_col }}">{{ entry_option_value }} {{ option_col }}</label>
-                              <select id="select-option-value{{ option_col }}" class="form-control">
-                                 <option value="">{{ text_select }}</option>
-                              </select>
+                              <div id="select-option-value{{ option_col }}"
+                                   style="height: 150px; overflow: auto;"
+                                   class="well well-sm">
+
+                              </div>
                            </div>
                         </div>
                         <div class="row">
@@ -2036,26 +2038,23 @@
 
        $('#tab-option-var').delegate('select[id^=select-var-option]', 'change', function () {
 
-           let selectValue = $(this).parent().find('select[id^=select-option-value]');
+           let selectValue = $(this).parent().find('div[id^=select-option-value]');
            if ($(this).val().length) {
 
                $.ajax({
                    url: 'index.php?route=catalog/option/autocompleteOptVar&user_token={{ user_token }}&option_id=' + $(this).val(),
                    dataType: 'json',
                    beforeSend: function () {
-                       selectValue.prop('disabled', true);
-                   },
-                   complete: function () {
-                       selectValue.prop('disabled', false);
+                       selectValue.html();
                    },
                    error: function (xhr, ajaxOptions, thrownError) {
                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                    },
                    success: function (json) {
-                       let html = '<option value="">{{ text_select }}</option>';
+                       let html = "";
 
                        $.each(json, function (i, opt) {
-                           html += '<option value="' + opt["option_value_id"] + '">' + opt["name"] + '</option>';
+                           html += '<div class="form-check"><input class="form-check-input" id="' + opt["option_value_id"] + '" type="checkbox" data-value-title="' + opt["name"] + '"  value="' + opt["option_value_id"] + '" /><label class="form-check-label" for="' + opt["option_value_id"] + '">' + opt["name"] + '</label></div>';
                        });
 
                        selectValue.html(html);
@@ -2063,7 +2062,7 @@
                    }
                });
            } else {
-               selectValue.html('<option value="">{{ text_select }}</option>');
+               selectValue.html("");
            }
        });
 
@@ -2079,16 +2078,15 @@
                success: function (json) {
 
                    let html = '<div class="form-group-sm col-sm-3">';
-                   html += '<label for="select-var-option' + option_col + '">{{ entry_option }} ' + option_col + '</label>';
+                   html += '<label for="select-var-option' + option_col + '">{{ entry_option }} ' + option_col + '<input style="margin-left:10px;" value="-" type="button" onclick="$(this).parent().parent().remove()" class="btn btn-danger btn-xs"></label>';
                    html += '<select id="select-var-option' + option_col + '" class="form-control">';
                    html += '<option value="">{{ text_select }}</option>';
                    $.each(json['option_variable'], function (i, opt) {
                        html += ' <option value="' + opt['option_id'] + '">' + opt['name'] + '</option>';
                    });
                    html += '</select><label for="select-option-value' + option_col + '">{{ entry_option_value }} ' + option_col + '</label>';
-                   html += '<select id="select-option-value' + option_col + '" class="form-control">';
-                   html += '<option value="">{{ text_select }}</option>';
-                   html += ' </select></div>';
+                   html += '<div id="select-option-value' + option_col + '" class="well well-sm" style="height: 150px; overflow: auto;">';
+                   html += '</div>';
 
                    $('#option-mix-container').append(html);
                }
@@ -2097,30 +2095,105 @@
 
        function addVariations() {
 
-           let optId = [], optValId = [], optTitle = [];
+           /* Check if any options checked*/
+           if ($('div[id^=select-option-value]:eq(0)').find("input:checked").length > 0) {
 
-           $('select[id^=select-var-option]').each(function () {
-               if ($(this).val().length) {
-                   let title = $('option:selected', this).text() + ' - ' + $(this).parent().find('select[id^=select-option-value] option:selected').text();
-                   optTitle.push(title);
-                   optId.push($(this).val());
-                   optValId.push($(this).parent().find('select[id^=select-option-value]').val());
+               let countVars = 1;
+               let varsObjArray = [];
+               let optValRepQtyArr = [];
+               /* Count quantity of variants*/
+               $("div[id^=select-option-value]").each(function (i, divOptVals) {
+                   countVars *= $(divOptVals).find("input:checked").length
+               });
+               /* Create variations object*/
+               for (let i = 0; i < countVars; i++) {
+                   varsObjArray.push({
+                       optId: [],
+                       optValId: [],
+                       optTitle: []
+                   });
                }
-           });
+               /* Collect repetition value qty */
+               for (let x = $("div[id^=select-option-value]").length, y = 0; x > 0; x--, y++) {
+                   if (y === 0) {
+                       let count = $("div[id^=select-option-value]:eq(" + (x - 1) + ")").find("input:checked").length;
+                       optValRepQtyArr.push(count);
+                   } else {
+                       let count = optValRepQtyArr[y - 1] * $("div[id^=select-option-value]:eq(" + (x - 1) + ")").find("input:checked").length;
+                       optValRepQtyArr.push(count);
+                   }
 
-           let html = ' <tr id="option-variation' + option_var_row + '">';
-           html += '<input type="hidden" name="option_var_id[' + option_var_row + '][option_id]" value="' + optId.join(',') + '">';
-           html += '<input type="hidden" name="option_var_id[' + option_var_row + '][option_value_id]" value="' + optValId.join(',') + '">';
-           html += '<td>' + optTitle.join(',') + '</td>';
-           html += '<td class="text-right"><a href="" id="option-image' + option_var_row + '"data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="option_images[' + option_var_row + '][image]" value="" id="input-image' + option_var_row + '" /></td>';
-           html += '<td class="text-left">';
-           html += '<button type="button" onclick="$(\'#option-variation' + option_var_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger">';
-           html += '<i class="fa fa-minus-circle"></i></button></td></tr>';
+               }
 
-           $('#table-option-variations tbody').append(html);
-           option_var_row++;
+               optValRepQtyArr.reverse();
+
+               /* Collect variations */
+               $('div[id^=select-option-value]').each(function (divInd, el) {
+
+                   let optId = $(this).parent().find("select").first().val();
+                   let optTitle = $(this).parent().find("select option:selected").text();
+
+                   for (let indObj = 0, inputIndex = 0, countIter = 1; indObj < countVars; indObj++) {
+
+                       /* If one option for variants */
+                       if ($('div[id^=select-option-value]').length === 1) {
+
+                           varsObjArray[indObj].optId.push(optId);
+                           varsObjArray[indObj].optValId.push($(this).find("input:checked:eq(" + indObj + ")").val());
+                           varsObjArray[indObj].optTitle.push(optTitle + " - " + $(this).find("input:checked:eq(" + indObj + ")").next("label").text().trim());
+
+                       } else if ((divInd + 1) === $('div[id^=select-option-value]').length) {
+
+                           varsObjArray[indObj].optId.push(optId);
+                           varsObjArray[indObj].optValId.push($(this).find("input:checked:eq(" + inputIndex + ")").val());
+                           varsObjArray[indObj].optTitle.push(optTitle + " - " + $(this).find("input:checked:eq(" + inputIndex + ")").next("label").text().trim());
+
+                           inputIndex++;
+
+                           if ((inputIndex + 1) > $(this).find("input:checked").length) {
+                               inputIndex = 0;
+                           }
+
+                       } else {
+
+                           varsObjArray[indObj].optId.push(optId);
+                           varsObjArray[indObj].optValId.push($(this).find("input:checked:eq(" + inputIndex + ")").val());
+                           varsObjArray[indObj].optTitle.push(optTitle + " - " + $(this).find("input:checked:eq(" + inputIndex + ")").next("label").text().trim());
+
+                           countIter++;
+
+                           if (countIter > optValRepQtyArr[divInd + 1]) {
+                               inputIndex++;
+                               countIter = 1;
+
+                               if (inputIndex > ($(this).find("input:checked").length - 1)) {
+                                   inputIndex = 0;
+                               }
+                           }
+                       }
 
 
+                   }
+
+
+               });
+               /* Create html with option variations*/
+               $(varsObjArray).each(function (i, obj) {
+                   let html = ' <tr id="option-variation' + option_var_row + '">';
+                   html += '<input type="hidden" name="option_var_id[' + option_var_row + '][option_id]" value="' + obj.optId.join(',') + '">';
+                   html += '<input type="hidden" name="option_var_id[' + option_var_row + '][option_value_id]" value="' + obj.optValId.join(',') + '">';
+                   html += '<td>' + obj.optTitle.join(',') + '</td>';
+                   html += '<td class="text-right"><a href="" id="option-image' + option_var_row + '"data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="option_images[' + option_var_row + '][image]" value="" id="input-image' + option_var_row + '" /></td>';
+                   html += '<td class="text-left">';
+                   html += '<button type="button" onclick="$(\'#option-variation' + option_var_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger">';
+                   html += '<i class="fa fa-minus-circle"></i></button></td></tr>';
+
+                   $('#table-option-variations tbody').append(html);
+                   option_var_row++;
+               });
+
+
+           }
        }
 
        //--></script>

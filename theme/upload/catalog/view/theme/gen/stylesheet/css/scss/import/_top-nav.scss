@@ -49,7 +49,7 @@
 }
 
 #top-links {
-   padding-top: 6px;
+   padding-top: 0;
 }
 
 #top-links a + a {
@@ -59,4 +59,33 @@
 /* logo */
 #logo {
    margin: 0 0 10px 0;
+}
+
+@media screen and (min-width: 468px) {
+   .list-inline-sm {
+      padding-left: 0;
+      list-style: none;
+      margin-left: -5px;
+   }
+
+   .list-inline-sm > li {
+      display: inline-block;
+      padding-left: 5px;
+      padding-right: 5px;
+   }
+}
+
+.list-inline-sm > li {
+   padding-top: 10px;
+}
+.list-inline-sm > li:first-child {
+   padding-top: 0;
+}
+
+.list-inline > li {
+   padding-top: 5px;
+}
+
+.list-inline > li:first-child {
+   padding-top: 0;
 }

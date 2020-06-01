@@ -16,4 +16,5 @@ $_['text_checkout']      = 'Оформление заказа';
 $_['text_search']        = 'Поиск';
 $_['text_all']           = 'Смотреть Все';
 $_['text_menu_info']     = 'Информация';
+$_['text_write_to_us']   = 'Написать в ';
 

@@ -63,6 +63,9 @@ $_['entry_admin_product_copy']          = 'Копіювати текст адм�
 $_['entry_google_translate_api_key']    = 'Google Translate ключ API (Отримати в Google API консолі)';
 $_['entry_counting_price_with_options'] = 'Динамічно підраховувати ціну з опціями';
 $_['entry_option_variation']            = 'Варіативні опції';
+$_['entry_viber_logo']                  = 'Вайбер логотип 35*35';
+$_['entry_telegram_logo']               = 'Телеграм логотип 35*35';
+$_['entry_telegram_name']               = 'Telegram имя без знака @';
 
 
 // Help

@@ -530,9 +530,9 @@
                            <fieldset>
                               <legend>{{ text_opengraph_meta }}</legend>
                               <div class="form-group">
-                                 <label class="col-sm-2 control-label"
+                                 <label class="col-sm-4 control-label"
                                         for="input-opengraph-logo">{{ entry_opengraph_logo }}</label>
-                                 <div class="col-sm-10">
+                                 <div class="col-sm-8">
                                     <a href=""
                                        id="opengraph-logo"
                                        data-toggle="image"
@@ -570,9 +570,9 @@
                            <fieldset>
                               <legend>{{ text_social }}</legend>
                               <div class="form-group">
-                                 <label class="col-sm-2 control-label"
+                                 <label class="col-sm-4 control-label"
                                         for="input-visa-mastercard-logo">{{ entry_card_logo }}</label>
-                                 <div class="col-sm-10">
+                                 <div class="col-sm-8">
                                     <a href=""
                                        id="visa-mastercard-logo"
                                        data-toggle="image"
@@ -588,13 +588,65 @@
                                            id="input-visa-mastercard-logo"/>
                                  </div>
                               </div>
+                              <div class="form-group">
+                                 <label class="col-sm-4 control-label"
+                                        for="input-viber-logo">{{ entry_viber_logo }}</label>
+                                 <div class="col-sm-8">
+                                    <a href=""
+                                       id="viber-logo"
+                                       data-toggle="image"
+                                       class="img-thumbnail">
+                                       <img src="{{ viber_logo_preview }}"
+                                            alt=""
+                                            title=""
+                                            data-placeholder="{{ placeholder }}"/>
+                                    </a>
+                                    <input type="hidden"
+                                           name="theme_gen_viber_logo"
+                                           value="{{ theme_gen_viber_logo }}"
+                                           id="input-viber-logo"/>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-4 control-label"
+                                        for="input-telegram-logo">{{ entry_telegram_logo }}</label>
+                                 <div class="col-sm-8">
+                                    <a href=""
+                                       id="telegram-logo"
+                                       data-toggle="image"
+                                       class="img-thumbnail">
+                                       <img src="{{ telegram_logo_preview }}"
+                                            alt=""
+                                            title=""
+                                            data-placeholder="{{ placeholder }}"/>
+                                    </a>
+                                    <input type="hidden"
+                                           name="theme_gen_telegram_logo"
+                                           value="{{ theme_gen_telegram_logo }}"
+                                           id="input-telegram-logo"/>
+                                 </div>
+
+                              </div>
+                              <div class="form-group">
+                                 <label class="col-sm-6 control-label"
+                                        for="input-telegram-name">
+                                    {{ entry_telegram_name }}
+                                 </label>
+                                 <div class="col-sm-6">
+                                    <input class="form-control"
+                                           type="text"
+                                           name="theme_gen_telegram_name"
+                                           value="{{ theme_gen_telegram_name }}"
+                                           id="input-telegram-name"/>
+                                 </div>
+                              </div>
                            </fieldset>
                            <fieldset>
                               <legend>{{ text_instagram_logo }}</legend>
                               <div class="form-group">
-                                 <label class="col-sm-2 control-label"
+                                 <label class="col-sm-4 control-label"
                                         for="input-instagram-logo">{{ entry_instagram_logo }}</label>
-                                 <div class="col-sm-10">
+                                 <div class="col-sm-8">
                                     <a href=""
                                        id="instagram-logo"
                                        data-toggle="image"

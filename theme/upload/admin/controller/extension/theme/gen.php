@@ -488,6 +488,34 @@ class ControllerExtensionThemeGen extends Controller {
 		} else {
 			$data['visa_mastercard_logo_preview'] = $this->model_tool_image->resize( 'no_image.png', 100, 100 );
 		}
+		// viber logo
+		if ( isset( $this->request->post['theme_gen_viber_logo'] ) ) {
+			$data['theme_gen_viber_logo'] = $this->request->post['theme_gen_viber_logo'];
+		} elseif ( isset( $setting_info['theme_gen_viber_logo'] ) ) {
+			$data['theme_gen_viber_logo'] = $this->config->get( 'theme_gen_viber_logo' );
+		}
+
+		if ( isset( $this->request->post['theme_gen_viber_logo'] ) && is_file( DIR_IMAGE . $this->request->post['theme_gen_viber_logo'] ) ) {
+			$data['viber_logo_preview'] = $this->model_tool_image->resize( $this->request->post['theme_gen_viber_logo'], 100, 100 );
+		} elseif ( $this->config->get( 'theme_gen_viber_logo' ) && is_file( DIR_IMAGE . $this->config->get( 'theme_gen_viber_logo' ) ) ) {
+			$data['viber_logo_preview'] = $this->model_tool_image->resize( $this->config->get( 'theme_gen_viber_logo' ), 100, 100 );
+		} else {
+			$data['viber_logo_preview'] = $this->model_tool_image->resize( 'no_image.png', 100, 100 );
+		}
+		// viber logo
+		if ( isset( $this->request->post['theme_gen_telegram_logo'] ) ) {
+			$data['theme_gen_telegram_logo'] = $this->request->post['theme_gen_telegram_logo'];
+		} elseif ( isset( $setting_info['theme_gen_telegram_logo'] ) ) {
+			$data['theme_gen_telegram_logo'] = $this->config->get( 'theme_gen_telegram_logo' );
+		}
+
+		if ( isset( $this->request->post['theme_gen_telegram_logo'] ) && is_file( DIR_IMAGE . $this->request->post['theme_gen_telegram_logo'] ) ) {
+			$data['telegram_logo_preview'] = $this->model_tool_image->resize( $this->request->post['theme_gen_telegram_logo'], 100, 100 );
+		} elseif ( $this->config->get( 'theme_gen_telegram_logo' ) && is_file( DIR_IMAGE . $this->config->get( 'theme_gen_telegram_logo' ) ) ) {
+			$data['telegram_logo_preview'] = $this->model_tool_image->resize( $this->config->get( 'theme_gen_telegram_logo' ), 100, 100 );
+		} else {
+			$data['telegram_logo_preview'] = $this->model_tool_image->resize( 'no_image.png', 100, 100 );
+		}
 
 		// instagram
 

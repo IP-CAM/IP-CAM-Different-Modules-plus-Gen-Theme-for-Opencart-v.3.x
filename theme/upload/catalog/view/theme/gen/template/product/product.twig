@@ -45,9 +45,11 @@
                   </ul>
                {% endif %}
                <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_description }}</a></li>
+                  <li{% if not attribute_groups %} class="active"{% endif %}><a href="#tab-description"
+                                                                                data-toggle="tab">{{ tab_description }}</a>
+                  </li>
                   {% if attribute_groups %}
-                     <li><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
+                     <li class="active"><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
                   {% endif %}
                   {% if review_status %}
                      <li><a href="#tab-review" data-toggle="tab">{{ tab_review }}</a></li>
@@ -263,7 +265,7 @@
                               <div id="input-option{{ option.product_option_id }}"
                                    class="row">
                                  {% for option_value in option.product_option_value %}
-                                    <div class="col-xs-2 text-center">
+                                    <div class="col-xs-3 col-sm-3 text-center">
                                        <label>
                                           <input type="radio"
                                                   {% if option_value.image %}
@@ -815,11 +817,11 @@
         });
     });
 
-    let productTitle = '{{ heading_title }}';
+    let productTitle = "{{ heading_title }}";
 
     $('select[data-variability="variable"], input[data-variability="variable"]').on('change', function () {
         let varQty = $('div[class*="variable"]').length;
-        let optionTitle = '';
+        let optionTitle = "";
         let optId = [];
         let optValId = [];
 
@@ -827,7 +829,7 @@
             if ($(this).val().length) {
                 optId.push($(this).attr('data-radio-option-id'));
                 optValId.push($(this).attr('data-radio-option-value-id'));
-                optionTitle += ' - ' + $.trim($(this).attr('data-option-title'));
+                optionTitle += " - " + $.trim($(this).attr("data-option-title"));
             }
 
         });
@@ -835,7 +837,7 @@
             if ($(this).val().length) {
                 optId.push($(this).attr('data-select-option-id'));
                 optValId.push($('option:selected', this).attr('data-select-option-value-id'));
-                optionTitle += ' - ' + $.trim($('option:selected', this).attr('data-option-title'));
+                optionTitle += " - " + $.trim($("option:selected", this).attr("data-option-title"));
             }
         });
 

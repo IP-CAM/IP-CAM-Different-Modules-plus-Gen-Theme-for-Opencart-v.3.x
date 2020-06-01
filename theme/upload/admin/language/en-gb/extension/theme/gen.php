@@ -60,6 +60,9 @@ $_['entry_admin_product_copy']          = 'Copy text on admin product page to si
 $_['entry_google_translate_api_key']    = 'Google Translate api key(Get from google api console)';
 $_['entry_counting_price_with_options'] = 'Dynamically counting price with options';
 $_['entry_option_variation']            = 'Option variations functionality';
+$_['entry_viber_logo']                  = 'Viber logo 35*35';
+$_['entry_telegram_logo']               = 'Telegram logo 35*35';
+$_['entry_telegram_name']               = 'Telegram name without sign @';
 
 
 $_['entry_instagram_logo']    = 'Instagram logo 90*30';

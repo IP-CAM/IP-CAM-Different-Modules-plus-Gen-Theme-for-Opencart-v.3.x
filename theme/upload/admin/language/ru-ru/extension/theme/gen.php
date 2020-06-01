@@ -64,6 +64,9 @@ $_['entry_google_translate_api_key']    = 'Google Translate ключ API (Пол
 $_['entry_counting_price_with_options'] = 'Динамически подсчитывать цену с опциями';
 $_['entry_counting_price_with_options'] = 'Динамически подсчитывать цену с опциями';
 $_['entry_option_variation']            = 'Вариативные опции';
+$_['entry_viber_logo']                  = 'Вайбер логотип 35*35';
+$_['entry_telegram_logo']               = 'Телеграм логотип 35*35';
+$_['entry_telegram_name']               = 'Telegram имя без знака @';
 
 // Help
 $_['help_directory']                  = 'Данное поле необходимо для того, чтобы старые шаблоны (от версий 2.0.х и .2.1.х), были совместимы с новым функционалом тем. В указанном поле вы можете выбрать директорию темы';

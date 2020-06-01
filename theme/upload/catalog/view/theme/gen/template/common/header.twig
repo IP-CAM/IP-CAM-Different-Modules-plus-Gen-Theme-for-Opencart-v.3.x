@@ -76,37 +76,66 @@
          </div>
       {% endif %}
       <div id="top-links" class="nav pull-right">
-         <ul class="list-inline">
-            <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a></li>
-            <li><a href="tel:{{ telephone }}">{{ telephone }}</a></li>
-            <li class="dropdown hidden-xs">
-               <a href="{{ account }}" title="{{ text_account }}"
-                  class="dropdown-toggle"
-                  data-toggle="dropdown">
-                  <i class="fa fa-user"></i>
-                  <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span>
-                  <span class="caret"></span>
-               </a>
-               <ul class="dropdown-menu dropdown-menu-right">
-                  {% if logged %}
-                     <li><a href="{{ account }}">{{ text_account }}</a></li>
-                     <li><a href="{{ order }}">{{ text_order }}</a></li>
-                     <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
-                     <li><a href="{{ download }}">{{ text_download }}</a></li>
-                     <li><a href="{{ logout }}">{{ text_logout }}</a></li>
-                  {% else %}
-                     <li><a href="{{ register }}">{{ text_register }}</a></li>
-                     <li><a href="{{ login }}">{{ text_login }}</a></li>
+         <ul class="list-unstyled list-inline pull-right">
+            <li>
+               <ul class="list-unstyled list-inline-sm">
+                  <li><a href="viber://chat?number={{ telephone }}">
+                        {{ text_write_to_us }}
+                        {% if viber_logo %}
+                        <img style="max-height: 21px;" src="{{ viber_logo }}" alt="{{ name }} viber">
+                        {% else %}
+                           <b><i>VIBER</i></b>
+                        {% endif %}
+                     </a>
+                  </li>
+                  {% if telegram_name %}
+                  <li><a href="https://telegram.me/{{ telegram_name }}">
+                        {{ text_write_to_us }}
+                        {% if telegram_logo %}
+                        <img style="max-height: 21px;" src="{{ telegram_logo }}" alt="{{ name }} telegram">
+                        {% else %}
+                        <b><i>TELEGRAM</i></b>
+                        {% endif %}
+                     </a>
+                  </li>
                   {% endif %}
                </ul>
             </li>
-            <li class="hidden">
-               <a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}">
-                  <i class="fa fa-heart"></i>
-                  <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span>
-               </a>
+            <li>
+               <ul class="list-unstyled list-inline-sm">
+                  <li><i class="fa fa-phone"></i>&nbsp;<a href="tel:{{ telephone }}">{{ telephone }}</a></li>
+                  <li><i class="fa fa-phone"></i>&nbsp;<a href="tel:{{ telephone_2 }}">{{ telephone_2 }}</a></li>
+                  <li class="dropdown hidden-xs">
+                     <a href="{{ account }}" title="{{ text_account }}"
+                        class="dropdown-toggle"
+                        data-toggle="dropdown">
+                        <i class="fa fa-user"></i>
+                        <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span>
+                        <span class="caret"></span>
+                     </a>
+                     <ul class="dropdown-menu dropdown-menu-right">
+                        {% if logged %}
+                           <li><a href="{{ account }}">{{ text_account }}</a></li>
+                           <li><a href="{{ order }}">{{ text_order }}</a></li>
+                           <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                           <li><a href="{{ download }}">{{ text_download }}</a></li>
+                           <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                        {% else %}
+                           <li><a href="{{ register }}">{{ text_register }}</a></li>
+                           <li><a href="{{ login }}">{{ text_login }}</a></li>
+                        {% endif %}
+                     </ul>
+                  </li>
+                  <li class="hidden">
+                     <a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}">
+                        <i class="fa fa-heart"></i>
+                        <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span>
+                     </a>
+                  </li>
+               </ul>
             </li>
          </ul>
+
       </div>
    </div>
 </nav>
