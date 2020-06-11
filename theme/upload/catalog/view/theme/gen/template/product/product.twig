@@ -19,7 +19,57 @@
             {% else %}
                {% set class = 'col-sm-8' %}
             {% endif %}
-            <div class="{{ class }}"> {% if thumb or images %}
+            <div class="{{ class }}">
+               {% if options %}
+                  <div class="btn-group pull-right" style="position: absolute; top: 0; right: 15px;">
+                     <button type="button" data-toggle="tooltip" class="btn btn-default btn-wishlist hidden-xs"
+                             title="{{ button_wishlist }}"
+                             onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
+                     <button type="button" data-toggle="tooltip" class="btn btn-default btn-compare hidden-xs"
+                             title="{{ button_compare }}"
+                             onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
+                  </div>
+                  <h1>{{ heading_title }}</h1>
+                  <ul class="list-unstyled">
+                     {% if manufacturer %}
+                        <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
+                     {% endif %}
+                     <li>{{ text_model }} {{ model }}</li>
+                     {% if reward %}
+                        <li>{{ text_reward }} {{ reward }}</li>
+                     {% endif %}
+                     <li>{{ text_stock }} {{ stock }}</li>
+                  </ul>
+                  {% if price %}
+                     <ul class="list-unstyled">
+                        {% if not special %}
+                           <li>
+                              <h2 style="font-size: 2em;" id="regular-price">{{ price }}</h2>
+                           </li>
+                        {% else %}
+                           <li><span style="text-decoration: line-through;">{{ price }}</span></li>
+                           <li>
+                              <h2 style="font-size: 2em;" id="special-price">{{ special }}</h2>
+                           </li>
+                        {% endif %}
+                        {% if tax %}
+                           <li>{{ text_tax }} {{ tax }}</li>
+                        {% endif %}
+                        {% if points %}
+                           <li>{{ text_points }} {{ points }}</li>
+                        {% endif %}
+                        {% if discounts %}
+                           <li>
+                              <hr>
+                           </li>
+                           {% for discount in discounts %}
+                              <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
+                           {% endfor %}
+                        {% endif %}
+                     </ul>
+                  {% endif %}
+               {% endif %}
+               {% if thumb or images %}
                   <ul class="thumbnails">
                      {% if thumb %}
                         <li>
@@ -44,24 +94,39 @@
                      {% endif %}
                   </ul>
                {% endif %}
+               {% if review_status %}
+                  <div class="rating">
+                     <p>{% for i in 1..5 %}
+                           {% if rating < i %}<span class="fa fa-stack"><i
+                                      class="fa fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fa fa-stack"><i
+                                      class="fa fa-star fa-stack-1x"></i><i
+                                      class="fa fa-star-o fa-stack-1x"></i></span>{% endif %}
+                        {% endfor %} <a href=""
+                                        onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a>
+                        / <a href=""
+                             onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a>
+                     </p>
+                  </div>
+               {% endif %}
                <ul class="nav nav-tabs">
-                  <li{% if not attribute_groups %} class="active"{% endif %}><a href="#tab-description"
-                                                                                data-toggle="tab">{{ tab_description }}</a>
+                  <li class="active">
+                     <a href="#tab-description"
+                        data-toggle="tab">{{ tab_description }}</a>
                   </li>
                   {% if attribute_groups %}
-                     <li class="active"><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
+                     <li><a href="#tab-specification" data-toggle="tab">{{ tab_attribute }}</a></li>
                   {% endif %}
                   {% if review_status %}
                      <li><a href="#tab-review" data-toggle="tab">{{ tab_review }}</a></li>
                   {% endif %}
                </ul>
                <div class="tab-content">
-                  <div class="tab-pane {% if not attribute_groups %} active{% endif %}" id="tab-description">
+                  <div class="tab-pane active" id="tab-description">
                      {{ description }}
                      <span class="description-more"><i class="fa fa-chevron-down"></i></span>
                   </div>
                   {% if attribute_groups %}
-                     <div class="tab-pane active" id="tab-specification">
+                     <div class="tab-pane" id="tab-specification">
                         <table class="table table-bordered">
                            {% for attribute_group in attribute_groups %}
                               <thead>
@@ -128,7 +193,9 @@
                            {% endif %}
                         </form>
                      </div>
-                  {% endif %}</div>
+                  {% endif %}
+               </div>
+               <hr>
             </div>
             {% if column_left or column_right %}
                {% set class = 'col-sm-6' %}
@@ -136,55 +203,58 @@
                {% set class = 'col-sm-4' %}
             {% endif %}
             <div class="{{ class }}">
-               <div class="btn-group pull-right" style="position: absolute; top: 0; right: 15px;">
-                  <button type="button" data-toggle="tooltip" class="btn btn-default btn-wishlist hidden-xs"
-                          title="{{ button_wishlist }}"
-                          onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
-                  <button type="button" data-toggle="tooltip" class="btn btn-default btn-compare hidden-xs"
-                          title="{{ button_compare }}"
-                          onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
-               </div>
-               <h1>{{ heading_title }}</h1>
-               <ul class="list-unstyled">
-                  {% if manufacturer %}
-                     <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
-                  {% endif %}
-                  <li>{{ text_model }} {{ model }}</li>
-                  {% if reward %}
-                     <li>{{ text_reward }} {{ reward }}</li>
-                  {% endif %}
-                  <li>{{ text_stock }} {{ stock }}</li>
-               </ul>
-               {% if price %}
-                  <ul class="list-unstyled">
-                     {% if not special %}
-                        <li>
-                           <h2 id="regular-price">{{ price }}</h2>
-                        </li>
-                     {% else %}
-                        <li><span style="text-decoration: line-through;">{{ price }}</span></li>
-                        <li>
-                           <h2 id="special-price">{{ special }}</h2>
-                        </li>
+               <div id="product">
+                  {% if not options %}
+                     <div class="btn-group pull-right" style="position: absolute; top: 0; right: 15px;">
+                        <button type="button" data-toggle="tooltip" class="btn btn-default btn-wishlist hidden-xs"
+                                title="{{ button_wishlist }}"
+                                onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i></button>
+                        <button type="button" data-toggle="tooltip" class="btn btn-default btn-compare hidden-xs"
+                                title="{{ button_compare }}"
+                                onclick="compare.add('{{ product_id }}');"><i class="fa fa-exchange"></i></button>
+                     </div>
+                     <h1>{{ heading_title }}</h1>
+                     <ul class="list-unstyled">
+                        {% if manufacturer %}
+                           <li>{{ text_manufacturer }} <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
+                        {% endif %}
+                        <li>{{ text_model }} {{ model }}</li>
+                        {% if reward %}
+                           <li>{{ text_reward }} {{ reward }}</li>
+                        {% endif %}
+                        <li>{{ text_stock }} {{ stock }}</li>
+                     </ul>
+                     {% if price %}
+                        <ul class="list-unstyled">
+                           {% if not special %}
+                              <li>
+                                 <h2 style="font-size: 2em;" id="regular-price">{{ price }}</h2>
+                              </li>
+                           {% else %}
+                              <li><span style="text-decoration: line-through;">{{ price }}</span></li>
+                              <li>
+                                 <h2 style="font-size: 2em;" id="special-price">{{ special }}</h2>
+                              </li>
+                           {% endif %}
+                           {% if tax %}
+                              <li>{{ text_tax }} {{ tax }}</li>
+                           {% endif %}
+                           {% if points %}
+                              <li>{{ text_points }} {{ points }}</li>
+                           {% endif %}
+                           {% if discounts %}
+                              <li>
+                                 <hr>
+                              </li>
+                              {% for discount in discounts %}
+                                 <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
+                              {% endfor %}
+                           {% endif %}
+                        </ul>
                      {% endif %}
-                     {% if tax %}
-                        <li>{{ text_tax }} {{ tax }}</li>
-                     {% endif %}
-                     {% if points %}
-                        <li>{{ text_points }} {{ points }}</li>
-                     {% endif %}
-                     {% if discounts %}
-                        <li>
-                           <hr>
-                        </li>
-                        {% for discount in discounts %}
-                           <li>{{ discount.quantity }}{{ text_discount }}{{ discount.price }}</li>
-                        {% endfor %}
-                     {% endif %}
-                  </ul>
-               {% endif %}
-               <div id="product"> {% if options %}
                      <hr>
+                  {% endif %}
+                  {% if options %}
                      <h3>{{ text_option }}</h3>
                      {% for option in options %}
                         {% if option.type == 'select' %}
@@ -200,13 +270,11 @@
                               {% if option.product_option_value[0].image %}
                                  <div class="row">
                                     <div class="col-xs-2">
-                                       <img style="float: right; max-height: 36px; padding: 0;"
+                                       <img style="float: right; height: 36px; width: 32px; padding: 0;box-shadow: 0 0 5px 3px rgba(115,115,115,1);"
                                             class="select-image-option{{ option.product_option_id }}{% if not option.variability %} select-image{% endif %} img-thumbnail img-responsive"
+                                            src="{{ option.product_option_value[0].image_select }}"
                                                {% if not option.variability %}
-                                                  src="{{ option.product_option_value[0].image_select }}"
-                                                  data-img-option-id="{{ option.product_option_id }}"
-                                               {% else %}
-                                                  src="{{ option.product_option_value[0].image }}"
+                                               data-img-option-id="{{ option.product_option_id }}"
                                                {% endif %}
                                             alt="{{ option.product_option_value[0].name }}"
                                             title="{{ option.product_option_value[0].name }}">
@@ -223,11 +291,8 @@
                                           {% for option_value in option.product_option_value %}
                                              <option value="{{ option_value.product_option_value_id }}"
                                                      data-select-option-value-id="{{ option_value.option_value_id }}"
-                                                     {% if not option.variability %}
-                                                        data-mfp-src="{{ option_value.image_select }}"
-                                                     {% else %}
-                                                        data-img-icon="{{ option_value.image }}"
-                                                     {% endif %}
+                                                     data-mfp-src="{{ option_value.image_select }}"
+                                                     data-img-icon="{{ option_value.image_select }}"
                                                      title="{{ option_value.name }}">
                                                 {{ option_value.name }}
                                                 {% if option_value.price %}
@@ -287,11 +352,11 @@
                                           {% endif %}
 
                                           {% if option_value.price %}
-                                             <p style="overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;"
+                                             <p style="min-height:40px;overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;"
                                                 class="small">{{ option_value.name }}
                                                 ({{ option_value.price_prefix }}{{ option_value.price }})</p>
                                           {% else %}
-                                             <p style="overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;"
+                                             <p style="min-height:40px;overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px;"
                                                 class="small">{{ option_value.name }}</p>
                                           {% endif %} </label>
                                     </div>
@@ -412,20 +477,7 @@
                   {% if minimum > 1 %}
                      <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
                   {% endif %}</div>
-               {% if review_status %}
-                  <div class="rating">
-                     <p>{% for i in 1..5 %}
-                           {% if rating < i %}<span class="fa fa-stack"><i
-                                      class="fa fa-star-o fa-stack-1x"></i></span>{% else %}<span class="fa fa-stack"><i
-                                      class="fa fa-star fa-stack-1x"></i><i
-                                      class="fa fa-star-o fa-stack-1x"></i></span>{% endif %}
-                        {% endfor %} <a href=""
-                                        onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ reviews }}</a>
-                        / <a href=""
-                             onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">{{ text_write }}</a>
-                     </p>
-                  </div>
-               {% endif %} </div>
+            </div>
          </div>
          {% if products %}
             <h3>{{ text_related }}</h3>
@@ -797,9 +849,9 @@
             let imgNode = $(this).parent().parent().find('img');
             if (imgNode.length) {
                 imgNode.attr({
-                    src: selectNode.find("option:selected").attr("data-img-icon"),
-                    title: $.trim(selectNode.find("option:selected").attr("title")),
-                    alt: $.trim(selectNode.find("option:selected").attr("title"))
+                    src: selectNode.children("option:selected").attr("data-img-icon"),
+                    title: $.trim(selectNode.children("option:selected").attr("title")),
+                    alt: $.trim(selectNode.children("option:selected").attr("title"))
                 });
             }
         });
