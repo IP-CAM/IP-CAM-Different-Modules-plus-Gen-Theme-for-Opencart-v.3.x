@@ -3,7 +3,6 @@
       <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-language">
          <div class="btn-group">
             <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-               <span>{{ text_language }}</span>&nbsp
                {% for language in languages %}
                   {% if language.code == code %}
                      <img src="catalog/language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}"

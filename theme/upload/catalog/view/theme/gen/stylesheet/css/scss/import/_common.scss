@@ -51,7 +51,7 @@ a:hover {
 
 legend {
    font-size: 18px;
-   padding: 7px 0px
+   padding: 7px 0;
 }
 
 label {
@@ -178,11 +178,14 @@ div.required .control-label:before {
 }
 
 .container {
-   width: 99% !important;
+   width: 100% !important;
 }
 
 .close {
    right: initial !important;
 }
 
+.padding-none{
+   padding: 0!important;
+}
 

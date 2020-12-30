@@ -502,7 +502,12 @@ class ControllerExtensionThemeGen extends Controller {
 		} else {
 			$data['viber_logo_preview'] = $this->model_tool_image->resize( 'no_image.png', 100, 100 );
 		}
-		// viber logo
+		// Telegram
+		if ( isset( $this->request->post['theme_gen_telegram_name'] ) ) {
+			$data['theme_gen_telegram_name'] = $this->request->post['theme_gen_telegram_name'];
+		} elseif ( isset( $setting_info['theme_gen_telegram_name'] ) ) {
+			$data['theme_gen_telegram_name'] = $this->config->get( 'theme_gen_telegram_name' );
+		}
 		if ( isset( $this->request->post['theme_gen_telegram_logo'] ) ) {
 			$data['theme_gen_telegram_logo'] = $this->request->post['theme_gen_telegram_logo'];
 		} elseif ( isset( $setting_info['theme_gen_telegram_logo'] ) ) {

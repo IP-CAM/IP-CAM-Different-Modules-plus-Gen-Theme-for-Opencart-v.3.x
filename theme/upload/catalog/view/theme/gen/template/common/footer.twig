@@ -12,7 +12,7 @@
          </div>
          <div class="collapse navbar-collapse navbar-footer-collapse">
             {% if informations %}
-               <div class="col-sm-3 col-xs-6 pull-left">
+               <div class="col-sm-4 col-xs-6 pull-left">
                   <h5>{{ text_information }}</h5>
                   <ul class="list-unstyled">
                      {% for information in informations %}
@@ -21,7 +21,7 @@
                   </ul>
                </div>
             {% endif %}
-            <div class="col-sm-3 col-xs-6 pull-right">
+            <div class="col-sm-4 col-xs-6 pull-right">
                <h5>{{ text_address }}</h5>
                <ul class="list-unstyled">
                   <li><a href="tel:{{ telephone }}"><i class="fa fa-phone"></i>&nbsp;{{ telephone }}</a></li>
@@ -35,25 +35,15 @@
                   <li><i class="fa fa-envelope"></i>&nbsp;{{ email }}</li>
                </ul>
             </div>
-            <div class="col-sm-3 col-xs-6 pull-left">
+            <div class="col-sm-4 col-xs-6 pull-left">
                <h5>{{ text_extra }}</h5>
                <ul class="list-unstyled">
                   <li><a href="{{ contact }}">{{ text_contact }}</a></li>
                   <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
-                  <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
                   <li class="hidden"><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
                   <li><a href="{{ special }}">{{ text_special }}</a></li>
                   <li><a href="{{ return }}">{{ text_return }}</a></li>
                   <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
-               </ul>
-            </div>
-            <div class="col-sm-3 col-xs-6 pull-right">
-               <h5>{{ text_account }}</h5>
-               <ul class="list-unstyled">
-                  <li><a href="{{ account }}">{{ text_account }}</a></li>
-                  <li><a href="{{ order }}">{{ text_order }}</a></li>
-                  <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
-                  <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
                </ul>
             </div>
          </div>

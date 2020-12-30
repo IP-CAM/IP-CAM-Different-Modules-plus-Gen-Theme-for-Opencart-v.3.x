@@ -91,6 +91,7 @@ class ControllerCommonHeader extends Controller {
 
 		// Opengraph
 		$data['locale'] = str_replace( '-', '_', $this->session->data['language'] );
+
 		if ( $this->config->get( 'config_theme' ) != 'gen' ) {
 			$data['menu'] = $this->load->controller( 'common/menu' );
 		} else {
@@ -125,7 +126,7 @@ class ControllerCommonHeader extends Controller {
 			$data['telegram_name'] = 0;
 		}
 		if ( $this->config->get( 'theme_gen_instagram_logo' ) ) {
-			$data['instagram_logo'] = $this->model_tool_image->resize( $this->config->get( 'theme_gen_instagram_logo' ), 90, 30 );
+			$data['instagram_logo'] = $this->model_tool_image->resize( $this->config->get( 'theme_gen_instagram_logo' ), 30, 30 );
 		} else {
 			$data['instagram_logo'] = 0;
 		}
@@ -137,6 +138,10 @@ class ControllerCommonHeader extends Controller {
 
 
 		$data['fb_api_id'] = $this->config->get( 'theme_gen_opengraph_api_id' ) ? $this->config->get( 'theme_gen_opengraph_api_id' ) : false;
+
+		if ( $this->config->get( 'config_theme' ) == 'gen' ) {
+			$data['main_menu'] = $this->load->controller( 'common/menu_left' );
+		}
 
 		return $this->load->view( 'common/header', $data );
 	}

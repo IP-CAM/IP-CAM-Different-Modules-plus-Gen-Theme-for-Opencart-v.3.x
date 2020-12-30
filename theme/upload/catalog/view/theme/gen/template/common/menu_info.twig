@@ -1,22 +1,20 @@
 {% if informations %}
-   <div class="container">
-      <nav id="menu-info" class="navbar">
-         <div class="navbar-header">
-            <span id="menu-info-text" class="visible-xs">{{ text_menu_info }}</span>
-            <button type="button"
-                    class="btn btn-navbar navbar-toggle"
-                    data-toggle="collapse"
-                    data-target=".navbar-info-collapse">
-               <i class="fa fa-bars"></i>
-            </button>
-         </div>
-         <div class="collapse navbar-collapse navbar-info-collapse text-center">
-            <ul class="nav navbar-nav">
-               {% for info in informations %}
-                  <li><a href="{{ info.href }}">{{ info.title }}</a></li>
-               {% endfor %}
-            </ul>
-         </div>
-      </nav>
-   </div>
+   <nav id="menu-info">
+      <div class="navbar-header">
+         <span id="menu-info-text" class="visible-xs">{{ text_menu_info }}</span>
+         <button type="button"
+                 class="btn btn-navbar navbar-toggle"
+                 data-toggle="collapse"
+                 data-target=".navbar-info-collapse">
+            <i class="fa fa-bars"></i>
+         </button>
+      </div>
+      <div class="collapse navbar-collapse navbar-info-collapse text-center">
+         <ul class="nav">
+            {% for info in informations %}
+               <li><a href="{{ info.href }}">{{ info.title }}</a></li>
+            {% endfor %}
+         </ul>
+      </div>
+   </nav>
 {% endif %}
