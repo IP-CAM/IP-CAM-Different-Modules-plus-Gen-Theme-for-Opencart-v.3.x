@@ -11,39 +11,51 @@
             <span id="footer-info-text" class="visible-xs">{{ text_footer_info }}</span>
          </div>
          <div class="collapse navbar-collapse navbar-footer-collapse">
+            <div class="col-sm-4 col-xs-12 pull-right">
+               <h5>{{ text_address }}</h5>
+               <ul class="list-unstyled">
+                  <li><a href="tel:{{ telephone }}"><i class="fa fa-phone"></i>&nbsp;{{ telephone }}</a></li>
+                  <hr>
+                  {% if fax %}
+                     <li><a href="tel:{{ fax }}"><i class="fa fa-phone"></i>&nbsp;{{ fax }}</a></li>
+                     <hr>
+                  {% endif %}
+                  <li><i class="fa fa-home"></i>&nbsp;{{ address }}</li>
+                  <hr>
+                  {% if open %}
+                     <li><i class="fa fa-calendar"></i>&nbsp;{{ open }}</li>
+                     <hr>
+                  {% endif %}
+                  <li><i class="fa fa-envelope"></i>&nbsp;{{ email }}</li>
+                  <hr>
+               </ul>
+            </div>
+
             {% if informations %}
                <div class="col-sm-4 col-xs-6 pull-left">
                   <h5>{{ text_information }}</h5>
                   <ul class="list-unstyled">
                      {% for information in informations %}
                         <li><a href="{{ information.href }}">{{ information.title }}</a></li>
+                        <hr>
                      {% endfor %}
                   </ul>
                </div>
             {% endif %}
+
             <div class="col-sm-4 col-xs-6 pull-right">
-               <h5>{{ text_address }}</h5>
-               <ul class="list-unstyled">
-                  <li><a href="tel:{{ telephone }}"><i class="fa fa-phone"></i>&nbsp;{{ telephone }}</a></li>
-                  {% if fax %}
-                     <li><a href="tel:{{ fax }}"><i class="fa fa-phone"></i>&nbsp;{{ fax }}</a></li>
-                  {% endif %}
-                  <li><i class="fa fa-home"></i>&nbsp;{{ address }}</li>
-                  {% if open %}
-                     <li><i class="fa fa-calendar"></i>&nbsp;{{ open }}</li>
-                  {% endif %}
-                  <li><i class="fa fa-envelope"></i>&nbsp;{{ email }}</li>
-               </ul>
-            </div>
-            <div class="col-sm-4 col-xs-6 pull-left">
                <h5>{{ text_extra }}</h5>
                <ul class="list-unstyled">
                   <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+                  <hr>
                   <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
-                  <li class="hidden"><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+                  <hr>
                   <li><a href="{{ special }}">{{ text_special }}</a></li>
+                  <hr>
                   <li><a href="{{ return }}">{{ text_return }}</a></li>
+                  <hr>
                   <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+                  <hr>
                </ul>
             </div>
          </div>
