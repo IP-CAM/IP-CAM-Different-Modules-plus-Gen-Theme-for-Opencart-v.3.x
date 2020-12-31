@@ -18,3 +18,10 @@
    background: linear-gradient(to left, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
+@mixin menu-bg-hover{
+   color: #3c3c3c;
+   background: #ffffff;
+   border: 1px solid #DDDDDD;
+   text-shadow: 0 1px 0 #FFF;
+   font-weight: bold;
+}
