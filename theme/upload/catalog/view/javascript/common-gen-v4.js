@@ -90,7 +90,10 @@ $(document).ready(function () {
                     },
                 })
             }, 1000);
+        } else if (value && value.length > 0) {
+            $("#btn-search-close").show();
         } else {
+            $("#btn-search-close").hide();
             $("#search-response").children().remove();
         }
 
@@ -111,6 +114,18 @@ $(document).ready(function () {
             $(this).addClass("active");
             $("#btn-search-open").removeClass("active");
             $(this).parent().toggle("slow");
+        });
+    } else {
+
+        $("#btn-search-close").on("click", function () {
+            $("header #search-gen input[name=\"search\"]").val("");
+
+            if ($("#search-response").children().length > 0) {
+                $("#search-response").children().remove();
+            }
+
+            $(this).hide();
+
         });
     }
 
