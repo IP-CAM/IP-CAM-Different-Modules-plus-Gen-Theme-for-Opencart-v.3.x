@@ -41,7 +41,7 @@
                      <li>{{ text_stock }} {{ stock }}</li>
                   </ul>
                   {% if price %}
-                     <ul class="list-unstyled">
+                     <ul class="list-unstyled text-center">
                         {% if not special %}
                            <li>
                               <h2 style="font-size: 2em;" id="regular-price">{{ price }}</h2>
@@ -225,7 +225,7 @@
                         <li>{{ text_stock }} {{ stock }}</li>
                      </ul>
                      {% if price %}
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled text-center">
                            {% if not special %}
                               <li>
                                  <h2 style="font-size: 2em;" id="regular-price">{{ price }}</h2>
@@ -274,7 +274,7 @@
                                             class="select-image-option{{ option.product_option_id }}{% if not option.variability %} select-image{% endif %} img-thumbnail img-responsive"
                                             src="{{ option.product_option_value[0].image_select }}"
                                                {% if not option.variability %}
-                                               data-img-option-id="{{ option.product_option_id }}"
+                                                  data-img-option-id="{{ option.product_option_id }}"
                                                {% endif %}
                                             alt="{{ option.product_option_value[0].name }}"
                                             title="{{ option.product_option_value[0].name }}">
