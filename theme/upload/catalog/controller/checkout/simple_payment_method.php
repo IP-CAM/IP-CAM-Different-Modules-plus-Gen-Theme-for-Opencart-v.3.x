@@ -165,7 +165,7 @@ class ControllerCheckoutSimplePaymentMethod extends Controller {
             $data['agree'] = 1;
         }
 
-        $data['show_payment_comment'] = in_array('payment_comment', $this->config->get('theme_gen_checkout_hidden_fields'));
+        $data['show_payment_comment'] = is_array($this->config->get('theme_gen_checkout_hidden_fields')) && in_array('payment_comment', $this->config->get('theme_gen_checkout_hidden_fields'));
 
 
         $this->response->setOutput($this->load->view('checkout/payment_method', $data));
